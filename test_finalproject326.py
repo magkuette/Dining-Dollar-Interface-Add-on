@@ -100,4 +100,17 @@ def test_get_user_info2():
     """
     # Code below in progress
     # assert get_user_info() ==
-    
+
+def test_verifications1():
+    """
+    Tests to see that the verifications function directs the user to the right page.
+    Raises:
+        AssertionError: in the event that the comparison of the verifications functions does not match the expected value of ____.
+    """
+
+def options():
+    """
+    Tests to see that the options function directs the user to the right program function.
+    Raises:
+        AssertionError: in the event that the comparison of the verifications functions does not match the expected value of _____.
+    """
