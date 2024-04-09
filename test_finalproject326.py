@@ -80,3 +80,15 @@ def test_suggested_spending2():
     """
     # Code below in progress
     # assert suggested_spending() == 
+
+def test_get_user_info1():
+    """
+    Tests to see that the get_user_info function correctly
+
+    Raises:
+        AssertionError: in the event that the comparison of the suggested_spending function 
+        does not match the expected value of _____.
+    """
+    # Code below in progress
+    # assert suggested_spending() == 
+    
