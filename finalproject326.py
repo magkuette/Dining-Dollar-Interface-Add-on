@@ -47,14 +47,14 @@ class User:
         self.p4.pack()
 
         # Call options function
-        self.options()
-
-        # Set up of the available buttons (ttk.Button), input boxes (ttk.Entry), etc.
-        pass
+        self.options()    
         
     def spending_reminders(self):
         """
         Sends reminders to user to spend dining dollars based on the current date.
+
+        Returns:
+            A tkinter messagebox, reminding user to 
         """
         # Get current date using date.today()
 
@@ -111,7 +111,7 @@ class User:
 
     def options(self):
         """
-        Displays a list of options the user can select in order 
+        Displays a list of options the user can select.
         """
         # Add buttons here about what users will be able to do
         pass
