@@ -20,6 +20,9 @@ from datetime import date
 
 class User:
     """
+    Creates a user object based on an acual program user.
+
+    Attributes
     """
     def __init__(self, root):
         self.root = root
@@ -51,10 +54,10 @@ class User:
         
     def spending_reminders(self):
         """
-        Sends reminders to user to spend dining dollars based on the current date.
+        Calculates when to send reminders to user to spend dining dollars based on the current date.
 
         Returns:
-            A tkinter messagebox, reminding user to 
+            A tkinter messagebox with a message reminding users to spend dining dollars.
         """
         # Get current date using date.today()
 
@@ -65,14 +68,20 @@ class User:
 
     def threshold_reminders(self):
         """
-        Informs users when their dining dollars balance reaches a certain threshold.
+        Calculates when dining dollar balance has reached certain thresholds based on the current date and date of dining dollar reset.
+
+        Returns:
+            A message letting users know what thresholds they have passed.
         """
         # Program will send a notification (tkinter.messagebox.showinfo)
         pass
 
     def suggested_spending(self):
         """
-        Gives users a suggested average amount of money they could spend daily based on their remaining dining dollar balance.
+        Calculates a suggested average amount of money they could spend daily based on their remaining dining dollar balance.
+
+        Returns:
+            A message letting users know how much money they could spend daily to spend their dining dollar balance.
         """
         # Get current date using date.today()
 
@@ -82,7 +91,9 @@ class User:
     def get_user_info(self):
         """
         Gets user information including dining dollar plan, current dining dollar balance, as well as name.
-        ^ (the name is irrelevant; it's just if we wanna be like 'Hey [name] you have this many dining dollars in your account' or something) <- just an idea
+
+        Returns:
+            self.p2 after user clicks Proceed button.
         """
         # Name entry
         self.name_entry = ttk.Entry(self.p1)
@@ -103,6 +114,9 @@ class User:
     def verification(self):
         """
         Asks user to verify the displayed information concerning them.
+
+        Returns:
+            Either self.p1 or self.p3, depending on the user's answer.
         """
         # Display name, dining dollar plan, and dining dollar balance with ttk.Label
 
@@ -112,6 +126,9 @@ class User:
     def options(self):
         """
         Displays a list of options the user can select.
+
+        Returns:
+            Requested option.
         """
         # Add buttons here about what users will be able to do
         pass
@@ -120,6 +137,9 @@ class User:
 def main():
     """
     Displays information to the user using User functions
+
+    Returns:
+        Message of information user requested.
     """
     pass
     
