@@ -83,12 +83,21 @@ def test_suggested_spending2():
 
 def test_get_user_info1():
     """
-    Tests to see that the get_user_info function correctly
-
+    Tests to see that the get_user_info function returns the correct information.
     Raises:
-        AssertionError: in the event that the comparison of the suggested_spending function 
+        AssertionError: in the event that the comparison of the get_user_info function 
         does not match the expected value of _____.
     """
     # Code below in progress
-    # assert suggested_spending() == 
+    # assert get_user_info() ==
+
+def test_get_user_info2():
+     """
+    Tests to see that the get_user_info function sends an appropriate message if the information inputted is not allowed.
+    Raises:
+        AssertionError: in the event that the comparison of the get_user_info function 
+        does not match the expected value of _____.
+    """
+    # Code below in progress
+    # assert get_user_info() ==
     
