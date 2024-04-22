@@ -40,7 +40,7 @@ class User:
 
         # Page 2 - user verifies their info
         self.p2 = tk.Frame(self.root)
-        self.p2.pack()
+        # self.p2.pack()
 
         # Call get_user_info function
         self.get_user_info()
@@ -58,6 +58,17 @@ class User:
 
         # Call options function
         self.options()    
+
+    def page_navigation(self, navigate):
+        if navigate == "p1_to_p2":
+            self.p1.forget()
+            self.p2.pack()
+        elif navigate == "p2_to_p1":
+            self.p2.forget()
+            self.p1.pack()
+        elif navigate == "p2_to_p3":
+            self.p2.forget()
+            self.p3.pack()
         
     def spending_reminders(self):
         """ Calculates when to send reminders to user to spend dining dollars based on the current date.
@@ -125,7 +136,7 @@ class User:
         self.balance_label.grid(row=3, column=1)
 
         # Proceed button leads to p2; figure out how to navigate to p2 later
-        self.proceed = ttk.Button(self.p1, text="Proceed", command=self.p2)
+        self.proceed = ttk.Button(self.p1, text="Proceed", command=lambda: self.page_navigation("p1_to_p2"))
         self.proceed.grid(row=4, column=2)
 
     def verification(self):
@@ -137,8 +148,10 @@ class User:
         """
         # Display name, dining dollar plan, and dining dollar balance with ttk.Label
 
-        self.yes_verify = ttk.Button(self.p2, text="Yes", command=self.p3)
-        self.no_verify = ttk.Button(self.p2, text="No", command=self.p1)
+        self.yes_verify = ttk.Button(self.p2, text="Yes", command=lambda: self.page_navigation("p2_to_p3"))
+        self.yes_verify.grid(row=1, column=1)
+        self.no_verify = ttk.Button(self.p2, text="No", command=lambda: self.page_navigation("p2_to_p1"))
+        self.no_verify.grid(row=1, column=2)
 
     def options(self):
         """
@@ -148,8 +161,7 @@ class User:
             Requested option.
         """
         # Add buttons here about what users will be able to do
-        pass
-        
+        pass        
 
 def main():
     """
