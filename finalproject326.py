@@ -103,32 +103,30 @@ class User:
         Returns:
             self.p2 after user clicks Proceed button.
         """
-        # Name entry
+        # Name entry and label
         self.name = ttk.Entry(self.p1)
-        self.name.pack()
-        # Name label
         self.name_label = ttk.Label(self.p1, text="Name")
-        # self.name_label.pack()
-        # Place name label on screen
-        self.name_label.grid(row=1, column=2)
+        # Place name entry and label on screen
+        self.name.grid(row=1, column=2)
+        self.name_label.grid(row=1, column=1)
         
-        # Enter dining dollar plan
+        # Dining dollar entry and label
         self.dd_plan = ttk.Entry(self.p1)
-        self.dd_plan.pack()
-        # Dining dollar label
         self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan")
-        self.dd_plan_label.pack()
+        # Place dining dollar entry and label on screen
+        self.dd_plan.grid(row=2, column=2)
+        self.dd_plan_label.grid(row=2, column=1)
 
-        # Enter current dining dollar balance
+        # Dining dollar balance entry and label
         self.balance = ttk.Entry(self.p1)
-        self.balance.pack()
-        # Current dining dollar balance label
         self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance")
-        self.balance_label.pack()
+        # Place dining dollar balance entry and label on screen
+        self.balance.grid(row=3, column=2)
+        self.balance_label.grid(row=3, column=1)
 
         # Proceed button leads to p2; figure out how to navigate to p2 later
         self.proceed = ttk.Button(self.p1, text="Proceed", command=self.p2)
-        self.proceed.pack()
+        self.proceed.grid(row=4, column=2)
 
     def verification(self):
         """
