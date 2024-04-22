@@ -25,6 +25,13 @@ class User:
     Attributes
     """
     def __init__(self, root):
+        """
+        Driver: Margaret Hermanto
+        Navigator: Arnav Patel
+
+        Args:
+            root
+        """
         self.root = root
 
         # Page 1 - user inputs their info
@@ -53,8 +60,7 @@ class User:
         self.options()    
         
     def spending_reminders(self):
-        """
-        Calculates when to send reminders to user to spend dining dollars based on the current date.
+        """ Calculates when to send reminders to user to spend dining dollars based on the current date.
 
         Returns:
             A tkinter messagebox with a message reminding users to spend dining dollars.
@@ -89,23 +95,36 @@ class User:
         pass
 
     def get_user_info(self):
-        """
-        Gets user information including dining dollar plan, current dining dollar balance, as well as name.
+        """ Gets user information including dining dollar plan, current dining dollar balance, as well as name.
+
+        Driver: Margaret Hermanto
+        Navigator: Arnav Patel
 
         Returns:
             self.p2 after user clicks Proceed button.
         """
         # Name entry
-        self.name_entry = ttk.Entry(self.p1)
-        self.name_entry.pack()
+        self.name = ttk.Entry(self.p1)
+        self.name.pack()
+        # Name label
+        self.name_label = ttk.Label(self.p1, text="Name")
+        # self.name_label.pack()
+        # Place name label on screen
+        self.name_label.grid(row=1, column=2)
         
         # Enter dining dollar plan
         self.dd_plan = ttk.Entry(self.p1)
         self.dd_plan.pack()
+        # Dining dollar label
+        self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan")
+        self.dd_plan_label.pack()
 
         # Enter current dining dollar balance
         self.balance = ttk.Entry(self.p1)
         self.balance.pack()
+        # Current dining dollar balance label
+        self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance")
+        self.balance_label.pack()
 
         # Proceed button leads to p2; figure out how to navigate to p2 later
         self.proceed = ttk.Button(self.p1, text="Proceed", command=self.p2)
