@@ -21,8 +21,7 @@ from datetime import timedelta
 import datetime
 
 class User:
-    """
-    Creates a user object based on an acual program user.
+    """ Creates a user object based on an actual program user.
 
     Attributes
     """
@@ -36,9 +35,6 @@ class User:
         """
         Driver: Margaret Hermanto
         Navigator: Arnav Patel
-
-        Args:
-            root
         """
         self.root = root
 
@@ -48,14 +44,12 @@ class User:
 
         # Page 2 - user verifies their info
         self.p2 = tk.Frame(self.root)
-        # self.p2.pack()
 
         # Call get_user_info function
         self.get_user_info()
 
         # Page 3 - user chooses what they want to do
         self.p3 = tk.Frame(self.root)
-        # self.p3.pack()
 
         # Call verification function
         self.verification()
@@ -63,19 +57,30 @@ class User:
         # Page 4 - user gets outcome of spending reminders
         self.p4 = tk.Frame(self.root)
 
+        # Call spending_reminders function
         self.spending_reminders()
 
         # page 5
         self.p5 = tk.Frame(self.root)
 
+        # Call threshold_reminders function
         self.threshold_reminders
         
-        # self.p4.pack()
+        # page 6
+        self.p6 = tk.Frame(self.root)
 
+        # Call suggested_spending function
+        self.suggested_spending()
+        
         # Call options function
         self.options()    
 
     def page_navigation(self, navigate):
+        """ Tells the program what pages to go to when a user clicks a button
+
+        Driver: Margaret Hermanto
+        Navigator: Arnav Patel
+        """
         if navigate == "p1_to_p2":
             self.p1.forget()
             self.p2.pack()
@@ -91,9 +96,18 @@ class User:
         elif navigate == "p3_to_p4":
             self.p3.forget()
             self.p4.pack()
+        elif navigate == "p3_to_p5":
+            self.p3.forget()
+            self.p5.pack()
+        elif navigate == "p3_to_p6":
+            self.p3.forget()
+            self.p6.pack()
         
     def spending_reminders(self):
         """ Calculates when to send reminders to user to spend dining dollars based on the current date.
+
+        Driver: Arnav Patel
+        Navigator: Margaret Hermanto
 
         Returns:
             A tkinter messagebox with a message reminding users to spend dining dollars.
@@ -117,42 +131,46 @@ class User:
 
         # MIGHT NOT NEED
         # Check how far away current date is to date of dining dollar reset        
-        num_days = self.numOfDays(self.day, self.sem_end) #should output a positive number
+        # num_days = self.numOfDays(self.day, self.sem_end) #should output a positive number
         # num_reminders = num_days / reminder_days
         #
 
-        if reminder_days > num_days:
-            self.error = tk.messagebox.showwarning(title="Error", message="Preferred number of days is larger than number of days left")
+        # Commented out because this was not allowing the GUI to run; figure out later
 
-        elif reminder_days == "1":
-            # Creates daily notifications
-            pass
+        # if reminder_days > num_days:
+        #     self.error = tk.messagebox.showwarning(title="Error", message="Preferred number of days is larger than number of days left")
+
+        # elif reminder_days == "1":
+        #     # Creates daily notifications
+        #     pass
         
-        elif reminder_days == "7":
-            # Creates notifications for every 7 days
-            pass
+        # elif reminder_days == "7":
+        #     # Creates notifications for every 7 days
+        #     pass
         
-        elif reminder_days == "14":
-            # Creates notifications for every 14 days
-            pass
+        # elif reminder_days == "14":
+        #     # Creates notifications for every 14 days
+        #     pass
 
-        elif reminder_days == "30":
-            # Creates notifications for every 30 days
-            pass
+        # elif reminder_days == "30":
+        #     # Creates notifications for every 30 days
+        #     pass
 
-        elif reminder_days == "90":
-            # Creates notifications for every 90 days
-            pass
+        # elif reminder_days == "90":
+        #     # Creates notifications for every 90 days
+        #     pass
 
         # Collect that data and use it to set up date reminder system
 
 
     def threshold_reminders(self):
-        """
-        Calculates when dining dollar balance has reached certain thresholds based on the current date and date of dining dollar reset.
+        """ Calculates when dining dollar balance has reached certain thresholds based on the current date and date of dining dollar reset.
+
+        Driver: Arnav Patel
+        Navigator: Margaret Hermanto
 
         Returns:
-            A message letting users know what thresholds they have passed.
+            A label letting users know what thresholds they have passed.
         """
         if User.dining_plan_total == 200:
             money_spent = User.dining_plan_current / User.dining_plan_total
@@ -211,16 +229,13 @@ class User:
             else:
                 #tkinter label saying user  has spent ____% of their dining dollars
                 pass
-        
-        else:
-            #tkinter error message
-            pass
     
-
-            
-   
     #Python3 program to find number of days between two given dates
-    def numOfDays(date1, date2):
+    def numOfDays(self, date1, date2):
+        """
+        Driver: Arnav Patel
+        Navigator: Margaret Hermanto
+        """
     #check which date is greater to avoid days output in -ve number
         if date2 > date1:   
             return (date2 - date1).days
@@ -228,8 +243,7 @@ class User:
             return (date1 - date2).days
 
     def suggested_spending(self):
-        """
-        Calculates a suggested average amount of money they could spend daily based on their remaining dining dollar balance.
+        """ Calculates a suggested average amount of money they could spend daily based on their remaining dining dollar balance.
 
         Returns:
             A message letting users know how much money they could spend daily to spend their dining dollar balance.
@@ -284,12 +298,15 @@ class User:
         self.proceed.grid(row=4, column=2)
 
     def verification(self):
-        """
-        Asks user to verify the displayed information concerning them.
+        """ Asks user to verify the displayed information concerning them.
+
+        Driver: Margaret Hermanto
+        Navigator: Arnav Patel
 
         Returns:
             Either self.p1 or self.p3, depending on the user's answer.
         """
+        # Might delete; trying to access user_name from get_user_info
         user_name = tk.StringVar()
         name = user_name.get()
 
@@ -310,8 +327,10 @@ class User:
         self.no_verify.grid(row=3, column=2)
 
     def options(self):
-        """
-        Displays a list of options the user can select.
+        """ Displays a list of options the user can select.
+
+        Driver: Margaret Hermanto
+        Navigator: Arnav Patel
 
         Returns:
             Requested option.
@@ -329,7 +348,7 @@ class User:
         self.threshold_path.grid(row=2, column=2)
 
         # button 3
-        self.suggested_path = ttk.Button(self.p3, text="Get a suggested spending recommendation")
+        self.suggested_path = ttk.Button(self.p3, text="Get a suggested spending recommendation", command=lambda: self.page_navigation("p3_to_p6"))
         self.suggested_path.grid(row=2, column=3)
 
         # button 4
@@ -337,8 +356,7 @@ class User:
         self.log_out_path.grid(row=2, column=4)  
 
 def main():
-    """
-    Displays information to the user using User functions
+    """ Displays information to the user using User functions
 
     Returns:
         Message of information user requested.
@@ -347,8 +365,7 @@ def main():
     
 
 if __name__ == "__main__":
-    """
-    Calls the main function
+    """ Calls the main function
     """
     pass
 
