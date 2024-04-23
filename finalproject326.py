@@ -18,6 +18,7 @@ from tkinter import messagebox
 # Need this for current date
 from datetime import date
 from datetime import timedelta
+import datetime
 
 class User:
     """
@@ -29,8 +30,7 @@ class User:
     dining_plan_total = 0
     dining_plan_current = 0
     day = date.today()
-    sem_end = day + timedelta(days = 25)
-
+    sem_end = datetime.datetime(2024, 5, 17)
 
     def __init__(self, root):
         """
@@ -55,14 +55,14 @@ class User:
 
         # Page 3 - user chooses what they want to do
         self.p3 = tk.Frame(self.root)
-        self.p3.pack()
+        # self.p3.pack()
 
         # Call verification function
         self.verification()
 
         # Page 4 - user gets outcome from what they wanted to do
         self.p4 = tk.Frame(self.root)
-        self.p4.pack()
+        # self.p4.pack()
 
         # Call options function
         self.options()    
@@ -100,10 +100,6 @@ class User:
 
 
         # Collect that data and use it to set up date reminder system
-
-
-
-
 
 
     def threshold_reminders(self):
@@ -148,6 +144,8 @@ class User:
         """
         # Name entry and label
         self.name = ttk.Entry(self.p1)
+        user_name = self.name
+
         self.name_label = ttk.Label(self.p1, text="Name")
         # Place name entry and label on screen
         self.name.grid(row=1, column=2)
@@ -186,12 +184,24 @@ class User:
         Returns:
             Either self.p1 or self.p3, depending on the user's answer.
         """
+        user_name = tk.StringVar()
+        name = user_name.get()
+
         # Display name, dining dollar plan, and dining dollar balance with ttk.Label
+        self.verify_label = ttk.Label(self.p2, text="Is this information correct?")
+        self.verify_label.grid(row=1, column=1)
+        # name
+        name_label = tk.Label(self.p2, text="")
+        name_label.grid(row=2, column=1)
+
+        self.verify_name_label = ttk.Label(self.p2, text="")
+        self.verify_name_label.grid(row=2, column=2)
+
 
         self.yes_verify = ttk.Button(self.p2, text="Yes", command=lambda: self.page_navigation("p2_to_p3"))
-        self.yes_verify.grid(row=1, column=1)
+        self.yes_verify.grid(row=3, column=1)
         self.no_verify = ttk.Button(self.p2, text="No", command=lambda: self.page_navigation("p2_to_p1"))
-        self.no_verify.grid(row=1, column=2)
+        self.no_verify.grid(row=3, column=2)
 
     def options(self):
         """
