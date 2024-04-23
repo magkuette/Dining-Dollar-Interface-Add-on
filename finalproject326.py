@@ -17,6 +17,7 @@ from tkinter import messagebox
 
 # Need this for current date
 from datetime import date
+from datetime import timedelta
 
 class User:
     """
@@ -24,6 +25,13 @@ class User:
 
     Attributes
     """
+
+    dining_plan_total = 0
+    dining_plan_current = 0
+    day = date.today()
+    sem_end = day + timedelta(days = 25)
+
+
     def __init__(self, root):
         """
         Driver: Margaret Hermanto
@@ -76,12 +84,27 @@ class User:
         Returns:
             A tkinter messagebox with a message reminding users to spend dining dollars.
         """
+
         # Get current date using date.today()
+        # This school year started on August 28, 2023
+        # day = date.today()
 
         # Check how far away current date is to date of dining dollar reset
+        # sem_end = day + timedelta(days = 25)
+        self.numOfDays(self.day, self.sem_end) #should output a positive number
 
         # Based on time between current date and date of dining dollar reset, program will send a notification (tkinter.messagebox.showinfo)
-        pass
+
+        # Ask user how often they want reminders with tkinter prompt (can be any number or set like 1, 5, 10 etc.)
+
+
+
+        # Collect that data and use it to set up date reminder system
+
+
+
+
+
 
     def threshold_reminders(self):
         """
@@ -92,6 +115,15 @@ class User:
         """
         # Program will send a notification (tkinter.messagebox.showinfo)
         pass
+
+   
+    #Python3 program to find number of days between two given dates
+    def numOfDays(date1, date2):
+    #check which date is greater to avoid days output in -ve number
+        if date2 > date1:   
+            return (date2 - date1).days
+        else:
+            return (date1 - date2).days
 
     def suggested_spending(self):
         """
@@ -123,6 +155,10 @@ class User:
         
         # Dining dollar entry and label
         self.dd_plan = ttk.Entry(self.p1)
+
+        # Updates global dining plan value to be used in other methods
+        dining_plan_total = self.dd_plan
+
         self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan")
         # Place dining dollar entry and label on screen
         self.dd_plan.grid(row=2, column=2)
@@ -130,6 +166,10 @@ class User:
 
         # Dining dollar balance entry and label
         self.balance = ttk.Entry(self.p1)
+
+        # Updates global balance value to be used in other methods
+        dining_plan_current = self.balance
+
         self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance")
         # Place dining dollar balance entry and label on screen
         self.balance.grid(row=3, column=2)
