@@ -60,8 +60,16 @@ class User:
         # Call verification function
         self.verification()
 
-        # Page 4 - user gets outcome from what they wanted to do
+        # Page 4 - user gets outcome of spending reminders
         self.p4 = tk.Frame(self.root)
+
+        self.spending_reminders()
+
+        # page 5
+        self.p5 = tk.Frame(self.root)
+
+        self.threshold_reminders
+        
         # self.p4.pack()
 
         # Call options function
@@ -77,6 +85,12 @@ class User:
         elif navigate == "p2_to_p3":
             self.p2.forget()
             self.p3.pack()
+        elif navigate == "p3_to_p1":
+            self.p3.forget()
+            self.p1.pack()
+        elif navigate == "p3_to_p4":
+            self.p3.forget()
+            self.p4.pack()
         
     def spending_reminders(self):
         """ Calculates when to send reminders to user to spend dining dollars based on the current date.
@@ -89,15 +103,46 @@ class User:
         # This school year started on August 28, 2023
         # day = date.today()
 
-        # Check how far away current date is to date of dining dollar reset
-        # sem_end = day + timedelta(days = 25)
-        self.numOfDays(self.day, self.sem_end) #should output a positive number
-
         # Based on time between current date and date of dining dollar reset, program will send a notification (tkinter.messagebox.showinfo)
 
-        # Ask user how often they want reminders with tkinter prompt (can be any number or set like 1, 5, 10 etc.)
+        # Ask user how often they want reminders with tkinter prompt (can be any number or set like 1, 7, 14, 30, 90)
+        self.ask_reminder = ttk.Label(self.p4, text="How often would you like to receive reminders? (Every 1, 7, 14, 30, or 90 days)")
+        self.ask_reminder.grid(row=1, column=1)
 
+        self.ask_reminder_entry = ttk.Entry(self.p4)
+        self.ask_reminder_entry.grid(row=2, column=1)
+        reminder_days = self.ask_reminder_entry
 
+        self.ask_reminder_enter = ttk.Button(self.p4, text="Enter") # maybe add command=lambda: get and then the variable with the answer
+
+        # MIGHT NOT NEED
+        # Check how far away current date is to date of dining dollar reset        
+        num_days = self.numOfDays(self.day, self.sem_end) #should output a positive number
+        # num_reminders = num_days / reminder_days
+        #
+
+        if reminder_days > num_days:
+            self.error = tk.messagebox.showwarning(title="Error", message="Preferred number of days is larger than number of days left")
+
+        elif reminder_days == "1":
+            # Creates daily notifications
+            pass
+        
+        elif reminder_days == "7":
+            # Creates notifications for every 7 days
+            pass
+        
+        elif reminder_days == "14":
+            # Creates notifications for every 14 days
+            pass
+
+        elif reminder_days == "30":
+            # Creates notifications for every 30 days
+            pass
+
+        elif reminder_days == "90":
+            # Creates notifications for every 90 days
+            pass
 
         # Collect that data and use it to set up date reminder system
 
@@ -109,9 +154,10 @@ class User:
         Returns:
             A message letting users know what thresholds they have passed.
         """
-        # Program will send a notification (tkinter.messagebox.showinfo)
-        pass
+        if User.dining_plan_total == 200:
+            money_spent = User.dining_plan_current / User.dining_plan_total
 
+            
    
     #Python3 program to find number of days between two given dates
     def numOfDays(date1, date2):
@@ -155,7 +201,7 @@ class User:
         self.dd_plan = ttk.Entry(self.p1)
 
         # Updates global dining plan value to be used in other methods
-        dining_plan_total = self.dd_plan
+        User.dining_plan_total = self.dd_plan
 
         self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan")
         # Place dining dollar entry and label on screen
@@ -166,7 +212,7 @@ class User:
         self.balance = ttk.Entry(self.p1)
 
         # Updates global balance value to be used in other methods
-        dining_plan_current = self.balance
+        User.dining_plan_current = self.balance
 
         self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance")
         # Place dining dollar balance entry and label on screen
@@ -211,7 +257,24 @@ class User:
             Requested option.
         """
         # Add buttons here about what users will be able to do
-        pass        
+        self.ask = ttk.Label(self.p3, text="What would you like to do today?")
+        self.ask.grid(row=1, column=1)
+
+        # button 1
+        self.spending_path = ttk.Button(self.p3, text="Create a spending reminder", command=lambda: self.page_navigation("p3_to_p4"))
+        self.spending_path.grid(row=2, column=1)
+
+        # button 2
+        self.threshold_path = ttk.Button(self.p3, text="Show thresholds passed", command=lambda: self.page_navigation("p3_to_p5"))
+        self.threshold_path.grid(row=2, column=2)
+
+        # button 3
+        self.suggested_path = ttk.Button(self.p3, text="Get a suggested spending recommendation")
+        self.suggested_path.grid(row=2, column=3)
+
+        # button 4
+        self.log_out_path = ttk.Button(self.p3, text="Log out", command=lambda: self.page_navigation("p3_to_p1"))
+        self.log_out_path.grid(row=2, column=4)  
 
 def main():
     """
