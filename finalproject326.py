@@ -157,6 +157,66 @@ class User:
         if User.dining_plan_total == 200:
             money_spent = User.dining_plan_current / User.dining_plan_total
 
+            if money_spent >= 1:
+                #tkinter label saying user spent all of their money
+                pass
+            elif money_spent >= .75:
+                #tkinter label saying user passed 25%, 50%, and 75% threshhold and has spent ____% of their dining dollars
+                pass
+            elif money_spent >= .50:
+                #tkinter label saying user passed 25% and 50% threshhold and has spent ____% of their dining dollars
+                pass
+            elif money_spent >= .25:
+                #tkinter label saying user passed 25% threshhold and has spent ____% of their dining dollars
+                pass
+            else:
+                #tkinter label saying user  has spent ____% of their dining dollars
+                pass
+        
+        elif User.dining_plan_total == 300:
+
+            money_spent = User.dining_plan_current / User.dining_plan_total
+
+            if money_spent >= 1:
+                #tkinter label saying user spent all of their money
+                pass
+            elif money_spent >= .75:
+                #tkinter label saying user passed 25%, 50%, and 75% threshhold and has spent ____% of their dining dollars
+                pass
+            elif money_spent >= .50:
+                #tkinter label saying user passed 25% and 50% threshhold and has spent ____% of their dining dollars
+                pass
+            elif money_spent >= .25:
+                #tkinter label saying user passed 25% threshhold and has spent ____% of their dining dollars
+                pass
+            else:
+                #tkinter label saying user  has spent ____% of their dining dollars
+                pass
+        
+        elif User.dining_plan_total == 400:
+            money_spent = User.dining_plan_current / User.dining_plan_total
+
+            if money_spent >= 1:
+                #tkinter label saying user spent all of their money
+                pass
+            elif money_spent >= .75:
+                #tkinter label saying user passed 25%, 50%, and 75% threshhold and has spent ____% of their dining dollars
+                pass
+            elif money_spent >= .50:
+                #tkinter label saying user passed 25% and 50% threshhold and has spent ____% of their dining dollars
+                pass
+            elif money_spent >= .25:
+                #tkinter label saying user passed 25% threshhold and has spent ____% of their dining dollars
+                pass
+            else:
+                #tkinter label saying user  has spent ____% of their dining dollars
+                pass
+        
+        else:
+            #tkinter error message
+            pass
+    
+
             
    
     #Python3 program to find number of days between two given dates
