@@ -264,7 +264,7 @@ class User:
         """
         # Name entry and label
         self.name = ttk.Entry(self.p1)
-        user_name = self.name
+        # user_name = self.name
 
         self.name_label = ttk.Label(self.p1, text="Name")
         # Place name entry and label on screen
@@ -297,6 +297,8 @@ class User:
         self.proceed = ttk.Button(self.p1, text="Proceed", command=lambda: self.page_navigation("p1_to_p2"))
         self.proceed.grid(row=4, column=2)
 
+        return self.name
+
     def verification(self):
         """ Asks user to verify the displayed information concerning them.
 
@@ -306,16 +308,20 @@ class User:
         Returns:
             Either self.p1 or self.p3, depending on the user's answer.
         """
+        self.name = self.get_user_info()
         # Might delete; trying to access user_name from get_user_info
-        user_name = tk.StringVar()
-        name = user_name.get()
+        # user_name = tk.StringVar()
+        # name = user_name.get()
+        #
 
         # Display name, dining dollar plan, and dining dollar balance with ttk.Label
         self.verify_label = ttk.Label(self.p2, text="Is this information correct?")
         self.verify_label.grid(row=1, column=1)
         # name
-        name_label = tk.Label(self.p2, text="")
+        name_label = tk.Label(self.p2, text=" ")
+        name_label.config(text=self.name)
         name_label.grid(row=2, column=1)
+
 
         self.verify_name_label = ttk.Label(self.p2, text="")
         self.verify_name_label.grid(row=2, column=2)
@@ -361,6 +367,7 @@ def main():
     Returns:
         Message of information user requested.
     """
+    
     pass
     
 
