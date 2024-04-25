@@ -31,12 +31,14 @@ class User:
     day = date.today()
     sem_end = datetime.datetime(2024, 5, 17)
 
+
     def __init__(self, root):
         """
         Driver: Margaret Hermanto
         Navigator: Arnav Patel
         """
         self.root = root
+
 
         # Page 1 - user inputs their info
         self.p1 = tk.Frame(self.root)
@@ -45,8 +47,11 @@ class User:
         # Page 2 - user verifies their info
         self.p2 = tk.Frame(self.root)
 
+        self.user_name = tk.StringVar()
+
         # Call get_user_info function
         self.get_user_info()
+
 
         # Page 3 - user chooses what they want to do
         self.p3 = tk.Frame(self.root)
@@ -262,14 +267,14 @@ class User:
         Returns:
             self.p2 after user clicks Proceed button.
         """
-        # Name entry and label
-        self.name = ttk.Entry(self.p1)
-        # user_name = self.name
-
+        # Name label that indicates where to put name
         self.name_label = ttk.Label(self.p1, text="Name")
-        # Place name entry and label on screen
-        self.name.grid(row=1, column=2)
         self.name_label.grid(row=1, column=1)
+        # Name entry; will store this information and use it later in verification
+        self.name = ttk.Entry(self.p1, textvariable=self.user_name)
+        self.name.grid(row=1, column=2)
+
+        # user_name = self.name
         
         # Dining dollar entry and label
         self.dd_plan = ttk.Entry(self.p1)
@@ -297,7 +302,7 @@ class User:
         self.proceed = ttk.Button(self.p1, text="Proceed", command=lambda: self.page_navigation("p1_to_p2"))
         self.proceed.grid(row=4, column=2)
 
-        return self.name
+        # return user_name, name_label
 
     def verification(self):
         """ Asks user to verify the displayed information concerning them.
@@ -308,22 +313,15 @@ class User:
         Returns:
             Either self.p1 or self.p3, depending on the user's answer.
         """
-        self.name = self.get_user_info()
-        # Might delete; trying to access user_name from get_user_info
-        # user_name = tk.StringVar()
-        # name = user_name.get()
-        #
+        # Unpack get_user_info function to access user_name (might delete)
+        # user_name, name_label = self.get_user_info()
 
         # Display name, dining dollar plan, and dining dollar balance with ttk.Label
         self.verify_label = ttk.Label(self.p2, text="Is this information correct?")
         self.verify_label.grid(row=1, column=1)
-        # name
-        name_label = tk.Label(self.p2, text=" ")
-        name_label.config(text=self.name)
-        name_label.grid(row=2, column=1)
 
-
-        self.verify_name_label = ttk.Label(self.p2, text="")
+        # Display user name
+        self.verify_name_label = ttk.Label(self.p2, text=self.user_name.get())
         self.verify_name_label.grid(row=2, column=2)
 
 
