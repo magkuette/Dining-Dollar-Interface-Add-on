@@ -6,7 +6,7 @@ Date: 4_7_24
 Challenges Encountered:
 
 """
-# last updated 4/27/24 657 pm
+# last updated 4/27/24 657 pm by Maggie
 import tkinter as tk
 
 # Need this for widgets
