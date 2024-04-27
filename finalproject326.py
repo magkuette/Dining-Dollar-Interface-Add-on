@@ -39,50 +39,36 @@ class User:
         """
         self.root = root
 
-        # Page 1 - user inputs their info
+        # Page 1 - get_user_info()
         self.p1 = tk.Frame(self.root)
         self.p1.pack()
 
-        # Page 2 - user verifies their info
+        # Page 2 - verification()
         self.p2 = tk.Frame(self.root)
 
-        # Stores name
+        # Stores entry information for future label configuration
         self.name_var = tk.StringVar()
         self.dd_var = tk.StringVar()
         self.balance_var = tk.StringVar()
+        self.reminder_var = tk.StringVar()
 
-        # Call get_user_info function
+        # Call get_user_info function (only need to call this first function because the rest of the functions will be called later on throughout the code through buttons)
         self.get_user_info()
 
-        # Page 3 - user chooses what they want to do
+        # Page 3 - options()
         self.p3 = tk.Frame(self.root)
-
-        # Call verification function
-        # self.verification()
 
         # Page 4 - user gets outcome of spending reminders
         self.p4 = tk.Frame(self.root)
 
-        # Call spending_reminders function
-        # self.spending_reminders()
-
         # page 5
         self.p5 = tk.Frame(self.root)
-
-        # Call threshold_reminders function
-        # self.threshold_reminders
         
         # page 6
         self.p6 = tk.Frame(self.root)
 
-        # Call suggested_spending function
-        # self.suggested_spending()
-        
-        # Call options function
-        # self.options()    
-
-        #stringvar stuff
-
+# May or may not need but don't delete (it's not in the way of the code rn)
+# rn it seems like it's better to navigate pages by directly setting command equal to a function in buttons
     def page_navigation(self, navigate):
         """ Tells the program what pages to go to when a user clicks a button
 
@@ -120,7 +106,9 @@ class User:
         Returns:
             A tkinter messagebox with a message reminding users to spend dining dollars.
         """
-
+        # page navigation
+        self.p3.forget()
+        self.p4.pack()
         # Get current date using date.today()
         # This school year started on August 28, 2023
         # day = date.today()
@@ -131,11 +119,12 @@ class User:
         self.ask_reminder = ttk.Label(self.p4, text="How often would you like to receive reminders? (Every 1, 7, 14, 30, or 90 days)")
         self.ask_reminder.grid(row=1, column=1)
 
-        self.ask_reminder_entry = ttk.Entry(self.p4)
+        # Enter reminder frequency
+        # what the user inputted is stored into self.reminder_var (replace future reminder_days with self.reminder_var. unless u set it equal to that that might work)
+        self.ask_reminder_entry = ttk.Entry(self.p4, textvariable=self.reminder_var)
         self.ask_reminder_entry.grid(row=2, column=1)
-        reminder_days = self.ask_reminder_entry
 
-        self.ask_reminder_enter = ttk.Button(self.p4, text="Enter") # maybe add command=lambda: get and then the variable with the answer
+        self.ask_reminder_enter = ttk.Button(self.p4, text="Enter")
 
         # MIGHT NOT NEED
         # Check how far away current date is to date of dining dollar reset        
@@ -334,7 +323,7 @@ class User:
         # Display balance
         self.verify_balance_label.config(text=self.balance_var.get())
 
-        self.yes_verify = ttk.Button(self.p2, text="Yes", command=lambda: self.page_navigation("p2_to_p3"))
+        self.yes_verify = ttk.Button(self.p2, text="Yes", command=self.options)
         self.yes_verify.grid(row=3, column=1)
         self.no_verify = ttk.Button(self.p2, text="No", command=lambda: self.page_navigation("p2_to_p1"))
         self.no_verify.grid(row=3, column=2)
@@ -348,12 +337,16 @@ class User:
         Returns:
             Requested option.
         """
-        # Add buttons here about what users will be able to do
+        # page navigation
+        # later on we can add an if statement so we can navigate to options from any page not just self.p2
+        self.p2.forget()
+        self.p3.pack()
+
         self.ask = ttk.Label(self.p3, text="What would you like to do today?")
         self.ask.grid(row=1, column=1)
 
         # button 1
-        self.spending_path = ttk.Button(self.p3, text="Create a spending reminder", command=lambda: self.page_navigation("p3_to_p4"))
+        self.spending_path = ttk.Button(self.p3, text="Create a spending reminder", command=self.spending_reminders)
         self.spending_path.grid(row=2, column=1)
 
         # button 2
