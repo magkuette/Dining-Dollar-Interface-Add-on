@@ -39,7 +39,6 @@ class User:
         """
         self.root = root
 
-
         # Page 1 - user inputs their info
         self.p1 = tk.Frame(self.root)
         self.p1.pack()
@@ -47,38 +46,42 @@ class User:
         # Page 2 - user verifies their info
         self.p2 = tk.Frame(self.root)
 
-        self.user_name = tk.StringVar()
+        # Stores name
+        self.name_var = tk.StringVar()
+        self.dd_var = tk.StringVar()
+        self.balance_var = tk.StringVar()
 
         # Call get_user_info function
         self.get_user_info()
-
 
         # Page 3 - user chooses what they want to do
         self.p3 = tk.Frame(self.root)
 
         # Call verification function
-        self.verification()
+        # self.verification()
 
         # Page 4 - user gets outcome of spending reminders
         self.p4 = tk.Frame(self.root)
 
         # Call spending_reminders function
-        self.spending_reminders()
+        # self.spending_reminders()
 
         # page 5
         self.p5 = tk.Frame(self.root)
 
         # Call threshold_reminders function
-        self.threshold_reminders
+        # self.threshold_reminders
         
         # page 6
         self.p6 = tk.Frame(self.root)
 
         # Call suggested_spending function
-        self.suggested_spending()
+        # self.suggested_spending()
         
         # Call options function
-        self.options()    
+        # self.options()    
+
+        #stringvar stuff
 
     def page_navigation(self, navigate):
         """ Tells the program what pages to go to when a user clicks a button
@@ -267,42 +270,46 @@ class User:
         Returns:
             self.p2 after user clicks Proceed button.
         """
+        
         # Name label that indicates where to put name
         self.name_label = ttk.Label(self.p1, text="Name")
         self.name_label.grid(row=1, column=1)
-        # Name entry; will store this information and use it later in verification
-        self.name = ttk.Entry(self.p1, textvariable=self.user_name)
+        # Name entry
+        self.name = ttk.Entry(self.p1, textvariable=self.name_var)
         self.name.grid(row=1, column=2)
+        # Will display inputted text from self.name entry
+        self.verify_name_label = ttk.Label(self.p2)
+        self.verify_name_label.grid(row=4, column=1)
 
-        # user_name = self.name
-        
-        # Dining dollar entry and label
-        self.dd_plan = ttk.Entry(self.p1)
+        # Dining dollar plan label that indicates where to put dining dollar plan
+        self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan")
+        self.dd_plan_label.grid(row=2, column=1)
+        # Dining dollar plan entry
+        self.dd_plan = ttk.Entry(self.p1, textvariable=self.dd_var)
+        self.dd_plan.grid(row=2, column=2)
+        # Will display inputted text from self.dd_plan entry
+        self.verify_dd_plan_label = ttk.Label(self.p2)
+        self.verify_dd_plan_label.grid(row=5, column=2)
 
         # Updates global dining plan value to be used in other methods
-        User.dining_plan_total = self.dd_plan
-
-        self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan")
-        # Place dining dollar entry and label on screen
-        self.dd_plan.grid(row=2, column=2)
-        self.dd_plan_label.grid(row=2, column=1)
-
-        # Dining dollar balance entry and label
-        self.balance = ttk.Entry(self.p1)
+        # User.dining_plan_total = self.dd_plan
+    
+        # Balance label that indicates where to put balance
+        self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance")
+        self.balance_label.grid(row=3, column=1)
+        # Balance entry
+        self.balance = ttk.Entry(self.p1, textvariable=self.balance_var)
+        self.balance.grid(row=3, column=2)
+        # Will display inputted text from self.balance entry
+        self.verify_balance_label = ttk.Label(self.p2)
+        self.verify_balance_label.grid(row=6, column=2)
 
         # Updates global balance value to be used in other methods
-        User.dining_plan_current = self.balance
+        # User.dining_plan_current = self.balance
 
-        self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance")
-        # Place dining dollar balance entry and label on screen
-        self.balance.grid(row=3, column=2)
-        self.balance_label.grid(row=3, column=1)
-
-        # Proceed button leads to p2; figure out how to navigate to p2 later
-        self.proceed = ttk.Button(self.p1, text="Proceed", command=lambda: self.page_navigation("p1_to_p2"))
+        # Proceed button leads to p2; page navigation is in verification()
+        self.proceed = ttk.Button(self.p1, text="Proceed", command=self.verification)
         self.proceed.grid(row=4, column=2)
-
-        # return user_name, name_label
 
     def verification(self):
         """ Asks user to verify the displayed information concerning them.
@@ -313,17 +320,19 @@ class User:
         Returns:
             Either self.p1 or self.p3, depending on the user's answer.
         """
-        # Unpack get_user_info function to access user_name (might delete)
-        # user_name, name_label = self.get_user_info()
+        # Page navigation
+        self.p1.forget()
+        self.p2.pack()
 
-        # Display name, dining dollar plan, and dining dollar balance with ttk.Label
         self.verify_label = ttk.Label(self.p2, text="Is this information correct?")
         self.verify_label.grid(row=1, column=1)
 
         # Display user name
-        self.verify_name_label = ttk.Label(self.p2, text=self.user_name.get())
-        self.verify_name_label.grid(row=2, column=2)
-
+        self.verify_name_label.config(text=self.name_var.get())
+        # Display dining dollar plan
+        self.verify_dd_plan_label.config(text=self.dd_var.get())
+        # Display balance
+        self.verify_balance_label.config(text=self.balance_var.get())
 
         self.yes_verify = ttk.Button(self.p2, text="Yes", command=lambda: self.page_navigation("p2_to_p3"))
         self.yes_verify.grid(row=3, column=1)
