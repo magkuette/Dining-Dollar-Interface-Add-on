@@ -17,6 +17,7 @@ from tkinter import messagebox
 
 # Need this for current date
 from datetime import date
+import time
 from datetime import timedelta
 import datetime
 
@@ -26,10 +27,6 @@ class User:
     Attributes
     """
 
-    dining_plan_total = 0
-    dining_plan_current = 0
-    day = date.today()
-    sem_end = datetime.datetime(2024, 5, 17)
 
 
     def __init__(self, root):
@@ -50,7 +47,10 @@ class User:
         self.name_var = tk.StringVar()
         self.dd_var = tk.StringVar()
         self.balance_var = tk.StringVar()
-        self.reminder_var = tk.StringVar()
+        self.reminder_var = tk.IntVar()
+        self.day = tk.StringVar()
+        self.sem_end = tk.StringVar()
+
 
         # Call get_user_info function (only need to call this first function because the rest of the functions will be called later on throughout the code through buttons)
         self.get_user_info()
@@ -66,6 +66,8 @@ class User:
         
         # page 6
         self.p6 = tk.Frame(self.root)
+
+        self.p7 = tk.Frame(self.root)
 
 # May or may not need but don't delete (it's not in the way of the code rn)
 # rn it seems like it's better to navigate pages by directly setting command equal to a function in buttons
@@ -90,6 +92,9 @@ class User:
         elif navigate == "p3_to_p4":
             self.p3.forget()
             self.p4.pack()
+        elif navigate == "p4_to_p7":
+            self.p4.forget()
+            self.p7.pack()
         elif navigate == "p3_to_p5":
             self.p3.forget()
             self.p5.pack()
@@ -124,7 +129,13 @@ class User:
         self.ask_reminder_entry = ttk.Entry(self.p4, textvariable=self.reminder_var)
         self.ask_reminder_entry.grid(row=2, column=1)
 
-        self.ask_reminder_enter = ttk.Button(self.p4, text="Enter")
+        
+
+
+        self.ask_reminder_enter = ttk.Button(self.p4, text="Enter", command=self.spending_reminders_helper)
+        self.ask_reminder_enter.grid(row=4, column=2)
+
+        
 
         # MIGHT NOT NEED
         # Check how far away current date is to date of dining dollar reset        
@@ -158,6 +169,146 @@ class User:
         #     pass
 
         # Collect that data and use it to set up date reminder system
+    
+    def spending_reminders_helper(self):
+        
+        # Page navigation
+        self.p4.forget()
+        self.p7.pack()
+
+        self.input_reminder = ttk.Label(self.p7)
+        self.input_reminder.grid(row=4, column=1)
+
+        self.input_reminder.config(text = f"You wanted reminders every {self.reminder_var.get()} days. Here are the dates you are reminded to spend.")
+
+        if self.reminder_var.get() == 1:
+            self.reminder = ttk.Label(self.p7, text="Please mark every date in your calendar from August 28, 2024 to May 17, 2025.")
+            self.reminder.grid(row=6, column=1)
+        
+        elif self.reminder_var.get() == 7:
+            date_format = "%m/%d/%Y"
+
+            date_today = time.mktime(time.strptime(self.day.get(), date_format))
+            end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+            diff = end_date - date_today
+            dates_num = int(diff / 86400)
+
+            dates = dates_num / 7
+            dates_to_print = []
+
+            temp = self.day.get()
+            temp_string = "%m/%d/%Y"
+
+            for y in range(0, int(dates)):
+                
+                current_date_temp = datetime.datetime.strptime(temp, temp_string)
+                newdate = current_date_temp + datetime.timedelta(days=7)
+                dates_to_print.append(newdate)
+                temp = str(newdate)
+                temp_string = "%Y-%m-%d %H:%M:%S"
+
+
+            self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
+            self.reminder.grid(row=10, column=1)
+
+            for x in range(0, len(dates_to_print)):
+                self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
+                self.statement.grid(row=11+x, column=1)
+
+        
+        elif self.reminder_var.get() == 14:
+            date_format = "%m/%d/%Y"
+
+            date_today = time.mktime(time.strptime(self.day.get(), date_format))
+            end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+            diff = end_date - date_today
+            dates_num = int(diff / 86400)
+
+            dates = dates_num / 14
+            dates_to_print = []
+
+            temp = self.day.get()
+            temp_string = "%m/%d/%Y"
+
+            for y in range(0, int(dates)):
+                
+                current_date_temp = datetime.datetime.strptime(temp, temp_string)
+                newdate = current_date_temp + datetime.timedelta(days=14)
+                dates_to_print.append(newdate)
+                temp = str(newdate)
+                temp_string = "%Y-%m-%d %H:%M:%S"
+
+
+            self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
+            self.reminder.grid(row=10, column=1)
+
+            for x in range(0, len(dates_to_print)):
+                self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
+                self.statement.grid(row=11+x, column=1)
+
+        elif self.reminder_var.get() == 30:
+            date_format = "%m/%d/%Y"
+
+            date_today = time.mktime(time.strptime(self.day.get(), date_format))
+            end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+            diff = end_date - date_today
+            dates_num = int(diff / 86400)
+
+            dates = dates_num / 30
+            dates_to_print = []
+
+            temp = self.day.get()
+            temp_string = "%m/%d/%Y"
+
+            for y in range(0, int(dates)):
+                
+                current_date_temp = datetime.datetime.strptime(temp, temp_string)
+                newdate = current_date_temp + datetime.timedelta(days=30)
+                dates_to_print.append(newdate)
+                temp = str(newdate)
+                temp_string = "%Y-%m-%d %H:%M:%S"
+
+
+            self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
+            self.reminder.grid(row=10, column=1)
+
+            for x in range(0, len(dates_to_print)):
+                self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
+                self.statement.grid(row=11+x, column=1)
+
+        elif self.reminder_var.get() == 90:
+            date_format = "%m/%d/%Y"
+
+            date_today = time.mktime(time.strptime(self.day.get(), date_format))
+            end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+            diff = end_date - date_today
+            dates_num = int(diff / 86400)
+
+            dates = dates_num / 90
+            dates_to_print = []
+
+            temp = self.day.get()
+            temp_string = "%m/%d/%Y"
+
+            for y in range(0, int(dates)):
+                
+                current_date_temp = datetime.datetime.strptime(temp, temp_string)
+                newdate = current_date_temp + datetime.timedelta(days=90)
+                dates_to_print.append(newdate)
+                temp = str(newdate)
+                temp_string = "%Y-%m-%d %H:%M:%S"
+
+
+            self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
+            self.reminder.grid(row=10, column=1)
+
+            for x in range(0, len(dates_to_print)):
+                self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
+                self.statement.grid(row=11+x, column=1)
+
+
+
+
 
 
     def threshold_reminders(self):
@@ -227,17 +378,6 @@ class User:
                 #tkinter label saying user  has spent ____% of their dining dollars
                 pass
     
-    #Python3 program to find number of days between two given dates
-    def numOfDays(self, date1, date2):
-        """
-        Driver: Arnav Patel
-        Navigator: Margaret Hermanto
-        """
-    #check which date is greater to avoid days output in -ve number
-        if date2 > date1:   
-            return (date2 - date1).days
-        else:
-            return (date1 - date2).days
 
     def suggested_spending(self):
         """ Calculates a suggested average amount of money they could spend daily based on their remaining dining dollar balance.
@@ -293,12 +433,28 @@ class User:
         self.verify_balance_label = ttk.Label(self.p2)
         self.verify_balance_label.grid(row=6, column=2)
 
-        # Updates global balance value to be used in other methods
-        # User.dining_plan_current = self.balance
+
+        self.today_label = ttk.Label(self.p1, text="Today's Date (MM/DD/YYYY)")
+        self.today_label.grid(row=4, column=1)
+
+        self.today = ttk.Entry(self.p1, textvariable=self.day)
+        self.today.grid(row=4, column=2)
+
+        self.verify_today_label = ttk.Label(self.p2)
+        self.verify_today_label.grid(row=7, column=2)
+
+        self.sem_end_label = ttk.Label(self.p1, text="Ending Date (MM/DD/YYYY)")
+        self.sem_end_label.grid(row=5, column=1)
+
+        self.sem_end = ttk.Entry(self.p1, textvariable=self.sem_end)
+        self.sem_end.grid(row=5, column=2)
+
+        self.verify_end_label = ttk.Label(self.p2)
+        self.verify_end_label.grid(row=8, column=2)
 
         # Proceed button leads to p2; page navigation is in verification()
         self.proceed = ttk.Button(self.p1, text="Proceed", command=self.verification)
-        self.proceed.grid(row=4, column=2)
+        self.proceed.grid(row=8, column=2)
 
     def verification(self):
         """ Asks user to verify the displayed information concerning them.
