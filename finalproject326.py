@@ -45,8 +45,8 @@ class User:
 
         # Stores entry information for future label configuration
         self.name_var = tk.StringVar()
-        self.dd_var = tk.StringVar()
-        self.balance_var = tk.StringVar()
+        self.dd_var = tk.IntVar()
+        self.balance_var = tk.IntVar()
         self.reminder_var = tk.IntVar()
         self.day = tk.StringVar()
         self.sem_end = tk.StringVar()
@@ -307,10 +307,6 @@ class User:
                 self.statement.grid(row=11+x, column=1)
 
 
-
-
-
-
     def threshold_reminders(self):
         """ Calculates when dining dollar balance has reached certain thresholds based on the current date and date of dining dollar reset.
 
@@ -320,63 +316,37 @@ class User:
         Returns:
             A label letting users know what thresholds they have passed.
         """
-        if User.dining_plan_total == 200:
-            money_spent = User.dining_plan_current / User.dining_plan_total
 
-            if money_spent >= 1:
-                #tkinter label saying user spent all of their money
-                pass
-            elif money_spent >= .75:
-                #tkinter label saying user passed 25%, 50%, and 75% threshhold and has spent ____% of their dining dollars
-                pass
-            elif money_spent >= .50:
-                #tkinter label saying user passed 25% and 50% threshhold and has spent ____% of their dining dollars
-                pass
-            elif money_spent >= .25:
-                #tkinter label saying user passed 25% threshhold and has spent ____% of their dining dollars
-                pass
-            else:
-                #tkinter label saying user  has spent ____% of their dining dollars
-                pass
-        
-        elif User.dining_plan_total == 300:
+        # page navigation
+        self.p3.forget()
+        self.p5.pack()
 
-            money_spent = User.dining_plan_current / User.dining_plan_total
+        self.ask_threshold = ttk.Label(self.p5, text="Here are the main quartile thresholds you have passed in dining dollar spending.")
+        self.ask_threshold.grid(row=1, column=1)
 
-            if money_spent >= 1:
-                #tkinter label saying user spent all of their money
-                pass
-            elif money_spent >= .75:
-                #tkinter label saying user passed 25%, 50%, and 75% threshhold and has spent ____% of their dining dollars
-                pass
-            elif money_spent >= .50:
-                #tkinter label saying user passed 25% and 50% threshhold and has spent ____% of their dining dollars
-                pass
-            elif money_spent >= .25:
-                #tkinter label saying user passed 25% threshhold and has spent ____% of their dining dollars
-                pass
-            else:
-                #tkinter label saying user  has spent ____% of their dining dollars
-                pass
-        
-        elif User.dining_plan_total == 400:
-            money_spent = User.dining_plan_current / User.dining_plan_total
-
-            if money_spent >= 1:
-                #tkinter label saying user spent all of their money
-                pass
-            elif money_spent >= .75:
-                #tkinter label saying user passed 25%, 50%, and 75% threshhold and has spent ____% of their dining dollars
-                pass
-            elif money_spent >= .50:
-                #tkinter label saying user passed 25% and 50% threshhold and has spent ____% of their dining dollars
-                pass
-            elif money_spent >= .25:
-                #tkinter label saying user passed 25% threshhold and has spent ____% of their dining dollars
-                pass
-            else:
-                #tkinter label saying user  has spent ____% of their dining dollars
-                pass
+        money_left = self.balance_var.get() / self.dd_var.get()
+        money_spent = 1 - money_left
+        spent_percent = money_spent * 100
+  
+        if money_spent >= 1:
+            self.threshold_resp = ttk.Label(self.p5, text="You have used up all of your dining dollars. Don't worry!")
+            self.threshold_resp.grid(row=4, column=1)
+        elif money_spent >= .75:
+            #tkinter label saying user passed 25%, 50%, and 75% threshhold and has spent ____% of their dining dollars
+            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th, 50th, and 75th percentiles of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.")
+            self.threshold_resp.grid(row=4, column=1)
+        elif money_spent >= .50:
+            #tkinter label saying user passed 25% and 50% threshhold and has spent ____% of their dining dollars
+            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th and 50th percentiles of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.")
+            self.threshold_resp.grid(row=4, column=1)
+        elif money_spent >= .25:
+            #tkinter label saying user passed 25% threshhold and has spent ____% of their dining dollars
+            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th percentile of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.")
+            self.threshold_resp.grid(row=4, column=1)
+        else:
+            #tkinter label saying user  has spent ____% of their dining dollars
+            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed no remarkable thresholds of spent dining dollars in your plan yet. You have used up {spent_percent}% of all of your dining dollars.")
+            self.threshold_resp.grid(row=4, column=1)
     
 
     def suggested_spending(self):
@@ -506,7 +476,7 @@ class User:
         self.spending_path.grid(row=2, column=1)
 
         # button 2
-        self.threshold_path = ttk.Button(self.p3, text="Show thresholds passed", command=lambda: self.page_navigation("p3_to_p5"))
+        self.threshold_path = ttk.Button(self.p3, text="Show thresholds passed", command=self.threshold_reminders)
         self.threshold_path.grid(row=2, column=2)
 
         # button 3
