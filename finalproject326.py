@@ -27,8 +27,6 @@ class User:
     Attributes
     """
 
-
-
     def __init__(self, root):
         """
         Driver: Margaret Hermanto
@@ -403,7 +401,7 @@ class User:
         self.name.grid(row=1, column=2)
         # Will display inputted text from self.name entry
         self.verify_name_label = ttk.Label(self.p2)
-        self.verify_name_label.grid(row=4, column=1)
+        self.verify_name_label.grid(row=2, column=2)
 
         # Dining dollar plan label that indicates where to put dining dollar plan
         self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan")
@@ -413,7 +411,7 @@ class User:
         self.dd_plan.grid(row=2, column=2)
         # Will display inputted text from self.dd_plan entry
         self.verify_dd_plan_label = ttk.Label(self.p2)
-        self.verify_dd_plan_label.grid(row=5, column=2)
+        self.verify_dd_plan_label.grid(row=3, column=2)
 
         # Updates global dining plan value to be used in other methods
         # User.dining_plan_total = self.dd_plan
@@ -426,30 +424,31 @@ class User:
         self.balance.grid(row=3, column=2)
         # Will display inputted text from self.balance entry
         self.verify_balance_label = ttk.Label(self.p2)
-        self.verify_balance_label.grid(row=6, column=2)
+        self.verify_balance_label.grid(row=4, column=2)
 
-
+        # Today's date label that indicates where to put today's date
         self.today_label = ttk.Label(self.p1, text="Today's Date (MM/DD/YYYY)")
         self.today_label.grid(row=4, column=1)
-
+        # Today's date entry
         self.today = ttk.Entry(self.p1, textvariable=self.day)
         self.today.grid(row=4, column=2)
-
+        # Will display inputted text from self.today entry
         self.verify_today_label = ttk.Label(self.p2)
-        self.verify_today_label.grid(row=7, column=2)
+        self.verify_today_label.grid(row=5, column=2)
 
+        # Semester end label that indicates when to put ending date
         self.sem_end_label = ttk.Label(self.p1, text="Ending Date (MM/DD/YYYY)")
         self.sem_end_label.grid(row=5, column=1)
-
+        # Semester end entry
         self.sem_end = ttk.Entry(self.p1, textvariable=self.sem_end)
         self.sem_end.grid(row=5, column=2)
-
+        # Will display inputted text from self.sem_end entry
         self.verify_end_label = ttk.Label(self.p2)
-        self.verify_end_label.grid(row=8, column=2)
+        self.verify_end_label.grid(row=6, column=2)
 
         # Proceed button leads to p2; page navigation is in verification()
         self.proceed = ttk.Button(self.p1, text="Proceed", command=self.verification)
-        self.proceed.grid(row=8, column=2)
+        self.proceed.grid(row=6, column=2)
 
     def verification(self):
         """ Asks user to verify the displayed information concerning them.
@@ -473,11 +472,15 @@ class User:
         self.verify_dd_plan_label.config(text=self.dd_var.get())
         # Display balance
         self.verify_balance_label.config(text=self.balance_var.get())
+        # Display start date
+        self.verify_today_label.config(text=self.day.get())
+        # Display end date
+        self.verify_end_label.config(text=self.sem_end.get())
 
         self.yes_verify = ttk.Button(self.p2, text="Yes", command=self.options)
-        self.yes_verify.grid(row=3, column=1)
+        self.yes_verify.grid(row=9, column=1)
         self.no_verify = ttk.Button(self.p2, text="No", command=lambda: self.page_navigation("p2_to_p1"))
-        self.no_verify.grid(row=3, column=2)
+        self.no_verify.grid(row=9, column=2)
 
     def options(self):
         """ Displays a list of options the user can select.
