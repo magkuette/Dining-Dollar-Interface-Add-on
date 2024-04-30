@@ -370,10 +370,19 @@ class User:
         self.p3.forget()
         self.p6.pack()
 
-        daily_spending = self.balance_var / self.days_total
+        date_format = "%m/%d/%Y"
+
+        date_today = time.mktime(time.strptime(self.day.get(), date_format))
+        end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+        diff = end_date - date_today
+        dates_num = int(diff / 86400)
+
+        self.days_total = dates_num
+
+        daily_spending = self.balance_var.get() / self.days_total
 
         # Divide dining dollars balance by amount of days left till date of dining dollars reset
-        self.ask_suggested = ttk.Label(self.p5, text=f"If you were to spend money every day until your dining dollar plan expired, you would need to spend ${daily_spending} daily.")
+        self.ask_suggested = ttk.Label(self.p6, text=f"If you were to spend money every day until your dining dollar plan expired, you would need to spend ${daily_spending} daily.")
         self.ask_suggested.grid(row=1, column=1)
 
     def get_user_info(self):
