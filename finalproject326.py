@@ -50,6 +50,7 @@ class User:
         self.reminder_var = tk.IntVar()
         self.day = tk.StringVar()
         self.sem_end = tk.StringVar()
+        self.days_total = 0
 
 
         # Call get_user_info function (only need to call this first function because the rest of the functions will be called later on throughout the code through buttons)
@@ -193,6 +194,8 @@ class User:
             diff = end_date - date_today
             dates_num = int(diff / 86400)
 
+            self.days_total = dates_num
+
             dates = dates_num / 7
             dates_to_print = []
 
@@ -224,6 +227,8 @@ class User:
             diff = end_date - date_today
             dates_num = int(diff / 86400)
 
+            self.days_total = dates_num
+
             dates = dates_num / 14
             dates_to_print = []
 
@@ -254,6 +259,8 @@ class User:
             diff = end_date - date_today
             dates_num = int(diff / 86400)
 
+            self.days_total = dates_num
+
             dates = dates_num / 30
             dates_to_print = []
 
@@ -283,6 +290,8 @@ class User:
             end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
             diff = end_date - date_today
             dates_num = int(diff / 86400)
+
+            self.days_total = dates_num
 
             dates = dates_num / 90
             dates_to_print = []
@@ -357,8 +366,15 @@ class User:
         """
         # Get current date using date.today()
 
+        # page navigation
+        self.p3.forget()
+        self.p6.pack()
+
+        daily_spending = self.balance_var / self.days_total
+
         # Divide dining dollars balance by amount of days left till date of dining dollars reset
-        pass
+        self.ask_suggested = ttk.Label(self.p5, text=f"If you were to spend money every day until your dining dollar plan expired, you would need to spend ${daily_spending} daily.")
+        self.ask_suggested.grid(row=1, column=1)
 
     def get_user_info(self):
         """ Gets user information including dining dollar plan, current dining dollar balance, as well as name.
@@ -480,7 +496,7 @@ class User:
         self.threshold_path.grid(row=2, column=2)
 
         # button 3
-        self.suggested_path = ttk.Button(self.p3, text="Get a suggested spending recommendation", command=lambda: self.page_navigation("p3_to_p6"))
+        self.suggested_path = ttk.Button(self.p3, text="Get a suggested spending recommendation", command=self.suggested_spending)
         self.suggested_path.grid(row=2, column=3)
 
         # button 4
