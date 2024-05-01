@@ -66,7 +66,7 @@ class User:
         # page 6
         self.p6 = tk.Frame(self.root)
 
-        self.p7 = tk.Frame(self.root)
+        self.p7 = tk.Frame(self.root)    
 
 # May or may not need but don't delete (it's not in the way of the code rn)
 # rn it seems like it's better to navigate pages by directly setting command equal to a function in buttons
@@ -100,6 +100,12 @@ class User:
         elif navigate == "p3_to_p6":
             self.p3.forget()
             self.p6.pack()
+        elif navigate == "p7_to_p1":
+            self.p7.forget()
+            self.p1.pack()
+        elif navigate == "p5_to_p1":
+            self.p5.forget()
+            self.p1.pack()
         
     def spending_reminders(self):
         """ Calculates when to send reminders to user to spend dining dollars based on the current date.
@@ -127,8 +133,6 @@ class User:
         # what the user inputted is stored into self.reminder_var (replace future reminder_days with self.reminder_var. unless u set it equal to that that might work)
         self.ask_reminder_entry = ttk.Entry(self.p4, textvariable=self.reminder_var)
         self.ask_reminder_entry.grid(row=2, column=1)
-
-        
 
 
         self.ask_reminder_enter = ttk.Button(self.p4, text="Enter", command=self.spending_reminders_helper)
@@ -313,6 +317,8 @@ class User:
                 self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
                 self.statement.grid(row=11+x, column=1)
 
+        self.log_out_path = ttk.Button(self.p7, text="Log out", command=lambda: self.page_navigation("p7_to_p1"))
+        self.log_out_path.grid(row=12, column=4)  
 
     def threshold_reminders(self):
         """ Calculates when dining dollar balance has reached certain thresholds based on the current date and date of dining dollar reset.
@@ -354,7 +360,9 @@ class User:
             #tkinter label saying user  has spent ____% of their dining dollars
             self.threshold_resp = ttk.Label(self.p5, text=f"You have passed no remarkable thresholds of spent dining dollars in your plan yet. You have used up {spent_percent}% of all of your dining dollars.")
             self.threshold_resp.grid(row=4, column=1)
-    
+
+        self.log_out_path = ttk.Button(self.p7, text="Log out", command=lambda: self.page_navigation("p5_to_p1"))
+        self.log_out_path.grid(row=12, column=4)
 
     def suggested_spending(self):
         """ Calculates a suggested average amount of money they could spend daily based on their remaining dining dollar balance.
@@ -378,9 +386,10 @@ class User:
         self.days_total = dates_num
 
         daily_spending = self.balance_var.get() / self.days_total
+        daily_spending_rounded = round(daily_spending, 2)
 
         # Divide dining dollars balance by amount of days left till date of dining dollars reset
-        self.ask_suggested = ttk.Label(self.p6, text=f"If you were to spend money every day until your dining dollar plan expired, you would need to spend ${daily_spending} daily.")
+        self.ask_suggested = ttk.Label(self.p6, text=f"If you were to spend money every day until your dining dollar plan expired, you would need to spend ${daily_spending_rounded} daily.")
         self.ask_suggested.grid(row=1, column=1)
 
     def get_user_info(self):
