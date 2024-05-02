@@ -370,7 +370,6 @@ class User:
         """
         
         # Name label that indicates where to put name
-        
         self.name_label = ttk.Label(self.p1, text="Name: ")
         self.name_label.grid(row=1, column=1, sticky="e")
         # Name entry
