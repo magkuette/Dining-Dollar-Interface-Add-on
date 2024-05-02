@@ -388,9 +388,6 @@ class User:
         # Will display inputted text from self.dd_plan entry
         self.verify_dd_plan_label = ttk.Label(self.p2)
         self.verify_dd_plan_label.grid(row=3, column=2)
-
-        # Updates global dining plan value to be used in other methods
-        # User.dining_plan_total = self.dd_plan
     
         # Balance label that indicates where to put balance
         self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance: ")
