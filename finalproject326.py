@@ -67,45 +67,6 @@ class User:
         self.p6 = tk.Frame(self.root)
 
         self.p7 = tk.Frame(self.root)    
-
-# May or may not need but don't delete (it's not in the way of the code rn)
-# rn it seems like it's better to navigate pages by directly setting command equal to a function in buttons
-    def page_navigation(self, navigate):
-        """ Tells the program what pages to go to when a user clicks a button
-
-        Driver: Margaret Hermanto
-        Navigator: Arnav Patel
-        """
-        if navigate == "p1_to_p2":
-            self.p1.forget()
-            self.p2.pack()
-        elif navigate == "p2_to_p1":
-            self.p2.forget()
-            self.p1.pack()
-        elif navigate == "p2_to_p3":
-            self.p2.forget()
-            self.p3.pack()
-        elif navigate == "p3_to_p1":
-            self.p3.forget()
-            self.p1.pack()
-        elif navigate == "p3_to_p4":
-            self.p3.forget()
-            self.p4.pack()
-        elif navigate == "p4_to_p7":
-            self.p4.forget()
-            self.p7.pack()
-        elif navigate == "p3_to_p5":
-            self.p3.forget()
-            self.p5.pack()
-        elif navigate == "p3_to_p6":
-            self.p3.forget()
-            self.p6.pack()
-        elif navigate == "p7_to_p1":
-            self.p7.forget()
-            self.p1.pack()
-        elif navigate == "p5_to_p1":
-            self.p5.forget()
-            self.p1.pack()
         
     def spending_reminders(self):
         """ Calculates when to send reminders to user to spend dining dollars based on the current date.
@@ -317,8 +278,10 @@ class User:
                 self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
                 self.statement.grid(row=11+x, column=1)
 
-        self.log_out_path = ttk.Button(self.p7, text="Log out", command=lambda: self.page_navigation("p7_to_p1"))
+        self.log_out_path = ttk.Button(self.p7, text="Log out", command=self.navigate_home)
         self.log_out_path.grid(row=12, column=4)  
+        self.options_path = ttk.Button(self.p7, text="Back to Options", command=self.navigate_options)
+        self.options_path.grid(row=12, column=5)
 
     def threshold_reminders(self):
         """ Calculates when dining dollar balance has reached certain thresholds based on the current date and date of dining dollar reset.
@@ -361,8 +324,11 @@ class User:
             self.threshold_resp = ttk.Label(self.p5, text=f"You have passed no remarkable thresholds of spent dining dollars in your plan yet. You have used up {spent_percent}% of all of your dining dollars.")
             self.threshold_resp.grid(row=4, column=1)
 
-        self.log_out_path = ttk.Button(self.p7, text="Log out", command=lambda: self.page_navigation("p5_to_p1"))
-        self.log_out_path.grid(row=12, column=4)
+        self.log_out_path = ttk.Button(self.p5, text="Log out", command=self.navigate_home)
+        self.log_out_path.grid(row=7, column=4)
+        self.options_path = ttk.Button(self.p5, text="Back to Options", command=self.navigate_options)
+        self.options_path.grid(row=7, column=5)
+
 
     def suggested_spending(self):
         """ Calculates a suggested average amount of money they could spend daily based on their remaining dining dollar balance.
@@ -392,6 +358,11 @@ class User:
         self.ask_suggested = ttk.Label(self.p6, text=f"If you were to spend money every day until your dining dollar plan expired, you would need to spend ${daily_spending_rounded} daily.")
         self.ask_suggested.grid(row=1, column=1)
 
+        self.log_out_path = ttk.Button(self.p6, text="Log out", command=self.navigate_home)
+        self.log_out_path.grid(row=2, column=4)
+        self.options_path = ttk.Button(self.p6, text="Back to Options", command=self.navigate_options)
+        self.options_path.grid(row=2, column=5)
+
     def get_user_info(self):
         """ Gets user information including dining dollar plan, current dining dollar balance, as well as name.
 
@@ -403,18 +374,20 @@ class User:
         """
         
         # Name label that indicates where to put name
-        self.name_label = ttk.Label(self.p1, text="Name")
-        self.name_label.grid(row=1, column=1)
+        # self.p1.pack()
+        
+        self.name_label = ttk.Label(self.p1, text="Name: ")
+        self.name_label.grid(row=1, column=1, sticky="e")
         # Name entry
         self.name = ttk.Entry(self.p1, textvariable=self.name_var)
         self.name.grid(row=1, column=2)
         # Will display inputted text from self.name entry
         self.verify_name_label = ttk.Label(self.p2)
-        self.verify_name_label.grid(row=2, column=2)
+        self.verify_name_label.grid(row=2, column=2, pady=2)
 
         # Dining dollar plan label that indicates where to put dining dollar plan
-        self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan")
-        self.dd_plan_label.grid(row=2, column=1)
+        self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan: ")
+        self.dd_plan_label.grid(row=2, column=1, sticky="e")
         # Dining dollar plan entry
         self.dd_plan = ttk.Entry(self.p1, textvariable=self.dd_var)
         self.dd_plan.grid(row=2, column=2)
@@ -426,8 +399,8 @@ class User:
         # User.dining_plan_total = self.dd_plan
     
         # Balance label that indicates where to put balance
-        self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance")
-        self.balance_label.grid(row=3, column=1)
+        self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance: ")
+        self.balance_label.grid(row=3, column=1, sticky="e")
         # Balance entry
         self.balance = ttk.Entry(self.p1, textvariable=self.balance_var)
         self.balance.grid(row=3, column=2)
@@ -436,8 +409,8 @@ class User:
         self.verify_balance_label.grid(row=4, column=2)
 
         # Today's date label that indicates where to put today's date
-        self.today_label = ttk.Label(self.p1, text="Today's Date (MM/DD/YYYY)")
-        self.today_label.grid(row=4, column=1)
+        self.today_label = ttk.Label(self.p1, text="Today's Date (MM/DD/YYYY): ")
+        self.today_label.grid(row=4, column=1, sticky="e")
         # Today's date entry
         self.today = ttk.Entry(self.p1, textvariable=self.day)
         self.today.grid(row=4, column=2)
@@ -446,8 +419,8 @@ class User:
         self.verify_today_label.grid(row=5, column=2)
 
         # Semester end label that indicates when to put ending date
-        self.sem_end_label = ttk.Label(self.p1, text="Ending Date (MM/DD/YYYY)")
-        self.sem_end_label.grid(row=5, column=1)
+        self.sem_end_label = ttk.Label(self.p1, text="Ending Date (MM/DD/YYYY): ")
+        self.sem_end_label.grid(row=5, column=1, sticky="e")
         # Semester end entry
         self.sem_end = ttk.Entry(self.p1, textvariable=self.sem_end)
         self.sem_end.grid(row=5, column=2)
@@ -474,6 +447,16 @@ class User:
 
         self.verify_label = ttk.Label(self.p2, text="Is this information correct?")
         self.verify_label.grid(row=1, column=1)
+        self.for_verify_name = ttk.Label(self.p2, text="Name:")
+        self.for_verify_name.grid(row=2, column=1, sticky="e")
+        self.for_verify_dd = ttk.Label(self.p2, text="Dining Dollar Plan:")
+        self.for_verify_dd.grid(row=3, column=1, sticky="e")
+        self.for_verify_balance = ttk.Label(self.p2, text="Balance:")
+        self.for_verify_balance.grid(row=4, column=1, sticky="e")
+        self.for_verify_today = ttk.Label(self.p2, text="Today's Date (MM/DD/YYYY):")
+        self.for_verify_today.grid(row=5, column=1, sticky="e")
+        self.for_verify_end = ttk.Label(self.p2, text="Ending Date (MM/DD/YYYY):")
+        self.for_verify_end.grid(row=6, column=1, sticky="e")
 
         # Display user name
         self.verify_name_label.config(text=self.name_var.get())
@@ -488,7 +471,7 @@ class User:
 
         self.yes_verify = ttk.Button(self.p2, text="Yes", command=self.options)
         self.yes_verify.grid(row=9, column=1)
-        self.no_verify = ttk.Button(self.p2, text="No", command=lambda: self.page_navigation("p2_to_p1"))
+        self.no_verify = ttk.Button(self.p2, text="No", command=self.navigate_home)
         self.no_verify.grid(row=9, column=2)
 
     def options(self):
@@ -521,8 +504,37 @@ class User:
         self.suggested_path.grid(row=2, column=3)
 
         # button 4
-        self.log_out_path = ttk.Button(self.p3, text="Log out", command=lambda: self.page_navigation("p3_to_p1"))
+        self.log_out_path = ttk.Button(self.p3, text="Log out", command=self.navigate_home)
         self.log_out_path.grid(row=2, column=4)  
+
+    def navigate_home(self):
+        """ Allows user to navigate to self.p1 from any other page in the program.
+
+        Driver: Margaret Hermanto
+        Navigator: Arnav Patel
+        """
+        self.p1.pack()
+        self.p2.forget()
+        self.p3.forget()
+        self.p4.forget()
+        self.p5.forget()
+        self.p6.forget()
+        self.p7.forget()
+    
+    def navigate_options(self):
+        """ Allows user to navigate to self.p3 from any other page in the program.
+
+        Driver: Margaret Hermanto
+        Navigator: Arnav Patel
+        """
+        self.p3.pack()
+        self.p1.forget()
+        self.p2.forget()
+        self.p4.forget()
+        self.p5.forget()
+        self.p6.forget()
+        self.p7.forget()
+
 
 def main():
     """ Displays information to the user using User functions
