@@ -34,11 +34,11 @@ class User:
         """
         self.root = root
 
-        # Page 1 - get_user_info()
+        # get_user_info()
         self.p1 = tk.Frame(self.root)
         self.p1.pack()
 
-        # Page 2 - verification()
+        # verification()
         self.p2 = tk.Frame(self.root)
 
         # Stores entry information for future label configuration
@@ -50,22 +50,18 @@ class User:
         self.sem_end = tk.StringVar()
         self.days_total = 0
 
-
         # Call get_user_info function (only need to call this first function because the rest of the functions will be called later on throughout the code through buttons)
         self.get_user_info()
 
-        # Page 3 - options()
+        # options()
         self.p3 = tk.Frame(self.root)
-
-        # Page 4 - user gets outcome of spending reminders
+        # spending_reminders()
         self.p4 = tk.Frame(self.root)
-
-        # page 5
+        # threshold_reminders()
         self.p5 = tk.Frame(self.root)
-        
-        # page 6
+        # suggested_spending()    
         self.p6 = tk.Frame(self.root)
-
+        # spending_reminders_helper
         self.p7 = tk.Frame(self.root)    
         
     def spending_reminders(self):
@@ -374,7 +370,6 @@ class User:
         """
         
         # Name label that indicates where to put name
-        # self.p1.pack()
         
         self.name_label = ttk.Label(self.p1, text="Name: ")
         self.name_label.grid(row=1, column=1, sticky="e")
