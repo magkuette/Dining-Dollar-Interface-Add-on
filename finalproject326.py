@@ -482,19 +482,19 @@ class User:
         self.ask = ttk.Label(self.p3, text="What would you like to do today?")
         self.ask.grid(row=1, column=1)
 
-        # button 1
+        # Button that leads to spending_reminders
         self.spending_path = ttk.Button(self.p3, text="Create a spending reminder", command=self.spending_reminders)
         self.spending_path.grid(row=2, column=1)
 
-        # button 2
+        # Button that leads to threshold_reminder
         self.threshold_path = ttk.Button(self.p3, text="Show thresholds passed", command=self.threshold_reminders)
         self.threshold_path.grid(row=2, column=2)
 
-        # button 3
+        # Button that leads to suggested_spending
         self.suggested_path = ttk.Button(self.p3, text="Get a suggested spending recommendation", command=self.suggested_spending)
         self.suggested_path.grid(row=2, column=3)
 
-        # button 4
+        # Button that leads to get_user_info
         self.log_out_path = ttk.Button(self.p3, text="Log out", command=self.navigate_home)
         self.log_out_path.grid(row=2, column=4)  
 
