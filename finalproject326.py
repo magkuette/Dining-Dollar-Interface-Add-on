@@ -12,9 +12,6 @@ import tkinter as tk
 # Need this for widgets
 from tkinter import ttk
 
-# Need this for notifications
-from tkinter import messagebox
-
 # Need this for current date
 from datetime import date
 import time
