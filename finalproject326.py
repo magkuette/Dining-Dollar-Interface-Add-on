@@ -31,7 +31,7 @@ class User:
         Driver: Margaret Hermanto
         Navigator: Arnav Patel
         """
-        self.root = root
+        self.root = root        
 
         # get_user_info()
         self.p1 = tk.Frame(self.root)
@@ -420,7 +420,7 @@ class User:
 
         # Proceed button leads to p2; page navigation is in verification()
         self.proceed = ttk.Button(self.p1, text="Proceed", command=self.verification)
-        self.proceed.grid(row=6, column=2)
+        self.proceed.grid(row=6, column=2)   
 
     def verification(self):
         """ Asks user to verify the displayed information concerning them.
@@ -431,38 +431,79 @@ class User:
         Returns:
             Either self.p1 or self.p3, depending on the user's answer.
         """
-        # Page navigation
-        self.p1.forget()
-        self.p2.pack()
+        error_list = []
 
-        self.verify_label = ttk.Label(self.p2, text="Is this information correct?")
-        self.verify_label.grid(row=1, column=1)
-        self.for_verify_name = ttk.Label(self.p2, text="Name:")
-        self.for_verify_name.grid(row=2, column=1, sticky="e")
-        self.for_verify_dd = ttk.Label(self.p2, text="Dining Dollar Plan:")
-        self.for_verify_dd.grid(row=3, column=1, sticky="e")
-        self.for_verify_balance = ttk.Label(self.p2, text="Balance:")
-        self.for_verify_balance.grid(row=4, column=1, sticky="e")
-        self.for_verify_today = ttk.Label(self.p2, text="Today's Date (MM/DD/YYYY):")
-        self.for_verify_today.grid(row=5, column=1, sticky="e")
-        self.for_verify_end = ttk.Label(self.p2, text="Ending Date (MM/DD/YYYY):")
-        self.for_verify_end.grid(row=6, column=1, sticky="e")
+        # Append error message if dining dollar plan is less than 0 or not an integer
+        if self.dd_var.get() < 0:
+            error_list.append("- Dining dollar plan must be a number greater than or equal to 0.")
+        else:
+            # Append error message if dining dollar plan is not an integer
+            # DOESNT WORK
+            try:
+                int(self.dd_var.get())
+            except TypeError:
+                error_list.append("- Dining dollar plan must be a number greater than or equal to 0.")
 
-        # Display user name
-        self.verify_name_label.config(text=self.name_var.get())
-        # Display dining dollar plan
-        self.verify_dd_plan_label.config(text=self.dd_var.get())
-        # Display balance
-        self.verify_balance_label.config(text=self.balance_var.get())
-        # Display start date
-        self.verify_today_label.config(text=self.day.get())
-        # Display end date
-        self.verify_end_label.config(text=self.sem_end.get())
+        # Append error message if balance is less than 0 or not an integer
+        if self.balance_var.get() < 0:
+            error_list.append("\n- Balance must be a number greater than or equal to 0.")
+        else:
+            # DOESNT WORK
+            try:
+                int(self.balance_var.get())
+            except TypeError:
+                error_list.append("\n- Balance must be a number greater than or equal to 0.")
 
-        self.yes_verify = ttk.Button(self.p2, text="Yes", command=self.options)
-        self.yes_verify.grid(row=9, column=1)
-        self.no_verify = ttk.Button(self.p2, text="No", command=self.navigate_home)
-        self.no_verify.grid(row=9, column=2)
+        date_format = "%m/%d/%Y"
+
+        try:
+            time.mktime(time.strptime(self.day.get(), date_format))
+        except ValueError:
+            error_list.append("\n- Invalid date format for today's date")
+
+        try:
+            time.mktime(time.strptime(self.sem_end.get(), date_format))
+        except ValueError:
+            error_list.append("\n- Invalid date format for ending date.")
+
+        # Convert error_list to str to display in messagebox message
+        error_str = "".join(error_list)
+
+        # If len(error_str) == 0, this means there are not errors. This means the program can proceed.
+        if len(error_str) == 0:
+            self.p1.forget()
+            self.p2.pack()
+
+            self.verify_label = ttk.Label(self.p2, text="Is this information correct?")
+            self.verify_label.grid(row=1, column=1)
+            self.for_verify_name = ttk.Label(self.p2, text="Name:")
+            self.for_verify_name.grid(row=2, column=1, sticky="e")
+            self.for_verify_dd = ttk.Label(self.p2, text="Dining Dollar Plan:")
+            self.for_verify_dd.grid(row=3, column=1, sticky="e")
+            self.for_verify_balance = ttk.Label(self.p2, text="Balance:")
+            self.for_verify_balance.grid(row=4, column=1, sticky="e")
+            self.for_verify_today = ttk.Label(self.p2, text="Today's Date (MM/DD/YYYY):")
+            self.for_verify_today.grid(row=5, column=1, sticky="e")
+            self.for_verify_end = ttk.Label(self.p2, text="Ending Date (MM/DD/YYYY):")
+            self.for_verify_end.grid(row=6, column=1, sticky="e")
+
+            # Display user name
+            self.verify_name_label.config(text=self.name_var.get())
+            # Display dining dollar plan
+            self.verify_dd_plan_label.config(text=self.dd_var.get())
+            # Display balance
+            self.verify_balance_label.config(text=self.balance_var.get())
+            # Display start date
+            self.verify_today_label.config(text=self.day.get())
+            # Display end date
+            self.verify_end_label.config(text=self.sem_end.get())
+
+            self.yes_verify = ttk.Button(self.p2, text="Yes", command=self.options)
+            self.yes_verify.grid(row=9, column=1)
+            self.no_verify = ttk.Button(self.p2, text="No", command=self.navigate_home)
+            self.no_verify.grid(row=9, column=2)
+        else:
+            messagebox.showerror(title="Error", message=error_str)
 
     def options(self):
         """ Displays a list of options the user can select.
