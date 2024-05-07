@@ -33,8 +33,9 @@ class User:
         """
         self.root = root
 
-        self.banner = tk.Label(self.root, text="Dining Dollar Interface", bg="#E72929", width=1400, height=2, font=("Berlin", 12, "bold"), fg="#FFE2E0")
+        self.banner = tk.Label(self.root, text="Dining Dollar Interface", bg="#5F6F52", width=1400, height=2, font=("Forte", 14), fg="#FFE2E0")
         self.banner.pack(side="bottom")
+
         
         # get_user_info()
         self.p1 = tk.Frame(self.root)
@@ -370,60 +371,64 @@ class User:
         Returns:
             self.p2 after user clicks Proceed button.
         """
-        
+        self.welcome_label = ttk.Label(self.p1, text="Welcome to our Dining Dollar Interface", font=("Century Gothic", 25))
+        self.welcome_label.grid(row=1, column=2)
+
+        self.directions_label = ttk.Label(self.p1, text="Please input your login information.", font=("Century Gothic", 15))
+        self.directions_label.grid(row=2, column=2, pady=10)
         # Name label that indicates where to put name
-        self.name_label = ttk.Label(self.p1, text="Name: ")
-        self.name_label.grid(row=1, column=1, sticky="e")
+        self.name_label = ttk.Label(self.p1, text="Name: ", font=("Century Gothic", 12, "bold"))
+        self.name_label.grid(row=4, column=2, pady=(15, 0))
         # Name entry
-        self.name = ttk.Entry(self.p1, textvariable=self.name_var)
-        self.name.grid(row=1, column=2)
+        self.name = ttk.Entry(self.p1, textvariable=self.name_var, font=("Century Gothic", 12))
+        self.name.grid(row=5, column=2)
         # Will display inputted text from self.name entry
         self.verify_name_label = ttk.Label(self.p2)
-        self.verify_name_label.grid(row=2, column=2, pady=2)
+        self.verify_name_label.grid(row=2, column=2)
 
         # Dining dollar plan label that indicates where to put dining dollar plan
-        self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan: ")
-        self.dd_plan_label.grid(row=2, column=1, sticky="e")
+        self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan: ", font=("Century Gothic", 12, "bold"))
+        self.dd_plan_label.grid(row=7, column=2, pady=(20, 0))
         # Dining dollar plan entry
-        self.dd_plan = ttk.Entry(self.p1, textvariable=self.dd_var)
-        self.dd_plan.grid(row=2, column=2)
+        self.dd_plan = ttk.Entry(self.p1, textvariable=self.dd_var, font=("Century Gothic", 12))
+        self.dd_plan.grid(row=8, column=2)
         # Will display inputted text from self.dd_plan entry
         self.verify_dd_plan_label = ttk.Label(self.p2)
         self.verify_dd_plan_label.grid(row=3, column=2)
     
         # Balance label that indicates where to put balance
-        self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance: ")
-        self.balance_label.grid(row=3, column=1, sticky="e")
+        self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance: ", font=("Century Gothic", 12, "bold"))
+        self.balance_label.grid(row=9, column=2, pady=(20, 0))
         # Balance entry
-        self.balance = ttk.Entry(self.p1, textvariable=self.balance_var)
-        self.balance.grid(row=3, column=2)
+        self.balance = ttk.Entry(self.p1, textvariable=self.balance_var, font=("Century Gothic", 12))
+        self.balance.grid(row=10, column=2)
         # Will display inputted text from self.balance entry
         self.verify_balance_label = ttk.Label(self.p2)
         self.verify_balance_label.grid(row=4, column=2)
 
         # Today's date label that indicates where to put today's date
-        self.today_label = ttk.Label(self.p1, text="Today's Date (MM/DD/YYYY): ")
-        self.today_label.grid(row=4, column=1, sticky="e")
+        self.today_label = ttk.Label(self.p1, text="Today's Date (MM/DD/YYYY): ", font=("Century Gothic", 12, "bold"))
+        self.today_label.grid(row=11, column=2, pady=(20, 0))
         # Today's date entry
-        self.today = ttk.Entry(self.p1, textvariable=self.day)
-        self.today.grid(row=4, column=2)
+        self.today = ttk.Entry(self.p1, textvariable=self.day, font=("Century Gothic", 12))
+        self.today.grid(row=12, column=2)
         # Will display inputted text from self.today entry
         self.verify_today_label = ttk.Label(self.p2)
         self.verify_today_label.grid(row=5, column=2)
 
         # Semester end label that indicates when to put ending date
-        self.sem_end_label = ttk.Label(self.p1, text="Ending Date (MM/DD/YYYY): ")
-        self.sem_end_label.grid(row=5, column=1, sticky="e")
+        self.sem_end_label = ttk.Label(self.p1, text="Ending Date (MM/DD/YYYY): ", font=("Century Gothic", 12, "bold"))
+        self.sem_end_label.grid(row=13, column=2, pady=(20, 0))
         # Semester end entry
-        self.sem_end = ttk.Entry(self.p1, textvariable=self.sem_end)
-        self.sem_end.grid(row=5, column=2)
+        self.sem_end = ttk.Entry(self.p1, textvariable=self.sem_end, font=("Century Gothic", 12))
+        self.sem_end.grid(row=14, column=2)
         # Will display inputted text from self.sem_end entry
         self.verify_end_label = ttk.Label(self.p2)
         self.verify_end_label.grid(row=6, column=2)
 
         # Proceed button leads to p2; page navigation is in verification()
-        self.proceed = ttk.Button(self.p1, text="Proceed", command=self.verification)
-        self.proceed.grid(row=6, column=2)   
+        self.proceed = tk.Button(self.p1, text="Proceed", command=self.verification, font=("Century Gothic", 12))
+        self.proceed.grid(row=15, column=2, pady=(20, 0))   
 
     def verification(self):
         """ Asks user to verify the displayed information concerning them.
