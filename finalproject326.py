@@ -33,7 +33,7 @@ class User:
         """
         self.root = root
 
-        self.banner = tk.Label(self.root, text="Dining Dollar Interface", bg="#5F6F52", width=1400, height=2, font=("Forte", 14), fg="#FFE2E0")
+        self.banner = tk.Label(self.root, text="Dining Dollar Interface", bg="#5F6F52", width=1400, height=2, font=("Times New Roman", 14), fg="#FFE2E0")
         self.banner.pack(side="bottom")
 
         
@@ -94,7 +94,6 @@ class User:
         self.ask_reminder_entry = ttk.Entry(self.p4, textvariable=self.reminder_var)
         self.ask_reminder_entry.grid(row=2, column=1)
 
-
         self.ask_reminder_enter = ttk.Button(self.p4, text="Enter", command=self.spending_reminders_helper)
         self.ask_reminder_enter.grid(row=4, column=2)
 
@@ -134,148 +133,152 @@ class User:
         # Collect that data and use it to set up date reminder system
     
     def spending_reminders_helper(self):
-        
-        # Page navigation
-        self.p4.forget()
-        self.p7.pack()
+        error_message = "Please input a valid number (1, 7, 14, 30, or 90)."
 
-        self.input_reminder = ttk.Label(self.p7)
-        self.input_reminder.grid(row=4, column=1)
+        if (self.reminder_var.get() != 1) and (self.reminder_var.get() != 7) and (self.reminder_var.get() != 14) and (self.reminder_var.get() != 30) and (self.reminder_var.get() != 90) :
+            messagebox.showerror(title="Error", message=error_message)
+        else:
+            # Page navigation
+            self.p4.forget()
+            self.p7.pack()
 
-        self.input_reminder.config(text = f"You wanted reminders every {self.reminder_var.get()} days. Here are the dates you are reminded to spend.")
+            self.input_reminder = ttk.Label(self.p7)
+            self.input_reminder.grid(row=4, column=1)
 
-        if self.reminder_var.get() == 1:
-            self.reminder = ttk.Label(self.p7, text="Please mark every date in your calendar from August 28, 2024 to May 17, 2025.")
-            self.reminder.grid(row=6, column=1)
-        
-        elif self.reminder_var.get() == 7:
-            date_format = "%m/%d/%Y"
+            self.input_reminder.config(text = f"You wanted reminders every {self.reminder_var.get()} days. Here are the dates you are reminded to spend.")
 
-            date_today = time.mktime(time.strptime(self.day.get(), date_format))
-            end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
-            diff = end_date - date_today
-            dates_num = int(diff / 86400)
+            if self.reminder_var.get() == 1:
+                self.reminder = ttk.Label(self.p7, text="Please mark every date in your calendar from August 28, 2024 to May 17, 2025.")
+                self.reminder.grid(row=6, column=1)
+            
+            elif self.reminder_var.get() == 7:
+                date_format = "%m/%d/%Y"
 
-            self.days_total = dates_num
+                date_today = time.mktime(time.strptime(self.day.get(), date_format))
+                end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+                diff = end_date - date_today
+                dates_num = int(diff / 86400)
 
-            dates = dates_num / 7
-            dates_to_print = []
+                self.days_total = dates_num
 
-            temp = self.day.get()
-            temp_string = "%m/%d/%Y"
+                dates = dates_num / 7
+                dates_to_print = []
 
-            for y in range(0, int(dates)):
-                
-                current_date_temp = datetime.datetime.strptime(temp, temp_string)
-                newdate = current_date_temp + datetime.timedelta(days=7)
-                dates_to_print.append(newdate)
-                temp = str(newdate)
-                temp_string = "%Y-%m-%d %H:%M:%S"
+                temp = self.day.get()
+                temp_string = "%m/%d/%Y"
 
-
-            self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
-            self.reminder.grid(row=10, column=1)
-
-            for x in range(0, len(dates_to_print)):
-                self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
-                self.statement.grid(row=11+x, column=1)
-
-        
-        elif self.reminder_var.get() == 14:
-            date_format = "%m/%d/%Y"
-
-            date_today = time.mktime(time.strptime(self.day.get(), date_format))
-            end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
-            diff = end_date - date_today
-            dates_num = int(diff / 86400)
-
-            self.days_total = dates_num
-
-            dates = dates_num / 14
-            dates_to_print = []
-
-            temp = self.day.get()
-            temp_string = "%m/%d/%Y"
-
-            for y in range(0, int(dates)):
-                
-                current_date_temp = datetime.datetime.strptime(temp, temp_string)
-                newdate = current_date_temp + datetime.timedelta(days=14)
-                dates_to_print.append(newdate)
-                temp = str(newdate)
-                temp_string = "%Y-%m-%d %H:%M:%S"
+                for y in range(0, int(dates)):
+                    
+                    current_date_temp = datetime.datetime.strptime(temp, temp_string)
+                    newdate = current_date_temp + datetime.timedelta(days=7)
+                    dates_to_print.append(newdate)
+                    temp = str(newdate)
+                    temp_string = "%Y-%m-%d %H:%M:%S"
 
 
-            self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
-            self.reminder.grid(row=10, column=1)
+                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
+                self.reminder.grid(row=10, column=1)
 
-            for x in range(0, len(dates_to_print)):
-                self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
-                self.statement.grid(row=11+x, column=1)
+                for x in range(0, len(dates_to_print)):
+                    self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
+                    self.statement.grid(row=11+x, column=1)
 
-        elif self.reminder_var.get() == 30:
-            date_format = "%m/%d/%Y"
+            
+            elif self.reminder_var.get() == 14:
+                date_format = "%m/%d/%Y"
 
-            date_today = time.mktime(time.strptime(self.day.get(), date_format))
-            end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
-            diff = end_date - date_today
-            dates_num = int(diff / 86400)
+                date_today = time.mktime(time.strptime(self.day.get(), date_format))
+                end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+                diff = end_date - date_today
+                dates_num = int(diff / 86400)
 
-            self.days_total = dates_num
+                self.days_total = dates_num
 
-            dates = dates_num / 30
-            dates_to_print = []
+                dates = dates_num / 14
+                dates_to_print = []
 
-            temp = self.day.get()
-            temp_string = "%m/%d/%Y"
+                temp = self.day.get()
+                temp_string = "%m/%d/%Y"
 
-            for y in range(0, int(dates)):
-                
-                current_date_temp = datetime.datetime.strptime(temp, temp_string)
-                newdate = current_date_temp + datetime.timedelta(days=30)
-                dates_to_print.append(newdate)
-                temp = str(newdate)
-                temp_string = "%Y-%m-%d %H:%M:%S"
-
-
-            self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
-            self.reminder.grid(row=10, column=1)
-
-            for x in range(0, len(dates_to_print)):
-                self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
-                self.statement.grid(row=11+x, column=1)
-
-        elif self.reminder_var.get() == 90:
-            date_format = "%m/%d/%Y"
-
-            date_today = time.mktime(time.strptime(self.day.get(), date_format))
-            end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
-            diff = end_date - date_today
-            dates_num = int(diff / 86400)
-
-            self.days_total = dates_num
-
-            dates = dates_num / 90
-            dates_to_print = []
-
-            temp = self.day.get()
-            temp_string = "%m/%d/%Y"
-
-            for y in range(0, int(dates)):
-                
-                current_date_temp = datetime.datetime.strptime(temp, temp_string)
-                newdate = current_date_temp + datetime.timedelta(days=90)
-                dates_to_print.append(newdate)
-                temp = str(newdate)
-                temp_string = "%Y-%m-%d %H:%M:%S"
+                for y in range(0, int(dates)):
+                    
+                    current_date_temp = datetime.datetime.strptime(temp, temp_string)
+                    newdate = current_date_temp + datetime.timedelta(days=14)
+                    dates_to_print.append(newdate)
+                    temp = str(newdate)
+                    temp_string = "%Y-%m-%d %H:%M:%S"
 
 
-            self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
-            self.reminder.grid(row=10, column=1)
+                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
+                self.reminder.grid(row=10, column=1)
 
-            for x in range(0, len(dates_to_print)):
-                self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
-                self.statement.grid(row=11+x, column=1)
+                for x in range(0, len(dates_to_print)):
+                    self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
+                    self.statement.grid(row=11+x, column=1)
+
+            elif self.reminder_var.get() == 30:
+                date_format = "%m/%d/%Y"
+
+                date_today = time.mktime(time.strptime(self.day.get(), date_format))
+                end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+                diff = end_date - date_today
+                dates_num = int(diff / 86400)
+
+                self.days_total = dates_num
+
+                dates = dates_num / 30
+                dates_to_print = []
+
+                temp = self.day.get()
+                temp_string = "%m/%d/%Y"
+
+                for y in range(0, int(dates)):
+                    
+                    current_date_temp = datetime.datetime.strptime(temp, temp_string)
+                    newdate = current_date_temp + datetime.timedelta(days=30)
+                    dates_to_print.append(newdate)
+                    temp = str(newdate)
+                    temp_string = "%Y-%m-%d %H:%M:%S"
+
+
+                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
+                self.reminder.grid(row=10, column=1)
+
+                for x in range(0, len(dates_to_print)):
+                    self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
+                    self.statement.grid(row=11+x, column=1)
+
+            elif self.reminder_var.get() == 90:
+                date_format = "%m/%d/%Y"
+
+                date_today = time.mktime(time.strptime(self.day.get(), date_format))
+                end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+                diff = end_date - date_today
+                dates_num = int(diff / 86400)
+
+                self.days_total = dates_num
+
+                dates = dates_num / 90
+                dates_to_print = []
+
+                temp = self.day.get()
+                temp_string = "%m/%d/%Y"
+
+                for y in range(0, int(dates)):
+                    
+                    current_date_temp = datetime.datetime.strptime(temp, temp_string)
+                    newdate = current_date_temp + datetime.timedelta(days=90)
+                    dates_to_print.append(newdate)
+                    temp = str(newdate)
+                    temp_string = "%Y-%m-%d %H:%M:%S"
+
+
+                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
+                self.reminder.grid(row=10, column=1)
+
+                for x in range(0, len(dates_to_print)):
+                    self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
+                    self.statement.grid(row=11+x, column=1)
 
         self.log_out_path = ttk.Button(self.p7, text="Log out", command=self.navigate_home)
         self.log_out_path.grid(row=12, column=4)  
@@ -383,7 +386,7 @@ class User:
         self.name = ttk.Entry(self.p1, textvariable=self.name_var, font=("Century Gothic", 12))
         self.name.grid(row=5, column=2)
         # Will display inputted text from self.name entry
-        self.verify_name_label = ttk.Label(self.p2)
+        self.verify_name_label = ttk.Label(self.p2, font=("Century Gothic", 12))
         self.verify_name_label.grid(row=2, column=2)
 
         # Dining dollar plan label that indicates where to put dining dollar plan
@@ -393,7 +396,7 @@ class User:
         self.dd_plan = ttk.Entry(self.p1, textvariable=self.dd_var, font=("Century Gothic", 12))
         self.dd_plan.grid(row=8, column=2)
         # Will display inputted text from self.dd_plan entry
-        self.verify_dd_plan_label = ttk.Label(self.p2)
+        self.verify_dd_plan_label = ttk.Label(self.p2, font=("Century Gothic", 12))
         self.verify_dd_plan_label.grid(row=3, column=2)
     
         # Balance label that indicates where to put balance
@@ -403,7 +406,7 @@ class User:
         self.balance = ttk.Entry(self.p1, textvariable=self.balance_var, font=("Century Gothic", 12))
         self.balance.grid(row=10, column=2)
         # Will display inputted text from self.balance entry
-        self.verify_balance_label = ttk.Label(self.p2)
+        self.verify_balance_label = ttk.Label(self.p2, font=("Century Gothic", 12))
         self.verify_balance_label.grid(row=4, column=2)
 
         # Today's date label that indicates where to put today's date
@@ -413,7 +416,7 @@ class User:
         self.today = ttk.Entry(self.p1, textvariable=self.day, font=("Century Gothic", 12))
         self.today.grid(row=12, column=2)
         # Will display inputted text from self.today entry
-        self.verify_today_label = ttk.Label(self.p2)
+        self.verify_today_label = ttk.Label(self.p2, font=("Century Gothic", 12))
         self.verify_today_label.grid(row=5, column=2)
 
         # Semester end label that indicates when to put ending date
@@ -423,7 +426,7 @@ class User:
         self.sem_end = ttk.Entry(self.p1, textvariable=self.sem_end, font=("Century Gothic", 12))
         self.sem_end.grid(row=14, column=2)
         # Will display inputted text from self.sem_end entry
-        self.verify_end_label = ttk.Label(self.p2)
+        self.verify_end_label = ttk.Label(self.p2, font=("Century Gothic", 12))
         self.verify_end_label.grid(row=6, column=2)
 
         # Proceed button leads to p2; page navigation is in verification()
@@ -482,17 +485,17 @@ class User:
             self.p1.forget()
             self.p2.pack()
 
-            self.verify_label = ttk.Label(self.p2, text="Is this information correct?")
+            self.verify_label = ttk.Label(self.p2, text="Is this information correct?", font=("Century Gothic", 15))
             self.verify_label.grid(row=1, column=1)
-            self.for_verify_name = ttk.Label(self.p2, text="Name:")
+            self.for_verify_name = ttk.Label(self.p2, text="Name:", font=("Century Gothic", 12, "bold"))
             self.for_verify_name.grid(row=2, column=1, sticky="e")
-            self.for_verify_dd = ttk.Label(self.p2, text="Dining Dollar Plan:")
+            self.for_verify_dd = ttk.Label(self.p2, text="Dining Dollar Plan:", font=("Century Gothic", 12, "bold"))
             self.for_verify_dd.grid(row=3, column=1, sticky="e")
-            self.for_verify_balance = ttk.Label(self.p2, text="Balance:")
+            self.for_verify_balance = ttk.Label(self.p2, text="Balance:", font=("Century Gothic", 12, "bold"))
             self.for_verify_balance.grid(row=4, column=1, sticky="e")
-            self.for_verify_today = ttk.Label(self.p2, text="Today's Date (MM/DD/YYYY):")
+            self.for_verify_today = ttk.Label(self.p2, text="Today's Date (MM/DD/YYYY):", font=("Century Gothic", 12, "bold"))
             self.for_verify_today.grid(row=5, column=1, sticky="e")
-            self.for_verify_end = ttk.Label(self.p2, text="Ending Date (MM/DD/YYYY):")
+            self.for_verify_end = ttk.Label(self.p2, text="Ending Date (MM/DD/YYYY):", font=("Century Gothic", 12, "bold"))
             self.for_verify_end.grid(row=6, column=1, sticky="e")
 
             # Display user name
