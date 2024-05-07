@@ -33,9 +33,6 @@ class User:
         """
         self.root = root
 
-        # self.banner = tk.Frame(self.root, bg="#E72929")
-        # self.banner.pack(side="bottom")
-
         self.banner = tk.Label(self.root, text="Dining Dollar Interface", bg="#E72929", width=1400, height=2, font=("Berlin", 12, "bold"), fg="#FFE2E0")
         self.banner.pack(side="bottom")
         
