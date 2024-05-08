@@ -86,15 +86,15 @@ class User:
         # Based on time between current date and date of dining dollar reset, program will send a notification (tkinter.messagebox.showinfo)
 
         # Ask user how often they want reminders with tkinter prompt (can be any number or set like 1, 7, 14, 30, 90)
-        self.ask_reminder = ttk.Label(self.p4, text="How often would you like to receive reminders? (Every 1, 7, 14, 30, or 90 days)")
+        self.ask_reminder = ttk.Label(self.p4, text="How often would you like to receive reminders? (Every 1, 7, 14, 30, or 90 days)", font=("Verdana", 15))
         self.ask_reminder.grid(row=1, column=1)
 
         # Enter reminder frequency
         # what the user inputted is stored into self.reminder_var (replace future reminder_days with self.reminder_var. unless u set it equal to that that might work)
-        self.ask_reminder_entry = ttk.Entry(self.p4, textvariable=self.reminder_var)
+        self.ask_reminder_entry = ttk.Entry(self.p4, textvariable=self.reminder_var, font=("Verdana", 12))
         self.ask_reminder_entry.grid(row=2, column=1)
 
-        self.ask_reminder_enter = ttk.Button(self.p4, text="Enter", command=self.spending_reminders_helper)
+        self.ask_reminder_enter = tk.Button(self.p4, text="Enter", command=self.spending_reminders_helper, font=("Verdana", 12))
         self.ask_reminder_enter.grid(row=4, column=2)
 
         
@@ -145,10 +145,10 @@ class User:
             self.input_reminder = ttk.Label(self.p7)
             self.input_reminder.grid(row=4, column=1)
 
-            self.input_reminder.config(text = f"You wanted reminders every {self.reminder_var.get()} days. Here are the dates you are reminded to spend.")
+            self.input_reminder.config(text = f"You wanted reminders every {self.reminder_var.get()} days. Here are the dates you are reminded to spend.", font=("Verdana", 12))
 
             if self.reminder_var.get() == 1:
-                self.reminder = ttk.Label(self.p7, text="Please mark every date in your calendar from August 28, 2024 to May 17, 2025.")
+                self.reminder = ttk.Label(self.p7, text="Please mark every date in your calendar from August 28, 2024 to May 17, 2025.", font=("Verdana", 12))
                 self.reminder.grid(row=6, column=1)
             
             elif self.reminder_var.get() == 7:
@@ -176,7 +176,7 @@ class User:
                     temp_string = "%Y-%m-%d %H:%M:%S"
 
 
-                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
+                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
                 self.reminder.grid(row=10, column=1)
 
                 for x in range(0, len(dates_to_print)):
@@ -209,7 +209,7 @@ class User:
                     temp_string = "%Y-%m-%d %H:%M:%S"
 
 
-                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
+                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
                 self.reminder.grid(row=10, column=1)
 
                 for x in range(0, len(dates_to_print)):
@@ -241,7 +241,7 @@ class User:
                     temp_string = "%Y-%m-%d %H:%M:%S"
 
 
-                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
+                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
                 self.reminder.grid(row=10, column=1)
 
                 for x in range(0, len(dates_to_print)):
@@ -273,16 +273,16 @@ class User:
                     temp_string = "%Y-%m-%d %H:%M:%S"
 
 
-                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:")
+                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
                 self.reminder.grid(row=10, column=1)
 
                 for x in range(0, len(dates_to_print)):
                     self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
                     self.statement.grid(row=11+x, column=1)
 
-        self.log_out_path = ttk.Button(self.p7, text="Log out", command=self.navigate_home)
+        self.log_out_path = tk.Button(self.p7, text="Log out", command=self.navigate_home, font=("Verdana", 12))
         self.log_out_path.grid(row=12, column=4)  
-        self.options_path = ttk.Button(self.p7, text="Back to Options", command=self.navigate_options)
+        self.options_path = tk.Button(self.p7, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
         self.options_path.grid(row=12, column=5)
 
     def threshold_reminders(self):
@@ -299,7 +299,7 @@ class User:
         self.p3.forget()
         self.p5.pack()
 
-        self.ask_threshold = ttk.Label(self.p5, text="Here are the main quartile thresholds you have passed in dining dollar spending.")
+        self.ask_threshold = ttk.Label(self.p5, text="Here are the main quartile thresholds you have passed in dining dollar spending.", font=("Verdana", 12))
         self.ask_threshold.grid(row=1, column=1)
 
         money_left = self.balance_var.get() / self.dd_var.get()
@@ -307,28 +307,28 @@ class User:
         spent_percent = money_spent * 100
   
         if money_spent >= 1:
-            self.threshold_resp = ttk.Label(self.p5, text="You have used up all of your dining dollars. Don't worry!")
+            self.threshold_resp = ttk.Label(self.p5, text="You have used up all of your dining dollars. Don't worry!", font=("Verdana", 12))
             self.threshold_resp.grid(row=4, column=1)
         elif money_spent >= .75:
             #tkinter label saying user passed 25%, 50%, and 75% threshhold and has spent ____% of their dining dollars
-            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th, 50th, and 75th percentiles of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.")
+            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th, 50th, and 75th percentiles of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
             self.threshold_resp.grid(row=4, column=1)
         elif money_spent >= .50:
             #tkinter label saying user passed 25% and 50% threshhold and has spent ____% of their dining dollars
-            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th and 50th percentiles of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.")
+            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th and 50th percentiles of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
             self.threshold_resp.grid(row=4, column=1)
         elif money_spent >= .25:
             #tkinter label saying user passed 25% threshhold and has spent ____% of their dining dollars
-            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th percentile of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.")
+            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th percentile of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
             self.threshold_resp.grid(row=4, column=1)
         else:
             #tkinter label saying user  has spent ____% of their dining dollars
-            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed no remarkable thresholds of spent dining dollars in your plan yet. You have used up {spent_percent}% of all of your dining dollars.")
+            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed no remarkable thresholds of spent dining dollars in your plan yet. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
             self.threshold_resp.grid(row=4, column=1)
 
-        self.log_out_path = ttk.Button(self.p5, text="Log out", command=self.navigate_home)
+        self.log_out_path = tk.Button(self.p5, text="Log out", command=self.navigate_home, font=("Verdana", 12))
         self.log_out_path.grid(row=7, column=4)
-        self.options_path = ttk.Button(self.p5, text="Back to Options", command=self.navigate_options)
+        self.options_path = tk.Button(self.p5, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
         self.options_path.grid(row=7, column=5)
 
 
@@ -357,12 +357,12 @@ class User:
         daily_spending_rounded = round(daily_spending, 2)
 
         # Divide dining dollars balance by amount of days left till date of dining dollars reset
-        self.ask_suggested = ttk.Label(self.p6, text=f"If you were to spend money every day until your dining dollar plan expired, you would need to spend ${daily_spending_rounded} daily.")
+        self.ask_suggested = ttk.Label(self.p6, text=f"If you were to spend money every day until your dining dollar plan expired, you would need to spend ${daily_spending_rounded} daily.", font=("Verdana", 12))
         self.ask_suggested.grid(row=1, column=1)
 
-        self.log_out_path = ttk.Button(self.p6, text="Log out", command=self.navigate_home)
+        self.log_out_path = tk.Button(self.p6, text="Log out", command=self.navigate_home, font=("Verdana", 12))
         self.log_out_path.grid(row=2, column=4)
-        self.options_path = ttk.Button(self.p6, text="Back to Options", command=self.navigate_options)
+        self.options_path = tk.Button(self.p6, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
         self.options_path.grid(row=2, column=5)
 
     def get_user_info(self):
@@ -374,63 +374,63 @@ class User:
         Returns:
             self.p2 after user clicks Proceed button.
         """
-        self.welcome_label = ttk.Label(self.p1, text="Welcome to our Dining Dollar Interface", font=("Century Gothic", 25))
+        self.welcome_label = ttk.Label(self.p1, text="Welcome to our Dining Dollar Interface", font=("Verdana", 25))
         self.welcome_label.grid(row=1, column=2)
 
-        self.directions_label = ttk.Label(self.p1, text="Please input your login information.", font=("Century Gothic", 15))
+        self.directions_label = ttk.Label(self.p1, text="Please input your login information.", font=("Verdana", 15))
         self.directions_label.grid(row=2, column=2, pady=10)
         # Name label that indicates where to put name
-        self.name_label = ttk.Label(self.p1, text="Name: ", font=("Century Gothic", 12, "bold"))
+        self.name_label = ttk.Label(self.p1, text="Name: ", font=("Verdana", 12, "bold"))
         self.name_label.grid(row=4, column=2, pady=(15, 0))
         # Name entry
-        self.name = ttk.Entry(self.p1, textvariable=self.name_var, font=("Century Gothic", 12))
+        self.name = ttk.Entry(self.p1, textvariable=self.name_var, font=("Verdana", 12))
         self.name.grid(row=5, column=2)
         # Will display inputted text from self.name entry
-        self.verify_name_label = ttk.Label(self.p2, font=("Century Gothic", 12))
+        self.verify_name_label = ttk.Label(self.p2, font=("Verdana", 12))
         self.verify_name_label.grid(row=2, column=2)
 
         # Dining dollar plan label that indicates where to put dining dollar plan
-        self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan: ", font=("Century Gothic", 12, "bold"))
+        self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan: ", font=("Verdana", 12, "bold"))
         self.dd_plan_label.grid(row=7, column=2, pady=(20, 0))
         # Dining dollar plan entry
-        self.dd_plan = ttk.Entry(self.p1, textvariable=self.dd_var, font=("Century Gothic", 12))
+        self.dd_plan = ttk.Entry(self.p1, textvariable=self.dd_var, font=("Verdana", 12))
         self.dd_plan.grid(row=8, column=2)
         # Will display inputted text from self.dd_plan entry
-        self.verify_dd_plan_label = ttk.Label(self.p2, font=("Century Gothic", 12))
+        self.verify_dd_plan_label = ttk.Label(self.p2, font=("Verdana", 12))
         self.verify_dd_plan_label.grid(row=3, column=2)
     
         # Balance label that indicates where to put balance
-        self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance: ", font=("Century Gothic", 12, "bold"))
+        self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance: ", font=("Verdana", 12, "bold"))
         self.balance_label.grid(row=9, column=2, pady=(20, 0))
         # Balance entry
-        self.balance = ttk.Entry(self.p1, textvariable=self.balance_var, font=("Century Gothic", 12))
+        self.balance = ttk.Entry(self.p1, textvariable=self.balance_var, font=("Verdana", 12))
         self.balance.grid(row=10, column=2)
         # Will display inputted text from self.balance entry
-        self.verify_balance_label = ttk.Label(self.p2, font=("Century Gothic", 12))
+        self.verify_balance_label = ttk.Label(self.p2, font=("Verdana", 12))
         self.verify_balance_label.grid(row=4, column=2)
 
         # Today's date label that indicates where to put today's date
-        self.today_label = ttk.Label(self.p1, text="Today's Date (MM/DD/YYYY): ", font=("Century Gothic", 12, "bold"))
+        self.today_label = ttk.Label(self.p1, text="Today's Date (MM/DD/YYYY): ", font=("Verdana", 12, "bold"))
         self.today_label.grid(row=11, column=2, pady=(20, 0))
         # Today's date entry
-        self.today = ttk.Entry(self.p1, textvariable=self.day, font=("Century Gothic", 12))
+        self.today = ttk.Entry(self.p1, textvariable=self.day, font=("Verdana", 12))
         self.today.grid(row=12, column=2)
         # Will display inputted text from self.today entry
-        self.verify_today_label = ttk.Label(self.p2, font=("Century Gothic", 12))
+        self.verify_today_label = ttk.Label(self.p2, font=("Verdana", 12))
         self.verify_today_label.grid(row=5, column=2)
 
         # Semester end label that indicates when to put ending date
-        self.sem_end_label = ttk.Label(self.p1, text="Ending Date (MM/DD/YYYY): ", font=("Century Gothic", 12, "bold"))
+        self.sem_end_label = ttk.Label(self.p1, text="Ending Date (MM/DD/YYYY): ", font=("Verdana", 12, "bold"))
         self.sem_end_label.grid(row=13, column=2, pady=(20, 0))
         # Semester end entry
-        self.sem_end = ttk.Entry(self.p1, textvariable=self.sem_end, font=("Century Gothic", 12))
+        self.sem_end = ttk.Entry(self.p1, textvariable=self.sem_end, font=("Verdana", 12))
         self.sem_end.grid(row=14, column=2)
         # Will display inputted text from self.sem_end entry
-        self.verify_end_label = ttk.Label(self.p2, font=("Century Gothic", 12))
+        self.verify_end_label = ttk.Label(self.p2, font=("Verdana", 12))
         self.verify_end_label.grid(row=6, column=2)
 
         # Proceed button leads to p2; page navigation is in verification()
-        self.proceed = tk.Button(self.p1, text="Proceed", command=self.verification, font=("Century Gothic", 12))
+        self.proceed = tk.Button(self.p1, text="Proceed", command=self.verification, font=("Verdana", 12))
         self.proceed.grid(row=15, column=2, pady=(20, 0))   
 
     def verification(self):
@@ -485,17 +485,17 @@ class User:
             self.p1.forget()
             self.p2.pack()
 
-            self.verify_label = ttk.Label(self.p2, text="Is this information correct?", font=("Century Gothic", 15))
-            self.verify_label.grid(row=1, column=1)
-            self.for_verify_name = ttk.Label(self.p2, text="Name:", font=("Century Gothic", 12, "bold"))
+            self.verify_label = ttk.Label(self.p2, text="Is this information correct?", font=("Verdana", 15))
+            self.verify_label.grid(row=1, column=1, pady=(0, 10))
+            self.for_verify_name = ttk.Label(self.p2, text="Name:", font=("Verdana", 12, "bold"))
             self.for_verify_name.grid(row=2, column=1, sticky="e")
-            self.for_verify_dd = ttk.Label(self.p2, text="Dining Dollar Plan:", font=("Century Gothic", 12, "bold"))
+            self.for_verify_dd = ttk.Label(self.p2, text="Dining Dollar Plan:", font=("Verdana", 12, "bold"))
             self.for_verify_dd.grid(row=3, column=1, sticky="e")
-            self.for_verify_balance = ttk.Label(self.p2, text="Balance:", font=("Century Gothic", 12, "bold"))
+            self.for_verify_balance = ttk.Label(self.p2, text="Balance:", font=("Verdana", 12, "bold"))
             self.for_verify_balance.grid(row=4, column=1, sticky="e")
-            self.for_verify_today = ttk.Label(self.p2, text="Today's Date (MM/DD/YYYY):", font=("Century Gothic", 12, "bold"))
+            self.for_verify_today = ttk.Label(self.p2, text="Today's Date (MM/DD/YYYY):", font=("Verdana", 12, "bold"))
             self.for_verify_today.grid(row=5, column=1, sticky="e")
-            self.for_verify_end = ttk.Label(self.p2, text="Ending Date (MM/DD/YYYY):", font=("Century Gothic", 12, "bold"))
+            self.for_verify_end = ttk.Label(self.p2, text="Ending Date (MM/DD/YYYY):", font=("Verdana", 12, "bold"))
             self.for_verify_end.grid(row=6, column=1, sticky="e")
 
             # Display user name
@@ -509,10 +509,10 @@ class User:
             # Display end date
             self.verify_end_label.config(text=self.sem_end.get())
 
-            self.yes_verify = ttk.Button(self.p2, text="Yes", command=self.options)
-            self.yes_verify.grid(row=9, column=1)
-            self.no_verify = ttk.Button(self.p2, text="No", command=self.navigate_home)
-            self.no_verify.grid(row=9, column=2)
+            self.yes_verify = tk.Button(self.p2, text="Yes", command=self.options, font=("Verdana", 12))
+            self.yes_verify.grid(row=9, column=1, pady=(10,0))
+            self.no_verify = tk.Button(self.p2, text="No", command=self.navigate_home, font=("Verdana", 12))
+            self.no_verify.grid(row=9, column=2, pady=(10,0))
         else:
             messagebox.showerror(title="Error", message=error_str)
 
@@ -530,24 +530,24 @@ class User:
         self.p2.forget()
         self.p3.pack()
 
-        self.ask = ttk.Label(self.p3, text="What would you like to do today?")
+        self.ask = ttk.Label(self.p3, text="What would you like to do today?", font=("Verdana", 15))
         self.ask.grid(row=1, column=1)
 
         # Button that leads to spending_reminders
-        self.spending_path = ttk.Button(self.p3, text="Create a spending reminder", command=self.spending_reminders)
-        self.spending_path.grid(row=2, column=1)
+        self.spending_path = tk.Button(self.p3, text="Create a spending reminder", command=self.spending_reminders, font=("Verdana", 12))
+        self.spending_path.grid(row=2, column=1, pady=(20, 20))
 
         # Button that leads to threshold_reminder
-        self.threshold_path = ttk.Button(self.p3, text="Show thresholds passed", command=self.threshold_reminders)
-        self.threshold_path.grid(row=2, column=2)
+        self.threshold_path = tk.Button(self.p3, text="Show thresholds passed", command=self.threshold_reminders, font=("Verdana", 12))
+        self.threshold_path.grid(row=3, column=1, pady=(0, 20))
 
         # Button that leads to suggested_spending
-        self.suggested_path = ttk.Button(self.p3, text="Get a suggested spending recommendation", command=self.suggested_spending)
-        self.suggested_path.grid(row=2, column=3)
+        self.suggested_path = tk.Button(self.p3, text="Get a suggested spending recommendation", command=self.suggested_spending, font=("Verdana", 12))
+        self.suggested_path.grid(row=4, column=1, pady=(0, 20))
 
         # Button that leads to get_user_info
-        self.log_out_path = ttk.Button(self.p3, text="Log out", command=self.navigate_home)
-        self.log_out_path.grid(row=2, column=4)  
+        self.log_out_path = tk.Button(self.p3, text="Log out", command=self.navigate_home, font=("Verdana", 12))
+        self.log_out_path.grid(row=5, column=1)  
 
     def navigate_home(self):
         """ Allows user to navigate to self.p1 from any other page in the program.
