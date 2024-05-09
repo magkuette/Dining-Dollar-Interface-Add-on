@@ -1,10 +1,7 @@
 """
 Group 4: Margaret Hermanto, Arnav Patel
 Assignment: Final Project INST326
-Date: 4_7_24
-
-Challenges Encountered:
-
+Date: 5_9_24
 """
 import tkinter as tk
 from tkinter import ttk
@@ -482,7 +479,7 @@ class User:
             time.mktime(time.strptime(self.sem_end.get(), date_format))
         except ValueError:
             error_list.append("\n- Invalid date format for ending date.")
-            
+
         # Convert error_list to str to display in messagebox message
         error_str = "".join(error_list)
 
