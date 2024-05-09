@@ -488,13 +488,13 @@ class User:
         daily_spending_rounded = round(daily_spending, 2)
 
         # Divide dining dollars balance by amount of days left till date of dining dollars reset
-        self.ask_suggested = ttk.Label(self.p6, text=f"If you were to spend money every day until your dining dollar plan expired, you would need to spend ${daily_spending_rounded} daily.", font=("Verdana", 12))
+        self.ask_suggested = ttk.Label(self.p6, text=f"If you were to spend money every day until your dining dollar plan expired,\nyou would need to spend ${daily_spending_rounded} daily.", font=("Verdana", 12))
         self.ask_suggested.grid(row=1, column=1)
 
         self.log_out_path = tk.Button(self.p6, text="Log out", command=self.navigate_home, font=("Verdana", 12))
-        self.log_out_path.grid(row=2, column=4)
+        self.log_out_path.grid(row=2, column=1)
         self.options_path = tk.Button(self.p6, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
-        self.options_path.grid(row=2, column=5)
+        self.options_path.grid(row=2, column=2)
 
     def navigate_home(self):
         """ Allows user to navigate to self.p1 from any other page in the program.
