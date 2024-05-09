@@ -89,7 +89,7 @@ class User:
         self.name.grid(row=5, column=2)
         # Will display inputted text from self.name entry
         self.verify_name_label = ttk.Label(self.p2, font=("Verdana", 12))
-        self.verify_name_label.grid(row=2, column=2)
+        self.verify_name_label.grid(row=2, column=2, sticky="w")
 
         # Dining dollar plan label that indicates where to put dining dollar plan
         self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan: ", font=("Verdana", 12, "bold"))
@@ -99,7 +99,7 @@ class User:
         self.dd_plan.grid(row=8, column=2)
         # Will display inputted text from self.dd_plan entry
         self.verify_dd_plan_label = ttk.Label(self.p2, font=("Verdana", 12))
-        self.verify_dd_plan_label.grid(row=3, column=2)
+        self.verify_dd_plan_label.grid(row=3, column=2, sticky="w")
     
         # Balance label that indicates where to put balance
         self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance: ", font=("Verdana", 12, "bold"))
@@ -109,7 +109,7 @@ class User:
         self.balance.grid(row=10, column=2)
         # Will display inputted text from self.balance entry
         self.verify_balance_label = ttk.Label(self.p2, font=("Verdana", 12))
-        self.verify_balance_label.grid(row=4, column=2)
+        self.verify_balance_label.grid(row=4, column=2, sticky="w")
 
         # Today's date label that indicates where to put today's date
         self.today_label = ttk.Label(self.p1, text="Today's Date (MM/DD/YYYY): ", font=("Verdana", 12, "bold"))
@@ -119,7 +119,7 @@ class User:
         self.today.grid(row=12, column=2)
         # Will display inputted text from self.today entry
         self.verify_today_label = ttk.Label(self.p2, font=("Verdana", 12))
-        self.verify_today_label.grid(row=5, column=2)
+        self.verify_today_label.grid(row=5, column=2, sticky="w")
 
         # Semester end label that indicates when to put ending date
         self.sem_end_label = ttk.Label(self.p1, text="Ending Date (MM/DD/YYYY): ", font=("Verdana", 12, "bold"))
@@ -129,7 +129,7 @@ class User:
         self.sem_end.grid(row=14, column=2)
         # Will display inputted text from self.sem_end entry
         self.verify_end_label = ttk.Label(self.p2, font=("Verdana", 12))
-        self.verify_end_label.grid(row=6, column=2)
+        self.verify_end_label.grid(row=6, column=2, sticky="w")
 
         # Proceed button leads to p2; page navigation is in verification()
         self.proceed = tk.Button(self.p1, text="Proceed", command=self.verification, font=("Verdana", 12))
@@ -189,15 +189,15 @@ class User:
 
             self.verify_label = ttk.Label(self.p2, text="Is this information correct?", font=("Verdana", 15))
             self.verify_label.grid(row=1, column=1, pady=(0, 10))
-            self.for_verify_name = ttk.Label(self.p2, text="Name:", font=("Verdana", 12, "bold"))
+            self.for_verify_name = ttk.Label(self.p2, text="Name: ", font=("Verdana", 12, "bold"))
             self.for_verify_name.grid(row=2, column=1, sticky="e")
-            self.for_verify_dd = ttk.Label(self.p2, text="Dining Dollar Plan:", font=("Verdana", 12, "bold"))
+            self.for_verify_dd = ttk.Label(self.p2, text="Dining Dollar Plan: ", font=("Verdana", 12, "bold"))
             self.for_verify_dd.grid(row=3, column=1, sticky="e")
-            self.for_verify_balance = ttk.Label(self.p2, text="Balance:", font=("Verdana", 12, "bold"))
+            self.for_verify_balance = ttk.Label(self.p2, text="Balance: ", font=("Verdana", 12, "bold"))
             self.for_verify_balance.grid(row=4, column=1, sticky="e")
-            self.for_verify_today = ttk.Label(self.p2, text="Today's Date (MM/DD/YYYY):", font=("Verdana", 12, "bold"))
+            self.for_verify_today = ttk.Label(self.p2, text="Today's Date (MM/DD/YYYY): ", font=("Verdana", 12, "bold"))
             self.for_verify_today.grid(row=5, column=1, sticky="e")
-            self.for_verify_end = ttk.Label(self.p2, text="Ending Date (MM/DD/YYYY):", font=("Verdana", 12, "bold"))
+            self.for_verify_end = ttk.Label(self.p2, text="Ending Date (MM/DD/YYYY): ", font=("Verdana", 12, "bold"))
             self.for_verify_end.grid(row=6, column=1, sticky="e")
 
             # Display user name
