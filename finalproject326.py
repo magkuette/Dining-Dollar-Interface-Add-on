@@ -6,7 +6,6 @@ Date: 4_7_24
 Challenges Encountered:
 
 """
-# last updated 4/27/24 657 pm by Maggie
 import tkinter as tk
 
 # Need this for widgets
@@ -182,7 +181,7 @@ class User:
         # Convert error_list to str to display in messagebox message
         error_str = "".join(error_list)
 
-        # If len(error_str) == 0, this means there are not errors. This means the program can proceed.
+        # If len(error_str) == 0, this means there are no errors. This means the program can proceed.
         if len(error_str) == 0:
             self.p1.forget()
             self.p2.pack()
@@ -228,7 +227,6 @@ class User:
             Requested option.
         """
         # page navigation
-        # later on we can add an if statement so we can navigate to options from any page not just self.p2
         self.p2.forget()
         self.p3.pack()
 
@@ -265,7 +263,6 @@ class User:
         self.p4.pack()
         # Get current date using date.today()
         # This school year started on August 28, 2023
-        # day = date.today()
 
         # Based on time between current date and date of dining dollar reset, program will send a notification (tkinter.messagebox.showinfo)
 
@@ -280,41 +277,6 @@ class User:
 
         self.ask_reminder_enter = tk.Button(self.p4, text="Enter", command=self.spending_reminders_helper, font=("Verdana", 12))
         self.ask_reminder_enter.grid(row=4, column=2)
-
-        
-
-        # MIGHT NOT NEED
-        # Check how far away current date is to date of dining dollar reset        
-        # num_days = self.numOfDays(self.day, self.sem_end) #should output a positive number
-        # num_reminders = num_days / reminder_days
-        #
-
-        # Commented out because this was not allowing the GUI to run; figure out later
-
-        # if reminder_days > num_days:
-        #     self.error = tk.messagebox.showwarning(title="Error", message="Preferred number of days is larger than number of days left")
-
-        # elif reminder_days == "1":
-        #     # Creates daily notifications
-        #     pass
-        
-        # elif reminder_days == "7":
-        #     # Creates notifications for every 7 days
-        #     pass
-        
-        # elif reminder_days == "14":
-        #     # Creates notifications for every 14 days
-        #     pass
-
-        # elif reminder_days == "30":
-        #     # Creates notifications for every 30 days
-        #     pass
-
-        # elif reminder_days == "90":
-        #     # Creates notifications for every 90 days
-        #     pass
-
-        # Collect that data and use it to set up date reminder system
     
     def spending_reminders_helper(self):
         error_message = "Please input a valid number (1, 7, 14, 30, or 90)."
