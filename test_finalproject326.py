@@ -162,5 +162,75 @@ Returns:
         self.p7 if user clicks "Enter" after inputting 1, 7, 14, 30, or 90 in the Entry box
         A messagebox that says "Please input a valid number (1, 7, 14, 30, or 90)
 """
-# This test case assumes the code is already running and you have gone through either Test Case #1 or Test Case #2 for the get_user_info function 
+# This test case assumes the code is already running and you have gone through either Test Case #1 or Test Case #2 for the get_user_info function and Test Case #1 for options function
+
+# To test this function, please do the following:
+
+# Check to see that it says "How often would you like to receive reminders? (Every 1, 7, 14, 30, or 90 days)" at the top
+# Check to see that there is an Entry box
+# Check to see that there is an "Enter" button
+
+# Once you have verified the above three, please do the following:
+
+# Input any number other than 1, 7, 14, 30, or 90 and then press "Enter" to see that a messagebox that says "Please input a valid number (1, 7, 14, 30, or 90)" shows up
+# Once you have verified the above, please do the following:
+
+# Input "1" and then press "Enter"
+# Go to Test Case #1 for the spending_reminders_helper function to continue testing
+
+# Input "7" and then press "Enter"
+# Go to Test Case #1 for the spending_reminders_helper function to continue testing
+
+# Input "14" and then press "Enter"
+# Go to Test Case #1 for the spending_reminders_helper function to continue testing
+
+# Input "30" and then press "Enter"
+# Go to Test Case #1 for the spending_reminders_helper function to continue testing
+
+# Input "90" and then press "Enter"
+# Go to Test Case #1 for the spending_reminders_helper function to continue testing
+
+""" Test Case #1 for spending_reminders_helper function: This is a test case to cover the seventh page (self.p7) of the tkinter GUI for
+    finalproject326.py. We are testing this function to show that clicking the "Enter" button on self.p4 works as expected.
+
+    Returns:
+        spending dates
+"""
+# This test case assumes the code is already running and you have gone through either Test Case #1 or Test Case #2 for the get_user_info function, Test Case #1 for options function, and Test Case #1 for spending_reminders function
+
+# If you inputted "1" previously in self.p4 and pressed "Enter", please check that the page has the following:
+
+# A Label that says "You wanted reminders every 1 days. Here are the dates you are reminded to spend. Please mark every date in your calendar from [inputted start date] to [inputted end date]."
+# A "Back to Options" button and a "Log out" button
+# You can now either close out the GUI window and rerun the code to launch the GUI again, press "Back to Options" to test Test Case #1 for options, or press "Log out" to test Test Case #1 or Test Case #2 for get_user_info function
+
+# If you inputted "7" previously in self.p4 and pressed "Enter", please check that the page has the following:
+
+# A Label that says "You wanted reminders every 7 days. Here are the dates you are reminded to spend. Please mark the following dates in your calendar:"
+# A date or list of dates. If there are multiple dates, ensure that there are 7 days in between each listed date.
+# A "Back to Options" button and a "Log out" button
+# You can now either close out the GUI window and rerun the code to launch the GUI again, press "Back to Options" to test Test Case #1 for options, or press "Log out" to test Test Case #1 or Test Case #2 for get_user_info function
+
+
+# If you inputted "14" previously in self.p4 and pressed "Enter", please check that the page has the following:
+
+# A Label that says "You wanted reminders every 14 days. Here are the dates you are reminded to spend. Please mark the following dates in your calendar:"
+# A date or list of dates. If there are multiple dates, ensure that there are 14 days in between each listed date.
+# A "Back to Options" button and a "Log out" button
+# You can now either close out the GUI window and rerun the code to launch the GUI again, press "Back to Options" to test Test Case #1 for options, or press "Log out" to test Test Case #1 or Test Case #2 for get_user_info function
+
+# If you inputted "30" previously in self.p4 and pressed "Enter", please check that the page has the following:
+
+# A Label that says "You wanted reminders every 30 days. Here are the dates you are reminded to spend. Please mark the following dates in your calendar:"
+# A date or list of dates. If there are multiple dates, ensure that there are 30 days in between each listed date.
+# A "Back to Options" button and a "Log out" button
+# You can now either close out the GUI window and rerun the code to launch the GUI again, press "Back to Options" to test Test Case #1 for options, or press "Log out" to test Test Case #1 or Test Case #2 for get_user_info function
+
+# If you inputted "90" previously in self.p4 and pressed "Enter", please check that the page has the following:
+
+# A Label that says "You wanted reminders every 90 days. Here are the dates you are reminded to spend. Please mark the following dates in your calendar:"
+# A date or list of dates. If there are multiple dates, ensure that there are 90 days in between each listed date.
+# A "Back to Options" button and a "Log out" button
+# You can now either close out the GUI window and rerun the code to launch the GUI again, press "Back to Options" to test Test Case #1 for options, or press "Log out" to test Test Case #1 or Test Case #2 for get_user_info function
+
 
