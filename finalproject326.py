@@ -67,6 +67,190 @@ class User:
         # spending_reminders_helper
         self.p7 = tk.Frame(self.root)    
         
+    def get_user_info(self):
+        """ Gets user information including dining dollar plan, current dining dollar balance, as well as name.
+
+        Driver: Margaret Hermanto
+        Navigator: Arnav Patel
+
+        Returns:
+            self.p2 after user clicks Proceed button.
+        """
+        self.welcome_label = ttk.Label(self.p1, text="Welcome to our Dining Dollar Interface", font=("Verdana", 25))
+        self.welcome_label.grid(row=1, column=2)
+
+        self.directions_label = ttk.Label(self.p1, text="Please input your login information.", font=("Verdana", 15))
+        self.directions_label.grid(row=2, column=2, pady=10)
+        # Name label that indicates where to put name
+        self.name_label = ttk.Label(self.p1, text="Name: ", font=("Verdana", 12, "bold"))
+        self.name_label.grid(row=4, column=2, pady=(15, 0))
+        # Name entry
+        self.name = ttk.Entry(self.p1, textvariable=self.name_var, font=("Verdana", 12))
+        self.name.grid(row=5, column=2)
+        # Will display inputted text from self.name entry
+        self.verify_name_label = ttk.Label(self.p2, font=("Verdana", 12))
+        self.verify_name_label.grid(row=2, column=2)
+
+        # Dining dollar plan label that indicates where to put dining dollar plan
+        self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan: ", font=("Verdana", 12, "bold"))
+        self.dd_plan_label.grid(row=7, column=2, pady=(20, 0))
+        # Dining dollar plan entry
+        self.dd_plan = ttk.Entry(self.p1, textvariable=self.dd_var, font=("Verdana", 12))
+        self.dd_plan.grid(row=8, column=2)
+        # Will display inputted text from self.dd_plan entry
+        self.verify_dd_plan_label = ttk.Label(self.p2, font=("Verdana", 12))
+        self.verify_dd_plan_label.grid(row=3, column=2)
+    
+        # Balance label that indicates where to put balance
+        self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance: ", font=("Verdana", 12, "bold"))
+        self.balance_label.grid(row=9, column=2, pady=(20, 0))
+        # Balance entry
+        self.balance = ttk.Entry(self.p1, textvariable=self.balance_var, font=("Verdana", 12))
+        self.balance.grid(row=10, column=2)
+        # Will display inputted text from self.balance entry
+        self.verify_balance_label = ttk.Label(self.p2, font=("Verdana", 12))
+        self.verify_balance_label.grid(row=4, column=2)
+
+        # Today's date label that indicates where to put today's date
+        self.today_label = ttk.Label(self.p1, text="Today's Date (MM/DD/YYYY): ", font=("Verdana", 12, "bold"))
+        self.today_label.grid(row=11, column=2, pady=(20, 0))
+        # Today's date entry
+        self.today = ttk.Entry(self.p1, textvariable=self.day, font=("Verdana", 12))
+        self.today.grid(row=12, column=2)
+        # Will display inputted text from self.today entry
+        self.verify_today_label = ttk.Label(self.p2, font=("Verdana", 12))
+        self.verify_today_label.grid(row=5, column=2)
+
+        # Semester end label that indicates when to put ending date
+        self.sem_end_label = ttk.Label(self.p1, text="Ending Date (MM/DD/YYYY): ", font=("Verdana", 12, "bold"))
+        self.sem_end_label.grid(row=13, column=2, pady=(20, 0))
+        # Semester end entry
+        self.sem_end = ttk.Entry(self.p1, textvariable=self.sem_end, font=("Verdana", 12))
+        self.sem_end.grid(row=14, column=2)
+        # Will display inputted text from self.sem_end entry
+        self.verify_end_label = ttk.Label(self.p2, font=("Verdana", 12))
+        self.verify_end_label.grid(row=6, column=2)
+
+        # Proceed button leads to p2; page navigation is in verification()
+        self.proceed = tk.Button(self.p1, text="Proceed", command=self.verification, font=("Verdana", 12))
+        self.proceed.grid(row=15, column=2, pady=(20, 0))   
+
+    def verification(self):
+        """ Asks user to verify the displayed information concerning them.
+
+        Driver: Margaret Hermanto
+        Navigator: Arnav Patel
+
+        Returns:
+            Either self.p1 or self.p3, depending on the user's answer.
+        """
+        error_list = []
+
+        # Append error message if dining dollar plan is less than 0 or not an integer
+        if self.dd_var.get() < 0:
+            error_list.append("- Dining dollar plan must be a number greater than or equal to 0.")
+        else:
+            # Append error message if dining dollar plan is not an integer
+            # DOESNT WORK
+            try:
+                int(self.dd_var.get())
+            except TypeError:
+                error_list.append("- Dining dollar plan must be a number greater than or equal to 0.")
+
+        # Append error message if balance is less than 0 or not an integer
+        if self.balance_var.get() < 0:
+            error_list.append("\n- Balance must be a number greater than or equal to 0.")
+        else:
+            # DOESNT WORK
+            try:
+                int(self.balance_var.get())
+            except TypeError:
+                error_list.append("\n- Balance must be a number greater than or equal to 0.")
+
+        date_format = "%m/%d/%Y"
+
+        try:
+            time.mktime(time.strptime(self.day.get(), date_format))
+        except ValueError:
+            error_list.append("\n- Invalid date format for today's date")
+
+        try:
+            time.mktime(time.strptime(self.sem_end.get(), date_format))
+        except ValueError:
+            error_list.append("\n- Invalid date format for ending date.")
+
+        # Convert error_list to str to display in messagebox message
+        error_str = "".join(error_list)
+
+        # If len(error_str) == 0, this means there are not errors. This means the program can proceed.
+        if len(error_str) == 0:
+            self.p1.forget()
+            self.p2.pack()
+
+            self.verify_label = ttk.Label(self.p2, text="Is this information correct?", font=("Verdana", 15))
+            self.verify_label.grid(row=1, column=1, pady=(0, 10))
+            self.for_verify_name = ttk.Label(self.p2, text="Name:", font=("Verdana", 12, "bold"))
+            self.for_verify_name.grid(row=2, column=1, sticky="e")
+            self.for_verify_dd = ttk.Label(self.p2, text="Dining Dollar Plan:", font=("Verdana", 12, "bold"))
+            self.for_verify_dd.grid(row=3, column=1, sticky="e")
+            self.for_verify_balance = ttk.Label(self.p2, text="Balance:", font=("Verdana", 12, "bold"))
+            self.for_verify_balance.grid(row=4, column=1, sticky="e")
+            self.for_verify_today = ttk.Label(self.p2, text="Today's Date (MM/DD/YYYY):", font=("Verdana", 12, "bold"))
+            self.for_verify_today.grid(row=5, column=1, sticky="e")
+            self.for_verify_end = ttk.Label(self.p2, text="Ending Date (MM/DD/YYYY):", font=("Verdana", 12, "bold"))
+            self.for_verify_end.grid(row=6, column=1, sticky="e")
+
+            # Display user name
+            self.verify_name_label.config(text=self.name_var.get())
+            # Display dining dollar plan
+            self.verify_dd_plan_label.config(text=self.dd_var.get())
+            # Display balance
+            self.verify_balance_label.config(text=self.balance_var.get())
+            # Display start date
+            self.verify_today_label.config(text=self.day.get())
+            # Display end date
+            self.verify_end_label.config(text=self.sem_end.get())
+
+            self.yes_verify = tk.Button(self.p2, text="Yes", command=self.options, font=("Verdana", 12))
+            self.yes_verify.grid(row=9, column=1, pady=(10,0))
+            self.no_verify = tk.Button(self.p2, text="No", command=self.navigate_home, font=("Verdana", 12))
+            self.no_verify.grid(row=9, column=2, pady=(10,0))
+        else:
+            messagebox.showerror(title="Error", message=error_str)
+
+    def options(self):
+        """ Displays a list of options the user can select.
+
+        Driver: Margaret Hermanto
+        Navigator: Arnav Patel
+
+        Returns:
+            Requested option.
+        """
+        # page navigation
+        # later on we can add an if statement so we can navigate to options from any page not just self.p2
+        self.p2.forget()
+        self.p3.pack()
+
+        self.ask = ttk.Label(self.p3, text="What would you like to do today?", font=("Verdana", 15))
+        self.ask.grid(row=1, column=1)
+
+        # Button that leads to spending_reminders
+        self.spending_path = tk.Button(self.p3, text="Create a spending reminder", command=self.spending_reminders, font=("Verdana", 12))
+        self.spending_path.grid(row=2, column=1, pady=(20, 20))
+
+        # Button that leads to threshold_reminder
+        self.threshold_path = tk.Button(self.p3, text="Show thresholds passed", command=self.threshold_reminders, font=("Verdana", 12))
+        self.threshold_path.grid(row=3, column=1, pady=(0, 20))
+
+        # Button that leads to suggested_spending
+        self.suggested_path = tk.Button(self.p3, text="Get a suggested spending recommendation", command=self.suggested_spending, font=("Verdana", 12))
+        self.suggested_path.grid(row=4, column=1, pady=(0, 20))
+
+        # Button that leads to get_user_info
+        self.log_out_path = tk.Button(self.p3, text="Log out", command=self.navigate_home, font=("Verdana", 12))
+        self.log_out_path.grid(row=5, column=1)
+
     def spending_reminders(self):
         """ Calculates when to send reminders to user to spend dining dollars based on the current date.
 
@@ -365,190 +549,6 @@ class User:
         self.options_path = tk.Button(self.p6, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
         self.options_path.grid(row=2, column=5)
 
-    def get_user_info(self):
-        """ Gets user information including dining dollar plan, current dining dollar balance, as well as name.
-
-        Driver: Margaret Hermanto
-        Navigator: Arnav Patel
-
-        Returns:
-            self.p2 after user clicks Proceed button.
-        """
-        self.welcome_label = ttk.Label(self.p1, text="Welcome to our Dining Dollar Interface", font=("Verdana", 25))
-        self.welcome_label.grid(row=1, column=2)
-
-        self.directions_label = ttk.Label(self.p1, text="Please input your login information.", font=("Verdana", 15))
-        self.directions_label.grid(row=2, column=2, pady=10)
-        # Name label that indicates where to put name
-        self.name_label = ttk.Label(self.p1, text="Name: ", font=("Verdana", 12, "bold"))
-        self.name_label.grid(row=4, column=2, pady=(15, 0))
-        # Name entry
-        self.name = ttk.Entry(self.p1, textvariable=self.name_var, font=("Verdana", 12))
-        self.name.grid(row=5, column=2)
-        # Will display inputted text from self.name entry
-        self.verify_name_label = ttk.Label(self.p2, font=("Verdana", 12))
-        self.verify_name_label.grid(row=2, column=2)
-
-        # Dining dollar plan label that indicates where to put dining dollar plan
-        self.dd_plan_label = ttk.Label(self.p1, text="Dining Dollar Plan: ", font=("Verdana", 12, "bold"))
-        self.dd_plan_label.grid(row=7, column=2, pady=(20, 0))
-        # Dining dollar plan entry
-        self.dd_plan = ttk.Entry(self.p1, textvariable=self.dd_var, font=("Verdana", 12))
-        self.dd_plan.grid(row=8, column=2)
-        # Will display inputted text from self.dd_plan entry
-        self.verify_dd_plan_label = ttk.Label(self.p2, font=("Verdana", 12))
-        self.verify_dd_plan_label.grid(row=3, column=2)
-    
-        # Balance label that indicates where to put balance
-        self.balance_label = ttk.Label(self.p1, text="Current Dining Dollar Balance: ", font=("Verdana", 12, "bold"))
-        self.balance_label.grid(row=9, column=2, pady=(20, 0))
-        # Balance entry
-        self.balance = ttk.Entry(self.p1, textvariable=self.balance_var, font=("Verdana", 12))
-        self.balance.grid(row=10, column=2)
-        # Will display inputted text from self.balance entry
-        self.verify_balance_label = ttk.Label(self.p2, font=("Verdana", 12))
-        self.verify_balance_label.grid(row=4, column=2)
-
-        # Today's date label that indicates where to put today's date
-        self.today_label = ttk.Label(self.p1, text="Today's Date (MM/DD/YYYY): ", font=("Verdana", 12, "bold"))
-        self.today_label.grid(row=11, column=2, pady=(20, 0))
-        # Today's date entry
-        self.today = ttk.Entry(self.p1, textvariable=self.day, font=("Verdana", 12))
-        self.today.grid(row=12, column=2)
-        # Will display inputted text from self.today entry
-        self.verify_today_label = ttk.Label(self.p2, font=("Verdana", 12))
-        self.verify_today_label.grid(row=5, column=2)
-
-        # Semester end label that indicates when to put ending date
-        self.sem_end_label = ttk.Label(self.p1, text="Ending Date (MM/DD/YYYY): ", font=("Verdana", 12, "bold"))
-        self.sem_end_label.grid(row=13, column=2, pady=(20, 0))
-        # Semester end entry
-        self.sem_end = ttk.Entry(self.p1, textvariable=self.sem_end, font=("Verdana", 12))
-        self.sem_end.grid(row=14, column=2)
-        # Will display inputted text from self.sem_end entry
-        self.verify_end_label = ttk.Label(self.p2, font=("Verdana", 12))
-        self.verify_end_label.grid(row=6, column=2)
-
-        # Proceed button leads to p2; page navigation is in verification()
-        self.proceed = tk.Button(self.p1, text="Proceed", command=self.verification, font=("Verdana", 12))
-        self.proceed.grid(row=15, column=2, pady=(20, 0))   
-
-    def verification(self):
-        """ Asks user to verify the displayed information concerning them.
-
-        Driver: Margaret Hermanto
-        Navigator: Arnav Patel
-
-        Returns:
-            Either self.p1 or self.p3, depending on the user's answer.
-        """
-        error_list = []
-
-        # Append error message if dining dollar plan is less than 0 or not an integer
-        if self.dd_var.get() < 0:
-            error_list.append("- Dining dollar plan must be a number greater than or equal to 0.")
-        else:
-            # Append error message if dining dollar plan is not an integer
-            # DOESNT WORK
-            try:
-                int(self.dd_var.get())
-            except TypeError:
-                error_list.append("- Dining dollar plan must be a number greater than or equal to 0.")
-
-        # Append error message if balance is less than 0 or not an integer
-        if self.balance_var.get() < 0:
-            error_list.append("\n- Balance must be a number greater than or equal to 0.")
-        else:
-            # DOESNT WORK
-            try:
-                int(self.balance_var.get())
-            except TypeError:
-                error_list.append("\n- Balance must be a number greater than or equal to 0.")
-
-        date_format = "%m/%d/%Y"
-
-        try:
-            time.mktime(time.strptime(self.day.get(), date_format))
-        except ValueError:
-            error_list.append("\n- Invalid date format for today's date")
-
-        try:
-            time.mktime(time.strptime(self.sem_end.get(), date_format))
-        except ValueError:
-            error_list.append("\n- Invalid date format for ending date.")
-
-        # Convert error_list to str to display in messagebox message
-        error_str = "".join(error_list)
-
-        # If len(error_str) == 0, this means there are not errors. This means the program can proceed.
-        if len(error_str) == 0:
-            self.p1.forget()
-            self.p2.pack()
-
-            self.verify_label = ttk.Label(self.p2, text="Is this information correct?", font=("Verdana", 15))
-            self.verify_label.grid(row=1, column=1, pady=(0, 10))
-            self.for_verify_name = ttk.Label(self.p2, text="Name:", font=("Verdana", 12, "bold"))
-            self.for_verify_name.grid(row=2, column=1, sticky="e")
-            self.for_verify_dd = ttk.Label(self.p2, text="Dining Dollar Plan:", font=("Verdana", 12, "bold"))
-            self.for_verify_dd.grid(row=3, column=1, sticky="e")
-            self.for_verify_balance = ttk.Label(self.p2, text="Balance:", font=("Verdana", 12, "bold"))
-            self.for_verify_balance.grid(row=4, column=1, sticky="e")
-            self.for_verify_today = ttk.Label(self.p2, text="Today's Date (MM/DD/YYYY):", font=("Verdana", 12, "bold"))
-            self.for_verify_today.grid(row=5, column=1, sticky="e")
-            self.for_verify_end = ttk.Label(self.p2, text="Ending Date (MM/DD/YYYY):", font=("Verdana", 12, "bold"))
-            self.for_verify_end.grid(row=6, column=1, sticky="e")
-
-            # Display user name
-            self.verify_name_label.config(text=self.name_var.get())
-            # Display dining dollar plan
-            self.verify_dd_plan_label.config(text=self.dd_var.get())
-            # Display balance
-            self.verify_balance_label.config(text=self.balance_var.get())
-            # Display start date
-            self.verify_today_label.config(text=self.day.get())
-            # Display end date
-            self.verify_end_label.config(text=self.sem_end.get())
-
-            self.yes_verify = tk.Button(self.p2, text="Yes", command=self.options, font=("Verdana", 12))
-            self.yes_verify.grid(row=9, column=1, pady=(10,0))
-            self.no_verify = tk.Button(self.p2, text="No", command=self.navigate_home, font=("Verdana", 12))
-            self.no_verify.grid(row=9, column=2, pady=(10,0))
-        else:
-            messagebox.showerror(title="Error", message=error_str)
-
-    def options(self):
-        """ Displays a list of options the user can select.
-
-        Driver: Margaret Hermanto
-        Navigator: Arnav Patel
-
-        Returns:
-            Requested option.
-        """
-        # page navigation
-        # later on we can add an if statement so we can navigate to options from any page not just self.p2
-        self.p2.forget()
-        self.p3.pack()
-
-        self.ask = ttk.Label(self.p3, text="What would you like to do today?", font=("Verdana", 15))
-        self.ask.grid(row=1, column=1)
-
-        # Button that leads to spending_reminders
-        self.spending_path = tk.Button(self.p3, text="Create a spending reminder", command=self.spending_reminders, font=("Verdana", 12))
-        self.spending_path.grid(row=2, column=1, pady=(20, 20))
-
-        # Button that leads to threshold_reminder
-        self.threshold_path = tk.Button(self.p3, text="Show thresholds passed", command=self.threshold_reminders, font=("Verdana", 12))
-        self.threshold_path.grid(row=3, column=1, pady=(0, 20))
-
-        # Button that leads to suggested_spending
-        self.suggested_path = tk.Button(self.p3, text="Get a suggested spending recommendation", command=self.suggested_spending, font=("Verdana", 12))
-        self.suggested_path.grid(row=4, column=1, pady=(0, 20))
-
-        # Button that leads to get_user_info
-        self.log_out_path = tk.Button(self.p3, text="Log out", command=self.navigate_home, font=("Verdana", 12))
-        self.log_out_path.grid(row=5, column=1)  
-
     def navigate_home(self):
         """ Allows user to navigate to self.p1 from any other page in the program.
 
@@ -576,7 +576,6 @@ class User:
         self.p5.forget()
         self.p6.forget()
         self.p7.forget()
-
 
 def main():
     """ Displays information to the user using User functions
