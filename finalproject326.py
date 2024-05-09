@@ -62,6 +62,12 @@ class User:
         self.p7 = tk.Frame(self.root)    
 
         self.get_user_info()
+        
+        # self.log_out_path = tk.Button(self.root, text="Log out", command=self.navigate_home, font=("Verdana", 12))
+        # self.log_out_path.pack()  
+        # self.options_path = tk.Button(self.root, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
+        # self.options_path.pack()
+
 
     def spending_reminders(self):
         """ Calculates when to send reminders to user to spend dining dollars based on the current date.
@@ -80,6 +86,7 @@ class User:
         self.ask_reminder = ttk.Label(self.p4, text="How often would you like to receive reminders? (Every 1, 7, 14, 30, or 90 days)", font=("Verdana", 15))
         self.ask_reminder.grid(row=1, column=1)
 
+        self.reminder_var.set("")
         # Enter reminder frequency
         # what the user inputted is stored into self.reminder_var (replace future reminder_days with self.reminder_var. unless u set it equal to that that might work)
         self.ask_reminder_entry = ttk.Entry(self.p4, textvariable=self.reminder_var, font=("Verdana", 12))
@@ -136,8 +143,6 @@ class User:
                 for x in range(0, len(self.dates_to_print)):
                     self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
                     self.statement.grid(row=11+x, column=1)
-
-                self.dates_to_print.clear()
             
             elif self.reminder_var.get() == 14:
                 date_format = "%m/%d/%Y"
@@ -169,8 +174,6 @@ class User:
                 for x in range(0, len(self.dates_to_print)):
                     self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
                     self.statement.grid(row=11+x, column=1)
-
-                self.dates_to_print.clear()
 
             elif self.reminder_var.get() == 30:
                 date_format = "%m/%d/%Y"
@@ -204,6 +207,7 @@ class User:
                     self.statement.grid(row=11+x, column=1)
 
                 self.dates_to_print.clear()
+                self.reminder_var.config(text="")
 
             elif self.reminder_var.get() == 90:
                 date_format = "%m/%d/%Y"
@@ -235,8 +239,6 @@ class User:
                 for x in range(0, len(self.dates_to_print)):
                     self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
                     self.statement.grid(row=11+x, column=1)
-
-                self.dates_to_print.clear()
 
         self.log_out_path = tk.Button(self.p7, text="Log out", command=self.navigate_home, font=("Verdana", 12))
         self.log_out_path.grid(row=12, column=4)  
@@ -474,6 +476,7 @@ class User:
             Requested option.
         """
         # Page navigation
+        
         self.p2.forget()
         self.p3.pack()
 
