@@ -18,13 +18,32 @@ import datetime
 class User:
     """ Creates a user object based on an actual program user.
 
-    Attributes
+    Attributes:
+        self.name_var: a global variable for the inputted user name.
+        self.dd_var: a global variable for the inputted dining dollar plan amount.
+        self.balance_var: a global variable for the inputted balance remaining.
+        self.reminder_var: a global variable for how often the user wants spending reminders.
+        self.day: a global variable for the current date.
+        self.sem_end: a global variable for the ending date.
+        self.days_total: a global variable for the total number of days between the starting and ending dates.
     """
 
     def __init__(self, root):
-        """
+        """ Initializes the GUI and loads the first page.
+
         Driver: Margaret Hermanto
         Navigator: Arnav Patel
+
+        Args:
+            root: a collection of all the pages in this tkinter GUI.
+        
+        Side effects:
+            Updates the value of self.name_var to user input.
+            Updates the value of self.dd_var to user input.
+            Updates the value of self.balance_var to user input.
+            Updates the value of self.reminder_var to user input.
+            Updates the value of self.day to user input.
+            Updates the value of self.sem_end to user input.
         """
         self.root = root
 
@@ -76,7 +95,7 @@ class User:
         Navigator: Margaret Hermanto
 
         Returns:
-            A tkinter messagebox with a message reminding users to spend dining dollars.
+            self.p7 after user clicks Enter button.
         """
         # Page navigation
         self.p3.forget()
@@ -88,7 +107,7 @@ class User:
 
         self.reminder_var.set("")
         # Enter reminder frequency
-        # what the user inputted is stored into self.reminder_var (replace future reminder_days with self.reminder_var. unless u set it equal to that that might work)
+        # what the user inputted is stored into self.reminder_var (replace future reminder_days with self.reminder_var.
         self.ask_reminder_entry = ttk.Entry(self.p4, textvariable=self.reminder_var, font=("Verdana", 12))
         self.ask_reminder_entry.grid(row=2, column=1)
         
@@ -97,6 +116,15 @@ class User:
         self.ask_reminder_enter.grid(row=4, column=2)
 
     def spending_reminders_helper(self):
+        """ Calculates when to send reminders to user to spend dining dollars based on the current date.
+
+        Driver: Arnav Patel
+        Navigator: Margaret Hermanto
+
+        Returns:
+            A tkinter messagebox with a message reminding users to spend dining dollars.
+        """
+        
         # If the user input something other than 1, 7, 14, 30, or 90, the program will show a messagebox
         if (self.reminder_var.get() != 1) and (self.reminder_var.get() != 7) and (self.reminder_var.get() != 14) and (self.reminder_var.get() != 30) and (self.reminder_var.get() != 90) :
             messagebox.showerror(title="Error", message="Please input a valid number (1, 7, 14, 30, or 90)")
@@ -108,16 +136,20 @@ class User:
             self.input_reminder = ttk.Label(self.p7, text=f"You wanted reminders every {self.reminder_var.get()} days. Here are the dates you are reminded to spend.", font=("Verdana", 12))
             self.input_reminder.grid(row=4, column=1)
 
+            # output if user inputs 1 in spending_reminders
             if self.reminder_var.get() == 1:
                 self.reminder = ttk.Label(self.p7, text=f"Please mark every date in your calendar from {self.day.get()} to {self.sem_end.get()}.", font=("Verdana", 12))
                 self.reminder.grid(row=6, column=1)
             
+            # output if user inputs 7 in spending_reminders
             elif self.reminder_var.get() == 7:
                 date_format = "%m/%d/%Y"
 
+                # Parses the date string into a time tuple and then into a float to be able to do operations
                 date_today = time.mktime(time.strptime(self.day.get(), date_format))
                 end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
                 diff = end_date - date_today
+                # Divides total seconds between dates by seconds in 24 hours to figure out how many days the user should be reminded
                 dates_num = int(diff / 86400)
 
                 self.days_total = dates_num
@@ -128,6 +160,7 @@ class User:
                 temp = self.day.get()
                 temp_string = "%m/%d/%Y"
 
+                # Adds elements to a list based on how many days after the value of the current date it is
                 for y in range(0, int(dates)):
                     
                     current_date_temp = datetime.datetime.strptime(temp, temp_string)
@@ -140,16 +173,20 @@ class User:
                 self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
                 self.reminder.grid(row=10, column=1)
 
+                # Prints elements of list out 1 line at a time on GUI page
                 for x in range(0, len(self.dates_to_print)):
                     self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
                     self.statement.grid(row=11+x, column=1)
-            
+
+            # output if user inputs 14 in spending_reminders
             elif self.reminder_var.get() == 14:
                 date_format = "%m/%d/%Y"
 
+                # Parses the date string into a time tuple and then into a float to be able to do operations
                 date_today = time.mktime(time.strptime(self.day.get(), date_format))
                 end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
                 diff = end_date - date_today
+                # Divides total seconds between dates by seconds in 24 hours to figure out how many days the user should be reminded
                 dates_num = int(diff / 86400)
 
                 self.days_total = dates_num
@@ -160,6 +197,7 @@ class User:
                 temp = self.day.get()
                 temp_string = "%m/%d/%Y"
 
+                # Adds elements to a list based on how many days after the value of the current date it is
                 for y in range(0, int(dates)):
                     
                     current_date_temp = datetime.datetime.strptime(temp, temp_string)
@@ -171,16 +209,20 @@ class User:
                 self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
                 self.reminder.grid(row=10, column=1)
 
+                # Prints elements of list out 1 line at a time on GUI page
                 for x in range(0, len(self.dates_to_print)):
                     self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
                     self.statement.grid(row=11+x, column=1)
-
+            
+            # output if user inputs 30 in spending_reminders
             elif self.reminder_var.get() == 30:
                 date_format = "%m/%d/%Y"
 
+                # Parses the date string into a time tuple and then into a float to be able to do operations
                 date_today = time.mktime(time.strptime(self.day.get(), date_format))
                 end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
                 diff = end_date - date_today
+                # Divides total seconds between dates by seconds in 24 hours to figure out how many days the user should be reminded
                 dates_num = int(diff / 86400)
 
                 self.days_total = dates_num
@@ -191,6 +233,7 @@ class User:
                 temp = self.day.get()
                 temp_string = "%m/%d/%Y"
 
+                # Adds elements to a list based on how many days after the value of the current date it is
                 for y in range(0, int(dates)):
                     
                     current_date_temp = datetime.datetime.strptime(temp, temp_string)
@@ -202,6 +245,7 @@ class User:
                 self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
                 self.reminder.grid(row=10, column=1)
 
+                # Prints elements of list out 1 line at a time on GUI page
                 for x in range(0, len(self.dates_to_print)):
                     self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
                     self.statement.grid(row=11+x, column=1)
@@ -209,12 +253,15 @@ class User:
                 self.dates_to_print.clear()
                 self.reminder_var.config(text="")
 
+            # output if user inputs 90 in spending_reminders
             elif self.reminder_var.get() == 90:
                 date_format = "%m/%d/%Y"
 
+                # Parses the date string into a time tuple and then into a float to be able to do operations
                 date_today = time.mktime(time.strptime(self.day.get(), date_format))
                 end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
                 diff = end_date - date_today
+                # Divides total seconds between dates by seconds in 24 hours to figure out how many days the user should be reminded
                 dates_num = int(diff / 86400)
 
                 self.days_total = dates_num
@@ -224,7 +271,8 @@ class User:
 
                 temp = self.day.get()
                 temp_string = "%m/%d/%Y"
-
+                
+                # Adds elements to a list based on how many days after the value of the current date it is
                 for y in range(0, int(dates)):
                     
                     current_date_temp = datetime.datetime.strptime(temp, temp_string)
@@ -235,11 +283,13 @@ class User:
 
                 self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
                 self.reminder.grid(row=10, column=1)
-
+                
+                # Prints elements of list out 1 line at a time on GUI page
                 for x in range(0, len(self.dates_to_print)):
                     self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
                     self.statement.grid(row=11+x, column=1)
 
+        # Buttons to navigate to page 1 and page 3 of the GUI, respectively
         self.log_out_path = tk.Button(self.p7, text="Log out", command=self.navigate_home, font=("Verdana", 12))
         self.log_out_path.grid(row=12, column=4)  
         self.options_path = tk.Button(self.p7, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
@@ -286,6 +336,7 @@ class User:
             self.threshold_resp = ttk.Label(self.p5, text=f"You have passed no remarkable thresholds of spent dining dollars in your plan yet. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
             self.threshold_resp.grid(row=4, column=1)
 
+        # Buttons to navigate to page 1 and 3 of the GUI, respectively
         self.log_out_path = tk.Button(self.p5, text="Log out", command=self.navigate_home, font=("Verdana", 12))
         self.log_out_path.grid(row=7, column=4)
         self.options_path = tk.Button(self.p5, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
@@ -293,6 +344,9 @@ class User:
 
     def suggested_spending(self):
         """ Calculates a suggested average amount of money they could spend daily based on their remaining dining dollar balance.
+
+        Driver: Arnav Patel
+        Navigator: Margaret Hermanto
 
         Returns:
             A message letting users know how much money they could spend daily to spend their dining dollar balance.
@@ -303,20 +357,23 @@ class User:
 
         date_format = "%m/%d/%Y"
 
+        # Parses the date string into a time tuple and then into a float to be able to do operations
         date_today = time.mktime(time.strptime(self.day.get(), date_format))
         end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
         diff = end_date - date_today
+        # Divides total seconds between dates by seconds in 24 hours to figure out how many days the user should be reminded
         dates_num = int(diff / 86400)
 
         self.days_total = dates_num
 
+        # Finds average by taking balance and dividing it by total days between the start and end date
         daily_spending = self.balance_var.get() / self.days_total
         daily_spending_rounded = round(daily_spending, 2)
 
-        # Divide dining dollars balance by amount of days left till date of dining dollars reset
         self.ask_suggested = ttk.Label(self.p6, text=f"If you were to spend money every day until your dining dollar plan expired,\nyou would need to spend ${daily_spending_rounded} daily.", font=("Verdana", 12))
         self.ask_suggested.grid(row=1, column=1)
 
+        # Buttons to navigate to page 1 and 3 of the GUI, respectively
         self.log_out_path = tk.Button(self.p6, text="Log out", command=self.navigate_home, font=("Verdana", 12))
         self.log_out_path.grid(row=3, column=1)
         self.options_path = tk.Button(self.p6, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
@@ -398,6 +455,12 @@ class User:
 
         Returns:
             Either self.p1 or self.p3, depending on the user's answer.
+
+        Raises:
+            ValueError: - Invalid date format for today's date.
+            ValueError: - Invalid date format for ending date.
+            ValueError: - Dining dollar plan must be a number greater than or equal to 0.
+            ValueError: - Balance must be a number greater than or equal to 0.
         """
         error_list = []
 
@@ -473,7 +536,7 @@ class User:
         Navigator: Arnav Patel
 
         Returns:
-            Requested option.
+            Requested option and its corresponding page in the GUI.
         """
         # Page navigation
         
@@ -504,6 +567,9 @@ class User:
 
         Driver: Margaret Hermanto
         Navigator: Arnav Patel
+
+        Returns:
+            self.p1 after user clicks Log out button.
         """
         # Pack self.p1
         self.p1.pack()
@@ -520,6 +586,9 @@ class User:
 
         Driver: Margaret Hermanto
         Navigator: Arnav Patel
+
+        Returns:
+            self.p3 after user clicks Back to Options button.
         """
         # Pack self.p3
         self.p3.pack()
