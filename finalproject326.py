@@ -148,23 +148,10 @@ class User:
         # Append error message if dining dollar plan is less than 0 or not an integer
         if self.dd_var.get() < 0:
             error_list.append("- Dining dollar plan must be a number greater than or equal to 0.")
-        else:
-            # Append error message if dining dollar plan is not an integer
-            # DOESNT WORK
-            try:
-                int(self.dd_var.get())
-            except TypeError:
-                error_list.append("- Dining dollar plan must be a number greater than or equal to 0.")
 
         # Append error message if balance is less than 0 or not an integer
         if self.balance_var.get() < 0:
             error_list.append("\n- Balance must be a number greater than or equal to 0.")
-        else:
-            # DOESNT WORK
-            try:
-                int(self.balance_var.get())
-            except TypeError:
-                error_list.append("\n- Balance must be a number greater than or equal to 0.")
 
         date_format = "%m/%d/%Y"
 
@@ -279,10 +266,8 @@ class User:
         self.ask_reminder_enter.grid(row=4, column=2)
     
     def spending_reminders_helper(self):
-        error_message = "Please input a valid number (1, 7, 14, 30, or 90)."
-
         if (self.reminder_var.get() != 1) and (self.reminder_var.get() != 7) and (self.reminder_var.get() != 14) and (self.reminder_var.get() != 30) and (self.reminder_var.get() != 90) :
-            messagebox.showerror(title="Error", message=error_message)
+            messagebox.showerror(title="Error", message="Please input a valid number (1, 7, 14, 30, or 90)")
         else:
             # Page navigation
             self.p4.forget()
@@ -539,28 +524,13 @@ class User:
         self.p6.forget()
         self.p7.forget()
 
-def main():
-    """ Displays information to the user using User functions
-
-    Returns:
-        Message of information user requested.
-    """
-    
-    pass
-    
-
-if __name__ == "__main__":
-    """ Calls the main function
-    """
-    pass
-
 # Keeps Tkinter running
 root = tk.Tk()
 
 # Resolution of the window
 root.geometry("1400x700")
 
-# Instance of User
+# Call User
 user_instance = User(root)
 
 # Keeps Tkinter running
