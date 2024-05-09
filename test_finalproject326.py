@@ -234,3 +234,52 @@ Returns:
 # You can now either close out the GUI window and rerun the code to launch the GUI again, press "Back to Options" to test Test Case #1 for options, or press "Log out" to test Test Case #1 or Test Case #2 for get_user_info function
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+""" Test Case #1 for suggested_spending function: This is a test case to cover the sixth page of the tkinter GUI for
+    finalproject326.py. We are testing this function to show that the output and buttons on this page work as expected.
+
+Returns:
+    A message letting users know how much money they could spend daily to spend their dining dollar balance.
+    self.p1 if user clicks Log out button.
+    self.p3 if user clicks Back to Options button.
+ """
+
+# This test case assumes the code is already running and you have gone through either Test Case #1 or Test Case #2 for the get_user_info function and Test Case #1 for options function.
+
+# Now, you should be on the options page. From here, click the "Get a suggested spending recommendation" button.
+# This should take you to page 6 of the GUI. There is no input required for this page.
+
+# To see if this test was successful, the GUI should load a message following this syntax: 
+# ""If you were to spend money every day until your dining dollar plan expired, you would need to spend $___ daily."
+
+# You can now either close out the GUI window and rerun the code to launch the GUI again or press the "Log out" or "Back to Options" buttons.
+# If you press the "Log out" button, go to the Test Case #1 or #2 for get_user_info function. If you press the "Back to Options" button, go to the Test Case #1 for options function.
+
+
+
+# These are all of the test cases we have written for the program. They cover all of the user functionality for this tkinter GUI.
+
+
