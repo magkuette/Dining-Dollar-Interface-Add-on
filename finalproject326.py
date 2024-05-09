@@ -29,13 +29,13 @@ class User:
     """
 
     def __init__(self, root):
-        """ Initializes the GUI and loads the first page.
+        """ Initializes the GUI and sets up all of the program's pages (self.p1 - self.p7). Only packs self.p1.
 
         Driver: Margaret Hermanto
         Navigator: Arnav Patel
 
         Args:
-            root: a collection of all the pages in this tkinter GUI.
+            root: the window that all of the Frames (self.p1 - self.p7) are packed into for this Tkinter GUI
         
         Side effects:
             Updates the value of self.name_var to user input.
@@ -66,9 +66,6 @@ class User:
         self.sem_end = tk.StringVar()
         self.days_total = 0
 
-        # Call get_user_info function (only need to call this first function because the rest of the functions will be called later on throughout the code through buttons)
-        # self.get_user_info()
-
         # options()
         self.p3 = tk.Frame(self.root)
         # spending_reminders()
@@ -80,49 +77,45 @@ class User:
         # spending_reminders_helper
         self.p7 = tk.Frame(self.root)    
 
+        # Call get_user_info function (only need to call this first function because the rest of the functions will be called later on throughout the code through buttons)
         self.get_user_info()
         
-        # self.log_out_path = tk.Button(self.root, text="Log out", command=self.navigate_home, font=("Verdana", 12))
-        # self.log_out_path.pack()  
-        # self.options_path = tk.Button(self.root, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
-        # self.options_path.pack()
-
-
     def spending_reminders(self):
-        """ Calculates when to send reminders to user to spend dining dollars based on the current date.
+        """ Takes user input to determine what values are to be plugged into spending_reminders_helper
 
         Driver: Arnav Patel
         Navigator: Margaret Hermanto
 
         Returns:
-            self.p7 after user clicks Enter button.
+            self.p7 after user clicks "Enter" button.
         """
         # Page navigation
         self.p3.forget()
         self.p4.pack()
 
-        # Ask user how often they want reminders with tkinter prompt (can be any number or set like 1, 7, 14, 30, 90)
+        # Ask user how often they want reminders (can be any number or set like 1, 7, 14, 30, 90)
         self.ask_reminder = ttk.Label(self.p4, text="How often would you like to receive reminders? (Every 1, 7, 14, 30, or 90 days)", font=("Verdana", 15))
         self.ask_reminder.grid(row=1, column=1)
 
+        # Deletes any previously-inputted user input from self.ask_reminder_entry
         self.reminder_var.set("")
-        # Enter reminder frequency
-        # what the user inputted is stored into self.reminder_var (replace future reminder_days with self.reminder_var.
+
+        # User enters reminder frequency
         self.ask_reminder_entry = ttk.Entry(self.p4, textvariable=self.reminder_var, font=("Verdana", 12))
         self.ask_reminder_entry.grid(row=2, column=1)
         
-        # Enter button that will lead to spending_reminders_helper
+        # "Enter" button that will lead to spending_reminders_helper
         self.ask_reminder_enter = tk.Button(self.p4, text="Enter", command=self.spending_reminders_helper, font=("Verdana", 12))
         self.ask_reminder_enter.grid(row=4, column=2)
 
     def spending_reminders_helper(self):
-        """ Calculates when to send reminders to user to spend dining dollars based on the current date.
+        """ Calculates when the user should set reminders to spend dining dollars based on the current date.
 
         Driver: Arnav Patel
         Navigator: Margaret Hermanto
 
         Returns:
-            A tkinter messagebox with a message reminding users to spend dining dollars.
+            A list of dates corresponding to the values that the user inputted in spending_reminders.
         """
         
         # If the user input something other than 1, 7, 14, 30, or 90, the program will show a messagebox
@@ -136,12 +129,12 @@ class User:
             self.input_reminder = ttk.Label(self.p7, text=f"You wanted reminders every {self.reminder_var.get()} days. Here are the dates you are reminded to spend.", font=("Verdana", 12))
             self.input_reminder.grid(row=4, column=1)
 
-            # output if user inputs 1 in spending_reminders
+            # Output if user inputs 1 in spending_reminders
             if self.reminder_var.get() == 1:
                 self.reminder = ttk.Label(self.p7, text=f"Please mark every date in your calendar from {self.day.get()} to {self.sem_end.get()}.", font=("Verdana", 12))
                 self.reminder.grid(row=6, column=1)
             
-            # output if user inputs 7 in spending_reminders
+            # Output if user inputs 7 in spending_reminders
             elif self.reminder_var.get() == 7:
                 date_format = "%m/%d/%Y"
 
@@ -178,7 +171,7 @@ class User:
                     self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
                     self.statement.grid(row=11+x, column=1)
 
-            # output if user inputs 14 in spending_reminders
+            # Output if user inputs 14 in spending_reminders
             elif self.reminder_var.get() == 14:
                 date_format = "%m/%d/%Y"
 
@@ -214,7 +207,7 @@ class User:
                     self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
                     self.statement.grid(row=11+x, column=1)
             
-            # output if user inputs 30 in spending_reminders
+            # Output if user inputs 30 in spending_reminders
             elif self.reminder_var.get() == 30:
                 date_format = "%m/%d/%Y"
 
@@ -253,7 +246,7 @@ class User:
                 self.dates_to_print.clear()
                 self.reminder_var.config(text="")
 
-            # output if user inputs 90 in spending_reminders
+            # Output if user inputs 90 in spending_reminders
             elif self.reminder_var.get() == 90:
                 date_format = "%m/%d/%Y"
 
@@ -289,11 +282,11 @@ class User:
                     self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
                     self.statement.grid(row=11+x, column=1)
 
-        # Buttons to navigate to page 1 and page 3 of the GUI, respectively
+        # Buttons to navigate to page 1 (self.p1) and page 3 (self.p3) of the GUI, respectively
         self.log_out_path = tk.Button(self.p7, text="Log out", command=self.navigate_home, font=("Verdana", 12))
-        self.log_out_path.grid(row=12, column=4)  
+        self.log_out_path.grid(row=13, column=3)  
         self.options_path = tk.Button(self.p7, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
-        self.options_path.grid(row=12, column=5)
+        self.options_path.grid(row=12, column=3)
 
     def threshold_reminders(self):
         """ Calculates when dining dollar balance has reached certain thresholds based on the current date and date of dining dollar reset.
@@ -320,27 +313,27 @@ class User:
             self.threshold_resp = ttk.Label(self.p5, text="You have used up all of your dining dollars. Don't worry!", font=("Verdana", 12))
             self.threshold_resp.grid(row=4, column=1)
         elif money_spent >= .75:
-            #tkinter label saying user passed 25%, 50%, and 75% threshhold and has spent ____% of their dining dollars
+            # Tkinter label saying user passed 25%, 50%, and 75% threshhold and has spent ____% of their dining dollars
             self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th, 50th, and 75th percentiles of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
             self.threshold_resp.grid(row=4, column=1)
         elif money_spent >= .50:
-            #tkinter label saying user passed 25% and 50% threshhold and has spent ____% of their dining dollars
+            # Tkinter label saying user passed 25% and 50% threshhold and has spent ____% of their dining dollars
             self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th and 50th percentiles of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
             self.threshold_resp.grid(row=4, column=1)
         elif money_spent >= .25:
-            #tkinter label saying user passed 25% threshhold and has spent ____% of their dining dollars
+            # Tkinter label saying user passed 25% threshhold and has spent ____% of their dining dollars
             self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th percentile of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
             self.threshold_resp.grid(row=4, column=1)
         else:
-            #tkinter label saying user  has spent ____% of their dining dollars
+            # Tkinter label saying user  has spent ____% of their dining dollars
             self.threshold_resp = ttk.Label(self.p5, text=f"You have passed no remarkable thresholds of spent dining dollars in your plan yet. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
             self.threshold_resp.grid(row=4, column=1)
 
-        # Buttons to navigate to page 1 and 3 of the GUI, respectively
+        # Buttons to navigate to page 1 (self.p1) and 3 (self.p3) of the GUI, respectively
         self.log_out_path = tk.Button(self.p5, text="Log out", command=self.navigate_home, font=("Verdana", 12))
-        self.log_out_path.grid(row=7, column=4)
+        self.log_out_path.grid(row=8, column=3)
         self.options_path = tk.Button(self.p5, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
-        self.options_path.grid(row=7, column=5)
+        self.options_path.grid(row=7, column=3)
 
     def suggested_spending(self):
         """ Calculates a suggested average amount of money they could spend daily based on their remaining dining dollar balance.
@@ -373,11 +366,11 @@ class User:
         self.ask_suggested = ttk.Label(self.p6, text=f"If you were to spend money every day until your dining dollar plan expired,\nyou would need to spend ${daily_spending_rounded} daily.", font=("Verdana", 12))
         self.ask_suggested.grid(row=1, column=1)
 
-        # Buttons to navigate to page 1 and 3 of the GUI, respectively
+        # Buttons to navigate to page 1 (self.p1) and 3 (self.p3) of the GUI, respectively
         self.log_out_path = tk.Button(self.p6, text="Log out", command=self.navigate_home, font=("Verdana", 12))
-        self.log_out_path.grid(row=3, column=1)
+        self.log_out_path.grid(row=3, column=3)
         self.options_path = tk.Button(self.p6, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
-        self.options_path.grid(row=2, column=1)
+        self.options_path.grid(row=2, column=3)
         
     def get_user_info(self):
         """ Gets user information including dining dollar plan, current dining dollar balance, as well as name.
@@ -443,7 +436,7 @@ class User:
         self.verify_end_label = ttk.Label(self.p2, font=("Verdana", 12))
         self.verify_end_label.grid(row=6, column=2, sticky="w")
 
-        # Proceed button leads to p2; page navigation is in verification()
+        # Proceed button leads to self.p2; page navigation is in verification()
         self.proceed = tk.Button(self.p1, text="Proceed", command=self.verification, font=("Verdana", 12))
         self.proceed.grid(row=15, column=2, pady=(20, 0))   
 
@@ -462,17 +455,18 @@ class User:
             ValueError: - Dining dollar plan must be a number greater than or equal to 0.
             ValueError: - Balance must be a number greater than or equal to 0.
         """
+        # Error messages will be appended to this list
         error_list = []
 
-        # Append error message if dining dollar plan is less than 0 or not an integer
+        # Append error message if dining dollar plan (self.dd_var) is less than 0 or not an integer
         if self.dd_var.get() < 0:
             error_list.append("- Dining dollar plan must be a number greater than or equal to 0.")
 
-        # Append error message if balance is less than 0 or not an integer
+        # Append error message if balance (self.balance_var) is less than 0 or not an integer
         if self.balance_var.get() < 0:
             error_list.append("\n- Balance must be a number greater than or equal to 0.")
 
-        # Append error message if balance is greater than dining dollar plan
+        # Append error message if balance (self.balance_var) is greater than dining dollar plan
         if self.balance_var.get() > self.dd_var.get():
             error_list.append("\n- Balance must not be greater than dining dollar plan.")
 
@@ -488,7 +482,7 @@ class User:
             time.mktime(time.strptime(self.sem_end.get(), date_format))
         except ValueError:
             error_list.append("\n- Invalid date format for ending date.")
-
+            
         # Convert error_list to str to display in messagebox message
         error_str = "".join(error_list)
 
@@ -521,8 +515,10 @@ class User:
             # Display end date
             self.verify_end_label.config(text=self.sem_end.get())
 
+            # self.yes_verify is a button that leads to self.options when clicked
             self.yes_verify = tk.Button(self.p2, text="Yes", command=self.options, font=("Verdana", 12))
             self.yes_verify.grid(row=9, column=1, pady=(10,0))
+            # self.no_verify is a button that, when clicked, leads to self.navigate_home, which will navigate to self.p1 (page 1)
             self.no_verify = tk.Button(self.p2, text="No", command=self.navigate_home, font=("Verdana", 12))
             self.no_verify.grid(row=9, column=2, pady=(10,0))
         else:
@@ -539,7 +535,6 @@ class User:
             Requested option and its corresponding page in the GUI.
         """
         # Page navigation
-        
         self.p2.forget()
         self.p3.pack()
 
@@ -569,7 +564,7 @@ class User:
         Navigator: Arnav Patel
 
         Returns:
-            self.p1 after user clicks Log out button.
+            self.p1 after user clicks "Log out" button.
         """
         # Pack self.p1
         self.p1.pack()
@@ -588,7 +583,7 @@ class User:
         Navigator: Arnav Patel
 
         Returns:
-            self.p3 after user clicks Back to Options button.
+            self.p3 after user clicks "Back to Options" button.
         """
         # Pack self.p3
         self.p3.pack()
