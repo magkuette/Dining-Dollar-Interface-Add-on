@@ -7,13 +7,9 @@ Challenges Encountered:
 
 """
 import tkinter as tk
-
-# Need this for widgets
 from tkinter import ttk
-
 from tkinter import messagebox
 
-# Need this for current date
 from datetime import date
 import time
 from datetime import timedelta
@@ -34,7 +30,6 @@ class User:
 
         self.banner = tk.Label(self.root, text="Dining Dollar Interface", bg="#5F6F52", width=1400, height=2, font=("Times New Roman", 14), fg="#FFE2E0")
         self.banner.pack(side="bottom")
-
         
         # get_user_info()
         self.p1 = tk.Frame(self.root)
@@ -53,7 +48,7 @@ class User:
         self.days_total = 0
 
         # Call get_user_info function (only need to call this first function because the rest of the functions will be called later on throughout the code through buttons)
-        self.get_user_info()
+        # self.get_user_info()
 
         # options()
         self.p3 = tk.Frame(self.root)
@@ -65,6 +60,265 @@ class User:
         self.p6 = tk.Frame(self.root)
         # spending_reminders_helper
         self.p7 = tk.Frame(self.root)    
+
+        self.get_user_info()
+
+    def spending_reminders(self):
+        """ Calculates when to send reminders to user to spend dining dollars based on the current date.
+
+        Driver: Arnav Patel
+        Navigator: Margaret Hermanto
+
+        Returns:
+            A tkinter messagebox with a message reminding users to spend dining dollars.
+        """
+        # Page navigation
+        self.p3.forget()
+        self.p4.pack()
+
+        # Ask user how often they want reminders with tkinter prompt (can be any number or set like 1, 7, 14, 30, 90)
+        self.ask_reminder = ttk.Label(self.p4, text="How often would you like to receive reminders? (Every 1, 7, 14, 30, or 90 days)", font=("Verdana", 15))
+        self.ask_reminder.grid(row=1, column=1)
+
+        # Enter reminder frequency
+        # what the user inputted is stored into self.reminder_var (replace future reminder_days with self.reminder_var. unless u set it equal to that that might work)
+        self.ask_reminder_entry = ttk.Entry(self.p4, textvariable=self.reminder_var, font=("Verdana", 12))
+        self.ask_reminder_entry.grid(row=2, column=1)
+        
+        # Enter button that will lead to spending_reminders_helper
+        self.ask_reminder_enter = tk.Button(self.p4, text="Enter", command=self.spending_reminders_helper, font=("Verdana", 12))
+        self.ask_reminder_enter.grid(row=4, column=2)
+
+    def spending_reminders_helper(self):
+        # If the user input something other than 1, 7, 14, 30, or 90, the program will show a messagebox
+        if (self.reminder_var.get() != 1) and (self.reminder_var.get() != 7) and (self.reminder_var.get() != 14) and (self.reminder_var.get() != 30) and (self.reminder_var.get() != 90) :
+            messagebox.showerror(title="Error", message="Please input a valid number (1, 7, 14, 30, or 90)")
+        else:
+            # Page navigation
+            self.p4.forget()
+            self.p7.pack()
+
+            self.input_reminder = ttk.Label(self.p7, text=f"You wanted reminders every {self.reminder_var.get()} days. Here are the dates you are reminded to spend.", font=("Verdana", 12))
+            self.input_reminder.grid(row=4, column=1)
+
+            if self.reminder_var.get() == 1:
+                self.reminder = ttk.Label(self.p7, text=f"Please mark every date in your calendar from {self.day.get()} to {self.sem_end.get()}.", font=("Verdana", 12))
+                self.reminder.grid(row=6, column=1)
+            
+            elif self.reminder_var.get() == 7:
+                date_format = "%m/%d/%Y"
+
+                date_today = time.mktime(time.strptime(self.day.get(), date_format))
+                end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+                diff = end_date - date_today
+                dates_num = int(diff / 86400)
+
+                self.days_total = dates_num
+
+                dates = dates_num / 7
+                self.dates_to_print = []
+
+                temp = self.day.get()
+                temp_string = "%m/%d/%Y"
+
+                for y in range(0, int(dates)):
+                    
+                    current_date_temp = datetime.datetime.strptime(temp, temp_string)
+                    newdate = current_date_temp + datetime.timedelta(days=7)
+                    self.dates_to_print.append(newdate)
+                    temp = str(newdate)
+                    temp_string = "%Y-%m-%d %H:%M:%S"
+
+
+                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
+                self.reminder.grid(row=10, column=1)
+
+                for x in range(0, len(self.dates_to_print)):
+                    self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
+                    self.statement.grid(row=11+x, column=1)
+
+                self.dates_to_print.clear()
+            
+            elif self.reminder_var.get() == 14:
+                date_format = "%m/%d/%Y"
+
+                date_today = time.mktime(time.strptime(self.day.get(), date_format))
+                end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+                diff = end_date - date_today
+                dates_num = int(diff / 86400)
+
+                self.days_total = dates_num
+
+                dates = dates_num / 14
+                self.dates_to_print = []
+
+                temp = self.day.get()
+                temp_string = "%m/%d/%Y"
+
+                for y in range(0, int(dates)):
+                    
+                    current_date_temp = datetime.datetime.strptime(temp, temp_string)
+                    newdate = current_date_temp + datetime.timedelta(days=14)
+                    self.dates_to_print.append(newdate)
+                    temp = str(newdate)
+                    temp_string = "%Y-%m-%d %H:%M:%S"
+
+                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
+                self.reminder.grid(row=10, column=1)
+
+                for x in range(0, len(self.dates_to_print)):
+                    self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
+                    self.statement.grid(row=11+x, column=1)
+
+                self.dates_to_print.clear()
+
+            elif self.reminder_var.get() == 30:
+                date_format = "%m/%d/%Y"
+
+                date_today = time.mktime(time.strptime(self.day.get(), date_format))
+                end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+                diff = end_date - date_today
+                dates_num = int(diff / 86400)
+
+                self.days_total = dates_num
+
+                dates = dates_num / 30
+                self.dates_to_print.clear()
+
+                temp = self.day.get()
+                temp_string = "%m/%d/%Y"
+
+                for y in range(0, int(dates)):
+                    
+                    current_date_temp = datetime.datetime.strptime(temp, temp_string)
+                    newdate = current_date_temp + datetime.timedelta(days=30)
+                    self.dates_to_print.append(newdate)
+                    temp = str(newdate)
+                    temp_string = "%Y-%m-%d %H:%M:%S"
+
+                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
+                self.reminder.grid(row=10, column=1)
+
+                for x in range(0, len(self.dates_to_print)):
+                    self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
+                    self.statement.grid(row=11+x, column=1)
+
+                self.dates_to_print.clear()
+
+            elif self.reminder_var.get() == 90:
+                date_format = "%m/%d/%Y"
+
+                date_today = time.mktime(time.strptime(self.day.get(), date_format))
+                end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+                diff = end_date - date_today
+                dates_num = int(diff / 86400)
+
+                self.days_total = dates_num
+
+                dates = dates_num / 90
+                self.dates_to_print = []
+
+                temp = self.day.get()
+                temp_string = "%m/%d/%Y"
+
+                for y in range(0, int(dates)):
+                    
+                    current_date_temp = datetime.datetime.strptime(temp, temp_string)
+                    newdate = current_date_temp + datetime.timedelta(days=90)
+                    self.dates_to_print.append(newdate)
+                    temp = str(newdate)
+                    temp_string = "%Y-%m-%d %H:%M:%S"
+
+                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
+                self.reminder.grid(row=10, column=1)
+
+                for x in range(0, len(self.dates_to_print)):
+                    self.statement = ttk.Label(self.p7, text=f"{self.dates_to_print[x]}")
+                    self.statement.grid(row=11+x, column=1)
+
+                self.dates_to_print.clear()
+
+        self.log_out_path = tk.Button(self.p7, text="Log out", command=self.navigate_home, font=("Verdana", 12))
+        self.log_out_path.grid(row=12, column=4)  
+        self.options_path = tk.Button(self.p7, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
+        self.options_path.grid(row=12, column=5)
+
+    def threshold_reminders(self):
+        """ Calculates when dining dollar balance has reached certain thresholds based on the current date and date of dining dollar reset.
+
+        Driver: Arnav Patel
+        Navigator: Margaret Hermanto
+
+        Returns:
+            A label letting users know what thresholds they have passed.
+        """
+
+        # Page navigation
+        self.p3.forget()
+        self.p5.pack()
+
+        self.ask_threshold = ttk.Label(self.p5, text="Here are the main quartile thresholds you have passed in dining dollar spending.", font=("Verdana", 12))
+        self.ask_threshold.grid(row=1, column=1)
+
+        money_left = self.balance_var.get() / self.dd_var.get()
+        money_spent = 1 - money_left
+        spent_percent = money_spent * 100
+  
+        if money_spent >= 1:
+            self.threshold_resp = ttk.Label(self.p5, text="You have used up all of your dining dollars. Don't worry!", font=("Verdana", 12))
+            self.threshold_resp.grid(row=4, column=1)
+        elif money_spent >= .75:
+            #tkinter label saying user passed 25%, 50%, and 75% threshhold and has spent ____% of their dining dollars
+            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th, 50th, and 75th percentiles of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
+            self.threshold_resp.grid(row=4, column=1)
+        elif money_spent >= .50:
+            #tkinter label saying user passed 25% and 50% threshhold and has spent ____% of their dining dollars
+            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th and 50th percentiles of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
+            self.threshold_resp.grid(row=4, column=1)
+        elif money_spent >= .25:
+            #tkinter label saying user passed 25% threshhold and has spent ____% of their dining dollars
+            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th percentile of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
+            self.threshold_resp.grid(row=4, column=1)
+        else:
+            #tkinter label saying user  has spent ____% of their dining dollars
+            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed no remarkable thresholds of spent dining dollars in your plan yet. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
+            self.threshold_resp.grid(row=4, column=1)
+
+        self.log_out_path = tk.Button(self.p5, text="Log out", command=self.navigate_home, font=("Verdana", 12))
+        self.log_out_path.grid(row=7, column=4)
+        self.options_path = tk.Button(self.p5, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
+        self.options_path.grid(row=7, column=5)
+
+    def suggested_spending(self):
+        """ Calculates a suggested average amount of money they could spend daily based on their remaining dining dollar balance.
+
+        Returns:
+            A message letting users know how much money they could spend daily to spend their dining dollar balance.
+        """
+        # Page navigation
+        self.p3.forget()
+        self.p6.pack()
+
+        date_format = "%m/%d/%Y"
+
+        date_today = time.mktime(time.strptime(self.day.get(), date_format))
+        end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
+        diff = end_date - date_today
+        dates_num = int(diff / 86400)
+
+        self.days_total = dates_num
+
+        daily_spending = self.balance_var.get() / self.days_total
+        daily_spending_rounded = round(daily_spending, 2)
+
+        # Divide dining dollars balance by amount of days left till date of dining dollars reset
+        self.ask_suggested = ttk.Label(self.p6, text=f"If you were to spend money every day until your dining dollar plan expired,\nyou would need to spend ${daily_spending_rounded} daily.", font=("Verdana", 12))
+        self.ask_suggested.grid(row=1, column=1)
+
+        self.log_out_path = tk.Button(self.p6, text="Log out", command=self.navigate_home, font=("Verdana", 12))
+        self.log_out_path.grid(row=3, column=1)
+        self.options_path = tk.Button(self.p6, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
+        self.options_path.grid(row=2, column=1)
         
     def get_user_info(self):
         """ Gets user information including dining dollar plan, current dining dollar balance, as well as name.
@@ -153,13 +407,18 @@ class User:
         if self.balance_var.get() < 0:
             error_list.append("\n- Balance must be a number greater than or equal to 0.")
 
-        date_format = "%m/%d/%Y"
+        # Append error message if balance is greater than dining dollar plan
+        if self.balance_var.get() > self.dd_var.get():
+            error_list.append("\n- Balance must not be greater than dining dollar plan.")
 
+        # Append error message if self.date is not in the format of date_format
+        date_format = "%m/%d/%Y"
         try:
             time.mktime(time.strptime(self.day.get(), date_format))
         except ValueError:
             error_list.append("\n- Invalid date format for today's date")
 
+        # Append error message if self.sem_end is not in the format of date_format
         try:
             time.mktime(time.strptime(self.sem_end.get(), date_format))
         except ValueError:
@@ -202,6 +461,7 @@ class User:
             self.no_verify = tk.Button(self.p2, text="No", command=self.navigate_home, font=("Verdana", 12))
             self.no_verify.grid(row=9, column=2, pady=(10,0))
         else:
+            # Displays error(s) in a messagebox
             messagebox.showerror(title="Error", message=error_str)
 
     def options(self):
@@ -213,7 +473,7 @@ class User:
         Returns:
             Requested option.
         """
-        # page navigation
+        # Page navigation
         self.p2.forget()
         self.p3.pack()
 
@@ -224,7 +484,7 @@ class User:
         self.spending_path = tk.Button(self.p3, text="Create a spending reminder", command=self.spending_reminders, font=("Verdana", 12))
         self.spending_path.grid(row=2, column=1, pady=(20, 20))
 
-        # Button that leads to threshold_reminder
+        # Button that leads to threshold_reminders
         self.threshold_path = tk.Button(self.p3, text="Show thresholds passed", command=self.threshold_reminders, font=("Verdana", 12))
         self.threshold_path.grid(row=3, column=1, pady=(0, 20))
 
@@ -232,277 +492,19 @@ class User:
         self.suggested_path = tk.Button(self.p3, text="Get a suggested spending recommendation", command=self.suggested_spending, font=("Verdana", 12))
         self.suggested_path.grid(row=4, column=1, pady=(0, 20))
 
-        # Button that leads to get_user_info
+        # Button that leads to navigate_home which will lead to get_user_info
         self.log_out_path = tk.Button(self.p3, text="Log out", command=self.navigate_home, font=("Verdana", 12))
         self.log_out_path.grid(row=5, column=1)
-
-    def spending_reminders(self):
-        """ Calculates when to send reminders to user to spend dining dollars based on the current date.
-
-        Driver: Arnav Patel
-        Navigator: Margaret Hermanto
-
-        Returns:
-            A tkinter messagebox with a message reminding users to spend dining dollars.
-        """
-        # page navigation
-        self.p3.forget()
-        self.p4.pack()
-        # Get current date using date.today()
-        # This school year started on August 28, 2023
-
-        # Based on time between current date and date of dining dollar reset, program will send a notification (tkinter.messagebox.showinfo)
-
-        # Ask user how often they want reminders with tkinter prompt (can be any number or set like 1, 7, 14, 30, 90)
-        self.ask_reminder = ttk.Label(self.p4, text="How often would you like to receive reminders? (Every 1, 7, 14, 30, or 90 days)", font=("Verdana", 15))
-        self.ask_reminder.grid(row=1, column=1)
-
-        # Enter reminder frequency
-        # what the user inputted is stored into self.reminder_var (replace future reminder_days with self.reminder_var. unless u set it equal to that that might work)
-        self.ask_reminder_entry = ttk.Entry(self.p4, textvariable=self.reminder_var, font=("Verdana", 12))
-        self.ask_reminder_entry.grid(row=2, column=1)
-
-        self.ask_reminder_enter = tk.Button(self.p4, text="Enter", command=self.spending_reminders_helper, font=("Verdana", 12))
-        self.ask_reminder_enter.grid(row=4, column=2)
     
-    def spending_reminders_helper(self):
-        if (self.reminder_var.get() != 1) and (self.reminder_var.get() != 7) and (self.reminder_var.get() != 14) and (self.reminder_var.get() != 30) and (self.reminder_var.get() != 90) :
-            messagebox.showerror(title="Error", message="Please input a valid number (1, 7, 14, 30, or 90)")
-        else:
-            # Page navigation
-            self.p4.forget()
-            self.p7.pack()
-
-            self.input_reminder = ttk.Label(self.p7)
-            self.input_reminder.grid(row=4, column=1)
-
-            self.input_reminder.config(text = f"You wanted reminders every {self.reminder_var.get()} days. Here are the dates you are reminded to spend.", font=("Verdana", 12))
-
-            if self.reminder_var.get() == 1:
-                self.reminder = ttk.Label(self.p7, text="Please mark every date in your calendar from August 28, 2024 to May 17, 2025.", font=("Verdana", 12))
-                self.reminder.grid(row=6, column=1)
-            
-            elif self.reminder_var.get() == 7:
-                date_format = "%m/%d/%Y"
-
-                date_today = time.mktime(time.strptime(self.day.get(), date_format))
-                end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
-                diff = end_date - date_today
-                dates_num = int(diff / 86400)
-
-                self.days_total = dates_num
-
-                dates = dates_num / 7
-                dates_to_print = []
-
-                temp = self.day.get()
-                temp_string = "%m/%d/%Y"
-
-                for y in range(0, int(dates)):
-                    
-                    current_date_temp = datetime.datetime.strptime(temp, temp_string)
-                    newdate = current_date_temp + datetime.timedelta(days=7)
-                    dates_to_print.append(newdate)
-                    temp = str(newdate)
-                    temp_string = "%Y-%m-%d %H:%M:%S"
-
-
-                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
-                self.reminder.grid(row=10, column=1)
-
-                for x in range(0, len(dates_to_print)):
-                    self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
-                    self.statement.grid(row=11+x, column=1)
-
-            
-            elif self.reminder_var.get() == 14:
-                date_format = "%m/%d/%Y"
-
-                date_today = time.mktime(time.strptime(self.day.get(), date_format))
-                end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
-                diff = end_date - date_today
-                dates_num = int(diff / 86400)
-
-                self.days_total = dates_num
-
-                dates = dates_num / 14
-                dates_to_print = []
-
-                temp = self.day.get()
-                temp_string = "%m/%d/%Y"
-
-                for y in range(0, int(dates)):
-                    
-                    current_date_temp = datetime.datetime.strptime(temp, temp_string)
-                    newdate = current_date_temp + datetime.timedelta(days=14)
-                    dates_to_print.append(newdate)
-                    temp = str(newdate)
-                    temp_string = "%Y-%m-%d %H:%M:%S"
-
-
-                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
-                self.reminder.grid(row=10, column=1)
-
-                for x in range(0, len(dates_to_print)):
-                    self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
-                    self.statement.grid(row=11+x, column=1)
-
-            elif self.reminder_var.get() == 30:
-                date_format = "%m/%d/%Y"
-
-                date_today = time.mktime(time.strptime(self.day.get(), date_format))
-                end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
-                diff = end_date - date_today
-                dates_num = int(diff / 86400)
-
-                self.days_total = dates_num
-
-                dates = dates_num / 30
-                dates_to_print = []
-
-                temp = self.day.get()
-                temp_string = "%m/%d/%Y"
-
-                for y in range(0, int(dates)):
-                    
-                    current_date_temp = datetime.datetime.strptime(temp, temp_string)
-                    newdate = current_date_temp + datetime.timedelta(days=30)
-                    dates_to_print.append(newdate)
-                    temp = str(newdate)
-                    temp_string = "%Y-%m-%d %H:%M:%S"
-
-
-                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
-                self.reminder.grid(row=10, column=1)
-
-                for x in range(0, len(dates_to_print)):
-                    self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
-                    self.statement.grid(row=11+x, column=1)
-
-            elif self.reminder_var.get() == 90:
-                date_format = "%m/%d/%Y"
-
-                date_today = time.mktime(time.strptime(self.day.get(), date_format))
-                end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
-                diff = end_date - date_today
-                dates_num = int(diff / 86400)
-
-                self.days_total = dates_num
-
-                dates = dates_num / 90
-                dates_to_print = []
-
-                temp = self.day.get()
-                temp_string = "%m/%d/%Y"
-
-                for y in range(0, int(dates)):
-                    
-                    current_date_temp = datetime.datetime.strptime(temp, temp_string)
-                    newdate = current_date_temp + datetime.timedelta(days=90)
-                    dates_to_print.append(newdate)
-                    temp = str(newdate)
-                    temp_string = "%Y-%m-%d %H:%M:%S"
-
-
-                self.reminder = ttk.Label(self.p7, text=f"Please mark the following dates in your calendar:", font=("Verdana", 12))
-                self.reminder.grid(row=10, column=1)
-
-                for x in range(0, len(dates_to_print)):
-                    self.statement = ttk.Label(self.p7, text=f"{dates_to_print[x]}")
-                    self.statement.grid(row=11+x, column=1)
-
-        self.log_out_path = tk.Button(self.p7, text="Log out", command=self.navigate_home, font=("Verdana", 12))
-        self.log_out_path.grid(row=12, column=4)  
-        self.options_path = tk.Button(self.p7, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
-        self.options_path.grid(row=12, column=5)
-
-    def threshold_reminders(self):
-        """ Calculates when dining dollar balance has reached certain thresholds based on the current date and date of dining dollar reset.
-
-        Driver: Arnav Patel
-        Navigator: Margaret Hermanto
-
-        Returns:
-            A label letting users know what thresholds they have passed.
-        """
-
-        # page navigation
-        self.p3.forget()
-        self.p5.pack()
-
-        self.ask_threshold = ttk.Label(self.p5, text="Here are the main quartile thresholds you have passed in dining dollar spending.", font=("Verdana", 12))
-        self.ask_threshold.grid(row=1, column=1)
-
-        money_left = self.balance_var.get() / self.dd_var.get()
-        money_spent = 1 - money_left
-        spent_percent = money_spent * 100
-  
-        if money_spent >= 1:
-            self.threshold_resp = ttk.Label(self.p5, text="You have used up all of your dining dollars. Don't worry!", font=("Verdana", 12))
-            self.threshold_resp.grid(row=4, column=1)
-        elif money_spent >= .75:
-            #tkinter label saying user passed 25%, 50%, and 75% threshhold and has spent ____% of their dining dollars
-            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th, 50th, and 75th percentiles of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
-            self.threshold_resp.grid(row=4, column=1)
-        elif money_spent >= .50:
-            #tkinter label saying user passed 25% and 50% threshhold and has spent ____% of their dining dollars
-            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th and 50th percentiles of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
-            self.threshold_resp.grid(row=4, column=1)
-        elif money_spent >= .25:
-            #tkinter label saying user passed 25% threshhold and has spent ____% of their dining dollars
-            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed the 25th percentile of total dining dollars in your plan. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
-            self.threshold_resp.grid(row=4, column=1)
-        else:
-            #tkinter label saying user  has spent ____% of their dining dollars
-            self.threshold_resp = ttk.Label(self.p5, text=f"You have passed no remarkable thresholds of spent dining dollars in your plan yet. You have used up {spent_percent}% of all of your dining dollars.", font=("Verdana", 12))
-            self.threshold_resp.grid(row=4, column=1)
-
-        self.log_out_path = tk.Button(self.p5, text="Log out", command=self.navigate_home, font=("Verdana", 12))
-        self.log_out_path.grid(row=7, column=4)
-        self.options_path = tk.Button(self.p5, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
-        self.options_path.grid(row=7, column=5)
-
-
-    def suggested_spending(self):
-        """ Calculates a suggested average amount of money they could spend daily based on their remaining dining dollar balance.
-
-        Returns:
-            A message letting users know how much money they could spend daily to spend their dining dollar balance.
-        """
-        # Get current date using date.today()
-
-        # page navigation
-        self.p3.forget()
-        self.p6.pack()
-
-        date_format = "%m/%d/%Y"
-
-        date_today = time.mktime(time.strptime(self.day.get(), date_format))
-        end_date = time.mktime(time.strptime(self.sem_end.get(), date_format))
-        diff = end_date - date_today
-        dates_num = int(diff / 86400)
-
-        self.days_total = dates_num
-
-        daily_spending = self.balance_var.get() / self.days_total
-        daily_spending_rounded = round(daily_spending, 2)
-
-        # Divide dining dollars balance by amount of days left till date of dining dollars reset
-        self.ask_suggested = ttk.Label(self.p6, text=f"If you were to spend money every day until your dining dollar plan expired,\nyou would need to spend ${daily_spending_rounded} daily.", font=("Verdana", 12))
-        self.ask_suggested.grid(row=1, column=1)
-
-        self.log_out_path = tk.Button(self.p6, text="Log out", command=self.navigate_home, font=("Verdana", 12))
-        self.log_out_path.grid(row=2, column=1)
-        self.options_path = tk.Button(self.p6, text="Back to Options", command=self.navigate_options, font=("Verdana", 12))
-        self.options_path.grid(row=2, column=2)
-
     def navigate_home(self):
         """ Allows user to navigate to self.p1 from any other page in the program.
 
         Driver: Margaret Hermanto
         Navigator: Arnav Patel
         """
+        # Pack self.p1
         self.p1.pack()
+        # Forget all other frames
         self.p2.forget()
         self.p3.forget()
         self.p4.forget()
@@ -516,7 +518,10 @@ class User:
         Driver: Margaret Hermanto
         Navigator: Arnav Patel
         """
+        # Pack self.p3
         self.p3.pack()
+
+        # Forget all other frames
         self.p1.forget()
         self.p2.forget()
         self.p4.forget()
